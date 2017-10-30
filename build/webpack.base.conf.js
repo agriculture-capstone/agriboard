@@ -5,8 +5,10 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
+const root = path.resolve(__dirname, '..');
+
 function resolve (dir) {
-  return path.resolve(__dirname, '..', dir)
+  return path.join(root, dir);
 }
 
 module.exports = {
@@ -44,22 +46,23 @@ module.exports = {
           resolve('test')
         ],
         options: {
-          configFile: resolve('tslint.json'),
-          tsConfigFile: resolve('tsconfig.json')
+          configFile: 'tslint.json',
+          tsConfigFile: 'tsconfig.json',
+          typeCheck: true
+        }
+      },
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules|vue\/src/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
         }
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
-      },
-      {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: resolve('node_modules'),
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        }
       },
       {
         test: /\.js$/,

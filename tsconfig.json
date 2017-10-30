@@ -7,7 +7,7 @@
     // if using webpack 2+ or rollup, to leverage tree shaking:
     "module": "es2015",
     "moduleResolution": "node",
-    "noImplicitAny": true,
+    "sourceMap": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
