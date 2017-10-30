@@ -9,7 +9,8 @@ module.exports = {
     sourceMap: isProduction
       ? config.build.productionSourceMap
       : config.dev.cssSourceMap,
-    extract: isProduction
+    extract: isProduction,
+    ts: 'ts-loader!tslint-loader'
   }),
   transformToRequire: {
     video: 'src',

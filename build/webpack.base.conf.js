@@ -6,12 +6,12 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+  return path.resolve(__dirname, '..', dir)
 }
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.ts'
   },
   output: {
     path: config.build.assetsRoot,
@@ -21,18 +21,45 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.ts', '.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+      '@root': resolve('.')
     }
   },
   module: {
     rules: [
       {
+        enforce: 'pre',
+        test: /\.js%/,
+        loader: 'source-map-loader'
+      },
+      {
+        enforce: 'pre',
+        test: /\.ts$/,
+        loader: 'tslint-loader',
+        include: [
+          resolve('src'),
+          resolve('test')
+        ],
+        options: {
+          configFile: resolve('tslint.json'),
+          tsConfigFile: resolve('tsconfig.json')
+        }
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
+      },
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: resolve('node_modules'),
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
       },
       {
         test: /\.js$/,
