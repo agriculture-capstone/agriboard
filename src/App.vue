@@ -11,9 +11,24 @@
 </template>
 
 <script lang="ts">
-export default {
+import vue from 'vue';
+
+export default vue.extend({
   name: 'app',
-};
+
+  data() {
+    return {
+      message: 'Hello',
+    };
+  },
+  computed: {
+    // a computed getter
+    reversedMessage(): string {
+      // `this` points to the vm instance
+      return this.message.split('').reverse().join('');
+    },
+  },
+});
 </script>
 
 <style>

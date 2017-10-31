@@ -2,6 +2,7 @@
 
 const utils = require('./utils')
 const config = require('../config')
+const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -12,10 +13,7 @@ module.exports = {
         : config.dev.cssSourceMap,
       extract: isProduction,
     }),
-    ts: 'ts-loader'
-  },
-  preLoaders: {
-    ts: 'tslint-loader?{"options":{"configFile":"tslint.json","tsConfigFile":"tsconfig.json","typeCheck":true}}'
+    ts: 'ts-loader!tslint-loader'
   },
   esModule: true,
   transformToRequire: {

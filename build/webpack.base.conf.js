@@ -48,7 +48,8 @@ module.exports = {
         options: {
           configFile: 'tslint.json',
           tsConfigFile: 'tsconfig.json',
-          typeCheck: true
+          typeCheck: true,
+          emitErrors: true
         }
       },
       {
@@ -94,5 +95,5 @@ module.exports = {
         }
       }
     ]
-  }
+  },
 }
