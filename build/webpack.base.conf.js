@@ -32,11 +32,13 @@ module.exports = {
   },
   module: {
     rules: [
+      // Source map loader to map typescript source-maps
       {
         enforce: 'pre',
         test: /\.js%/,
         loader: 'source-map-loader'
       },
+      // tslint-loader to perform linting during webpack build
       {
         enforce: 'pre',
         test: /\.ts$/,
@@ -52,6 +54,7 @@ module.exports = {
           emitErrors: true
         }
       },
+      // ts-loader to compile typescript using tsc
       {
         test: /\.ts$/,
         loader: 'ts-loader',
@@ -60,16 +63,30 @@ module.exports = {
           appendTsSuffixTo: [/\.vue$/],
         }
       },
+      // Sass loader to enable using sass within vue components
+      {
+        test: /\.scss$/,
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "sass-loader" // compiles Sass to CSS
+        }]
+      },
+      // Vue loader to handle single file components
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
+      // Babel loader to compile typescript/vue output down to es5 (for browser support)
       {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
       },
+      // Url loaders to handle files
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
