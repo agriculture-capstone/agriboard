@@ -1,6 +1,6 @@
 import vue from 'vue';
 import vueRouter from 'vue-router';
-import Hello from '@/components/Hello';
+import Hello from '@/components/Hello.vue';
 
 vue.use(vueRouter);
 

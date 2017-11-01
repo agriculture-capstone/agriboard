@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import vue from 'vue';
+import Vue from 'vue';
 
-export default vue.extend({
+export default Vue.extend({
   name: 'app',
 
   data() {

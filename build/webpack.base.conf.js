@@ -5,12 +5,6 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-const root = path.resolve(__dirname, '..');
-
-function resolve (dir) {
-  return path.join(root, dir);
-}
-
 module.exports = {
   entry: {
     app: './src/main.ts'
@@ -26,8 +20,8 @@ module.exports = {
     extensions: ['.ts', '.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
-      '@root': resolve('.')
+      '@': utils.resolve('src'),
+      '@root': utils.resolve('.')
     }
   },
   module: {
@@ -37,21 +31,6 @@ module.exports = {
         enforce: 'pre',
         test: /\.js%/,
         loader: 'source-map-loader'
-      },
-      // tslint-loader to perform linting during webpack build
-      {
-        enforce: 'pre',
-        test: /\.ts$/,
-        loader: 'tslint-loader',
-        include: [
-          resolve('src'),
-        ],
-        options: {
-          configFile: 'tslint.json',
-          tsConfigFile: 'tsconfig.json',
-          typeCheck: true,
-          emitErrors: true
-        }
       },
       // ts-loader to compile typescript using tsc
       {
@@ -77,13 +56,13 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderConfig
+        options: vueLoaderConfig('base')
       },
       // Babel loader to compile typescript/vue output down to es5 (for browser support)
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src')]
+        exclude: [utils.resolve('node_modules')]
       },
       // Url loaders to handle files
       {
