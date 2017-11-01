@@ -63,7 +63,7 @@ module.exports = {
           appendTsSuffixTo: [/\.vue$/],
         }
       },
-      // Sass loader to enable using sass within vue components
+      // Sass loader to enable using standalone scss files (if you really want to)
       {
         test: /\.scss$/,
         use: [{
