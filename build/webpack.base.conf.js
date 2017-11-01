@@ -45,7 +45,6 @@ module.exports = {
         loader: 'tslint-loader',
         include: [
           resolve('src'),
-          resolve('test')
         ],
         options: {
           configFile: 'tslint.json',
@@ -84,7 +83,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src')]
       },
       // Url loaders to handle files
       {
