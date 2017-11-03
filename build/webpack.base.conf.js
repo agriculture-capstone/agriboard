@@ -11,7 +11,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.ts'
   },
   output: {
     path: config.build.assetsRoot,
@@ -21,7 +21,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.ts', '.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src')
@@ -29,6 +29,21 @@ module.exports = {
   },
   module: {
     rules: [
+      // Source map loader to map typescript source-maps
+      {
+        enforce: 'pre',
+        test: /\.js%/,
+        loader: 'source-map-loader'
+      },
+      // ts-loader to compile typescript using tsc
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules|vue\/src/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',

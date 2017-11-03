@@ -4,16 +4,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import MessageList from './components/MessageList'
 
-export default {
+export default Vue.extend({
   name: 'app',
   data: () => ({ messages: ['Hey John', 'Howdy Paco'] }),
   components: {
     MessageList
   }
-}
+});
 </script>
 
 
