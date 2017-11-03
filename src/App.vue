@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-    <header>
-      <span>Vue.js PWA</span>
-    </header>
-    <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
-      <router-view></router-view>
-    </main>
+    <MessageList :messages="messages"/>
   </div>
 </template>
 
 <script>
+import MessageList from './components/MessageList'
+
 export default {
-  name: 'app'
+  name: 'app',
+  data: () => ({ messages: ['Hey John', 'Howdy Paco'] }),
+  components: {
+    MessageList
+  }
 }
 </script>
+
 
 <style>
 body {
