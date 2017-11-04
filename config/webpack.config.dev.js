@@ -1,6 +1,5 @@
 'use strict';
 
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -10,6 +9,9 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const { createResolve, postcssConfig } = require('./utils');
+
+const resolve = createResolve(path.resolve(__dirname, '..'));
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -93,9 +95,11 @@ module.exports = {
       '.json',
       '.web.jsx',
       '.jsx',
+      '.scss'
     ],
     alias: {
-      
+      '@': resolve('src'),
+      '@root': resolve('.'),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -123,6 +127,12 @@ module.exports = {
         loader: require.resolve('tslint-loader'),
         enforce: 'pre',
         include: paths.appSrc,
+        options: {
+          configFile: resolve('tslint.json'),
+          tsConfigFile: resolve('tsconfig.json'),
+          typeCheck: true,
+          emitErrors: true
+        }
       },
       {
         test: /\.js$/,
@@ -152,6 +162,21 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('ts-loader'),
           },
+          {
+            test: /\.scss$/,
+            use: [{
+                loader: require.resolve('style-loader') // creates style nodes from JS strings
+            }, {
+                loader: require.resolve('css-loader') // translates CSS into CommonJS
+            },
+            postcssConfig(),
+            {
+              loader: require.resolve('sass-loader'), // compiles Sass to CSS
+              options: {
+                sourceMap: true
+              }
+            }]
+          },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -167,26 +192,7 @@ module.exports = {
                   importLoaders: 1,
                 },
               },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
-                  ],
-                },
-              },
+              postcssConfig(),
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
