@@ -11,6 +11,6 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'list',
-  props: ['messages']
+  props: ['messages'],
 });
 </script>

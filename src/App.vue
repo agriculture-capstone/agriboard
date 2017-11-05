@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import MessageList from './components/MessageList'
+import Vue from 'vue';
+import MessageList from './components/MessageList';
 
 export default Vue.extend({
   name: 'app',
   data: () => ({ messages: ['Hey John', 'Howdy Paco'] }),
   components: {
-    MessageList
-  }
+    MessageList,
+  },
 });
 </script>
 

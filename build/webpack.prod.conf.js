@@ -6,7 +6,7 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
+const baseWebpackConfig = require('./webpack.base.conf')('production')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -19,10 +19,23 @@ const env = config.build.env
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: true
-    })
+    rules: [
+      {
+        test: /\.ts$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        options: {
+          typeCheck: true,
+          configFile: utils.resolve('tslint.json'),
+          tsConfigFile: utils.resolve('tsconfig.json'),
+          emitErrors: true
+        }
+      },
+      ...utils.styleLoaders({
+        sourceMap: config.build.productionSourceMap,
+        extract: true
+      })
+  ]
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {

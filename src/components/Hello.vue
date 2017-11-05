@@ -27,13 +27,13 @@ export default Vue.extend({
   methods: {
     test() {
       return 'hi';
-    }
+    },
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js PWA'
-    }
-  }
+      msg: 'Welcome to Your Vue.js PWA',
+    };
+  },
 });
 </script>
 

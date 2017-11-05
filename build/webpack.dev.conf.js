@@ -6,7 +6,7 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
+const baseWebpackConfig = require('./webpack.base.conf')('development')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
@@ -17,7 +17,20 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    rules: [
+      {
+        test: /\.ts$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        options: {
+          typeCheck: true,
+          configFile: utils.resolve('tslint.json'),
+          tsConfigFile: utils.resolve('tsconfig.json'),
+          emitErrors: false
+        }
+      },
+      ...utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    ]
   },
   // cheap-module-eval-source-map is faster for development
   devtool: 'cheap-module-eval-source-map',
