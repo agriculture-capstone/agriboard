@@ -40,4 +40,6 @@ Any assets needed by the web server.
 
 ## Vuex
 
-TODO: develop & document vuex
+Vuex is the state management system the dashboard uses! You can learn about how it works [here](https://vuex.vuejs.org/en/)!
+
+PS: It's very similar to redux :smile:
