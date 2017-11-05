@@ -5,10 +5,6 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
-}
-
 module.exports = {
   entry: {
     app: './src/main.ts'
@@ -24,8 +20,11 @@ module.exports = {
     extensions: ['.ts', '.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': utils.resolve('src')
     }
+  },
+  node: {
+    fs: 'empty'
   },
   module: {
     rules: [
@@ -38,21 +37,23 @@ module.exports = {
       // ts-loader to compile typescript using tsc
       {
         test: /\.ts$/,
-        loader: 'ts-loader',
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+            }
+          }
+        ],
         exclude: /node_modules|vue\/src/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        }
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

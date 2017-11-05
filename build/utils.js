@@ -71,3 +71,7 @@ exports.styleLoaders = function (options) {
   }
   return output
 }
+
+exports.resolve = function (dir) {
+  return path.resolve(__dirname, '..', dir)
+}

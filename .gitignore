@@ -13,5 +13,4 @@ yarn-error.log*
 *.sln
 
 # Test coverage
-
 test/unit/coverage/*

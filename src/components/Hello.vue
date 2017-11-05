@@ -24,6 +24,11 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'hello',
+  methods: {
+    test() {
+      return 'hi';
+    }
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js PWA'

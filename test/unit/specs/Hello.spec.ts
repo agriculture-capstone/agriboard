@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Hello from '@/components/Hello'
+import 'mocha'
+import { expect } from 'chai'
 
 describe('Hello.vue', () => {
   it('should render correct contents', () => {
