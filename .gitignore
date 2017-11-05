@@ -11,3 +11,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# Test coverage
+
+test/unit/coverage/*

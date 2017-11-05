@@ -12,7 +12,7 @@ module.exports = {
         : config.dev.cssSourceMap,
       extract: isProduction
     }),
-    ts: 'ts-loader'
+    ts: 'babel-loader!ts-loader'
   },
   transformToRequire: {
     video: 'src',
