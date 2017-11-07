@@ -1,6 +1,6 @@
 {
-  "name": "dashboard",
-  "short_name": "dashboard",
+  "name": "agriboard",
+  "short_name": "agriboard",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
