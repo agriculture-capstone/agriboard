@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-IMAGE_NAME="boresha/dashboard"
+IMAGE_NAME="dashboard"
 DOCKER_HOME="/dashboard/"
 
 if [ "$1" == "init" ]; then
