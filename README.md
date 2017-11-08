@@ -1,4 +1,4 @@
-# Dashboard
+# Agriboard
 ## Using Docker
 The `./dockerize.sh` script can be used with the following arguments:
 - `init` - creates a Docker image based on the Dockerfile

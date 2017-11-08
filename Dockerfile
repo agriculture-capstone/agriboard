@@ -1,5 +1,5 @@
 FROM node:8.9
 
-WORKDIR /dashboard
+WORKDIR /agriboard
 
 RUN npm install -g yarn
