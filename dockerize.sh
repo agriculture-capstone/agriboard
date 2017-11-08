@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-IMAGE_NAME="dashboard"
+IMAGE_NAME="boresha/dashboard"
 DOCKER_HOME="/dashboard/"
 
 if [ "$1" == "init" ]; then
