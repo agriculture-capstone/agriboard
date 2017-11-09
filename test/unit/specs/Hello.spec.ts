@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import Hello from '@/components/Hello'
-import 'mocha'
-import { expect } from 'chai'
+import Vue from 'vue';
+import Hello from '@/pages/Hello';
+import 'mocha';
+import { expect } from 'chai';
 
 describe('Hello.vue', () => {
   it('should render correct contents', () => {
-    const Constructor = Vue.extend(Hello)
-    const vm = new Constructor().$mount()
+    const constructor = Vue.extend(Hello);
+    const vm = new constructor().$mount();
     expect(vm.$el.querySelector('.hello h1').textContent)
-      .to.equal('Welcome to Your Vue.js PWA')
+      .to.equal('Welcome to Your Vue.js PWA');
   })
 })

@@ -17,7 +17,7 @@ export default Vue.extend({
   name: 'app',
   data() {
     return {
-      message: 'Hello',
+      message: 'Hello World',
     };
   },
   computed: {
