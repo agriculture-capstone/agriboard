@@ -19,27 +19,15 @@ const env = config.build.env
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        enforce: 'pre',
-        loader: 'tslint-loader',
-        options: {
-          typeCheck: true,
-          configFile: utils.resolve('tslint.json'),
-          tsConfigFile: utils.resolve('tsconfig.json'),
-          emitErrors: true
-        }
-      },
-      ...utils.styleLoaders({
-        sourceMap: config.build.productionSourceMap,
-        extract: true
-      })
-  ]
+    rules: utils.styleLoaders({
+      sourceMap: config.build.productionSourceMap,
+      extract: true
+    })
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
+    // Include the chunkhash in order to support caching files
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
@@ -81,7 +69,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
         './service-worker-prod.js'))}</script>`
     }),
-    // split vendor js into its own file
+    // split vendor js into its own file. This allows us to cache the vendor for longer.
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {

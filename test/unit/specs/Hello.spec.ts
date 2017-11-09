@@ -9,5 +9,5 @@ describe('Hello.vue', () => {
     const vm = new constructor().$mount();
     expect(vm.$el.querySelector('.hello h1').textContent)
       .to.equal('Welcome to Your Vue.js PWA');
-  })
-})
+  });
+});

@@ -29,19 +29,38 @@ module.exports = function baseConfig(env) {
     },
     module: {
       rules: [
-        // Source map loader to map typescript source-maps
+        // Source map loader to map typescript and babel source-maps
+        // for debugging and coverage purposes
         {
           enforce: 'pre',
           test: /\.js%/,
           loader: 'source-map-loader'
         },
-        // ts-loader to compile typescript using tsc
+        // tslint loader to lint files during build
+        {
+          test: /\.ts$/,
+          enforce: 'pre',
+          loader: 'tslint-loader',
+          options: {
+            typeCheck: true,
+            configFile: utils.resolve('tslint.json'),
+            tsConfigFile: utils.resolve('tsconfig.json'),
+            // We do not want linting to break the build during development
+            // but we do want it to break in testing/production environments
+            emitErrors: (env !== 'development'),
+            failOnHint: (env !== 'development')
+          }
+        },
+        // ts-loader to compile typescript using tsc. We cannot use
+        // awesome-typescript-loader due to low support for Vue
         {
           test: /\.ts$/,
           use: [
+            // Pipe into babel-loader
             {
               loader: 'babel-loader'
             },
+            // Process using ts-loader first
             {
               loader: 'ts-loader',
               options: {
@@ -51,11 +70,13 @@ module.exports = function baseConfig(env) {
           ],
           exclude: /node_modules|vue\/src/,
         },
+        // vue-loader for Vue components
         {
           test: /\.vue$/,
           loader: 'vue-loader',
           options: vueLoaderConfig(env)
         },
+        // Use url-loader for images, fonts, audio, video, etc
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
           loader: 'url-loader',

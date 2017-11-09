@@ -72,6 +72,11 @@ exports.styleLoaders = function (options) {
   return output
 }
 
-exports.resolve = function (dir) {
-  return path.resolve(__dirname, '..', dir)
+/**
+ * Resolve a path to file or directory in root
+ *
+ * @param {string} fileOrDir Name of file or directory in root
+ */
+exports.resolve = function (fileOrDir) {
+  return path.resolve(__dirname, '..', fileOrDir)
 }

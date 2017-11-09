@@ -8,11 +8,11 @@ module.exports = function vueLoaderConfig(env) {
   let tsLoader = null;
   switch (env) {
     case 'development':
-      tsLoader = 'babel-loader!ts-loader!tslint-loader?{emitErrors:false,typeCheck:false}';
+      tsLoader = 'babel-loader!ts-loader!tslint-loader?{emitErrors:false,typeCheck:false,failOnHint:false}';
       break;
 
     case 'production':
-      tsLoader = 'babel-loader!ts-loader!tslint-loader?{emitErrors:true,typeCheck:false}';
+      tsLoader = 'babel-loader!ts-loader!tslint-loader?{emitErrors:true,typeCheck:false,failOnHint:true}';
       break;
 
     case 'test':

@@ -4,16 +4,21 @@
   "description": "Administrator dashboard for the agriculture software stack",
   "author": "agriculture-capstone",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test": "npm run unit"
+    "test": "npm run test:unit:single && npm run test:e2e",
+    "test:unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
+    "test:unit:single": "npm run test:unit -- --single-run",
+    "test:e2e": "npm run test:e2e:single",
+    "test:e2e:single": "echo 'No e2e tests'"
   },
   "dependencies": {
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
@@ -76,7 +81,6 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.2",
-    "vuex": "^3.0.1",
     "webpack": "^3.7.1",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
