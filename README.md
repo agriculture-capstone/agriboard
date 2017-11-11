@@ -32,9 +32,11 @@ Instead use:
 
 ### Development
 
-Getting started developing is easy, simply run:
+To start developing, simply run the following command:
 
 `npm start`
+
+And navigate to `localhost:8080` in your browser.
 
 Hot reloading is enabled, so there is no need to restart the server or reload the page when you make changes. They will automatically propogate to your browser, while maintaining the previous state of your application.
 
@@ -62,19 +64,19 @@ To perform a single run of the tests, simply run:
 
 `npm run test`
 
-This will run both the unit tests, and the end to end tests. Keep in mind testing will fail if any of the tests do not adhere to the styleguide
+This will run both the unit tests, and the integration tests. Keep in mind testing will fail if any of the tests do not adhere to the styleguide
 
 To only run the unit tests, run:
 
 `npm run test:unit:single`
 
-And likewise to run only the e2e tests:
+And likewise to run only the integration tests:
 
-`npm run test:e2e:single`
+`npm run test:inte:single`
 
 If you want to rebuild the tests on changes, instead run:
 
-`npm run test:unit` and `npm run test:e2e`
+`npm run test:unit` and `npm run test:inte`
 
 ## Typescript
 
