@@ -24,7 +24,7 @@ IMPORTANT: Please use yarn to manage your dependencies.
 
 === Using Yarn
 
-The following commands should never be used in this repository.
+*The following commands should never be used in this repository.*
 
 * `npm install`
 * `npm install <package>`
