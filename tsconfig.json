@@ -34,6 +34,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    "types/**/*.d.ts"
   ]
 }

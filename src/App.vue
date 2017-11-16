@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <toolbar :title="message"></toolbar>
     <header>
       <span>Vue.js PWA</span>
     </header>

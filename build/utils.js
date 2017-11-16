@@ -4,6 +4,15 @@ const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+/**
+ * Resolve a path to file or directory in root
+ *
+ * @param {string} fileOrDir Name of file or directory in root
+ */
+function resolve(fileOrDir) {
+  return path.resolve(__dirname, '..', fileOrDir)
+}
+
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -51,8 +60,17 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    sass: generateLoaders('sass', {
+      indentedSyntax: true,
+      includePaths: [
+        resolve('node_modules')
+      ]
+    }),
+    scss: generateLoaders('sass', {
+      includePaths: [
+        resolve('node_modules')
+      ]
+    }),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
@@ -72,11 +90,4 @@ exports.styleLoaders = function (options) {
   return output
 }
 
-/**
- * Resolve a path to file or directory in root
- *
- * @param {string} fileOrDir Name of file or directory in root
- */
-exports.resolve = function (fileOrDir) {
-  return path.resolve(__dirname, '..', fileOrDir)
-}
+exports.resolve = resolve;
