@@ -11,32 +11,26 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapMutations, mapState } from 'vuex';
 
-export enum NavType {
-  MENU = 'menu',
-  BACK = 'arrow_back',
-}
+import { State } from '@/vuex/types';
+import { MutationTypes as AppMutations } from '@/vuex/modules/app/mutations'
 
 const name = 'toolbar';
 
 export default Vue.component(name, {
   name,
 
-  props: {
-    title: {
-      required: true,
-      type: String,
-    },
+  computed: {
+    ...mapState<State>({
+      drawerLocked: state => state.app.drawerLocked,
+    }),
+  },
 
-    type: {
-      required: false,
-      default: NavType.MENU,
-      validator(val: string) {
-        return Object.keys(NavType).map(k => NavType[k as any]).some((navType) => {
-          return val === navType;
-        });
-      },
-    },
+  methods: {
+    ...mapMutations([
+      AppMutations.SET_DRAWER_OPEN,
+    ]),
   },
 });
 </script>
