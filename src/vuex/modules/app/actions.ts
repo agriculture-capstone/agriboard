@@ -1,6 +1,4 @@
-export enum ActionTypes {
-
-}
+import { AppState, ActionTypes } from './types';
 
 const actions = {
 

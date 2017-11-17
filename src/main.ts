@@ -9,10 +9,12 @@ import {
 
 import App from '@/App.vue';
 import router from './router';
-import '@/components';
+import '@/views/components';
+import store from '@/vuex';
 
 Vue.config.productionTip = false;
 
+// Use material components
 Vue.use(MdToolbar);
 Vue.use(MdButton);
 Vue.use(MdIcon);
@@ -20,6 +22,7 @@ Vue.use(MdIcon);
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   el: '#app',
   template: '<App/>',
   components: { App },

@@ -1,6 +1,4 @@
-export enum GetterTypes {
-
-}
+import { GetterTypes } from './types';
 
 const getters = {
 
