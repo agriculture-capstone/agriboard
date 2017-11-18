@@ -2,10 +2,11 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 
 import app from './modules/app';
+import { State } from '@/store/types';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+const store = new Vuex.Store<State>({
   modules: {
     app,
   },
