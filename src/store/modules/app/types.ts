@@ -4,14 +4,14 @@ import AppState from './state';
 
 /** Mutation types for app module */
 export enum MutationTypes {
-  SET_DRAWER_OPEN = 'setDrawerOpen',
+  SET_DRAWER_SHOWN = 'setDrawerShown',
   TOGGLE_DRAWER = 'toggleDrawer',
   SET_DRAWER_LOCKED = 'setDrawerLocked',
   SET_TITLE = 'setTitle',
 }
 
 /** Payload for setDrawerOpen */
-export interface SetDrawerOpenPayload {
+export interface SetDrawerShownPayload {
   open: boolean;
 }
 

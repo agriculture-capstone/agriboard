@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Hello from '@/pages/Hello';
+import Hello from '@/views/pages/Hello.vue';
 import 'mocha';
 import { expect } from 'chai';
 

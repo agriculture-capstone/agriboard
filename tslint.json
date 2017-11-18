@@ -47,6 +47,7 @@
         "static-method-regex": "^('?[A-Z_\\d]+'?|\\[.*\\])$",
         "function-regex": "^('?[a-z][\\w\\d]+'?|\\[.*\\])$"
       }
-    ]
+    ],
+    "strict-boolean-expressions": false
   }
 }

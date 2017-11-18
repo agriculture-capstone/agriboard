@@ -1,4 +1,4 @@
-import { AppState, MutationTypes, SetDrawerOpenPayload, ToggleDrawerPayload, SetDrawerLockedPayload, SetTitlePayload } from './types';
+import { AppState, MutationTypes, SetDrawerShownPayload, ToggleDrawerPayload, SetDrawerLockedPayload, SetTitlePayload } from './types';
 
 const mutations = {
   /**
@@ -9,7 +9,7 @@ const mutations = {
    * @param payload - Payload to mutation
    * @param payload.open - whether to open or close the drawer
    */
-  [MutationTypes.SET_DRAWER_OPEN](state: AppState, { open }: SetDrawerOpenPayload) {
+  [MutationTypes.SET_DRAWER_SHOWN](state: AppState, { open }: SetDrawerShownPayload) {
     if (!state.drawerLocked) {
       state.drawerShown = open;
     }

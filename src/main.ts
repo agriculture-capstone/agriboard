@@ -10,7 +10,7 @@ import {
 import App from '@/App.vue';
 import router from './router';
 import '@/views/components';
-import store from '@/vuex';
+import store from '@/store';
 
 Vue.config.productionTip = false;
 

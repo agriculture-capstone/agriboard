@@ -1,4 +1,4 @@
-import * as AppTypes from '@/vuex/modules/app/types';
+import * as AppTypes from './modules/app/types';
 
 export interface State {
   app: AppTypes.AppState;

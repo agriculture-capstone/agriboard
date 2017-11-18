@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <toolbar :title="message"></toolbar>
+    <toolbar />
     <header>
       <span>Vue.js PWA</span>
     </header>
@@ -16,11 +16,13 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'app',
+
   data() {
     return {
       message: 'Hello World',
     };
   },
+
   computed: {
     // a computed getter
     reversedMessage(): string {
