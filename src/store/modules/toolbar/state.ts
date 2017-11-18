@@ -7,6 +7,7 @@ const toolbarState: ToolbarState = {
     name: 'Testing!',
     mutation: MutationTypes.SET_DRAWER_SHOWN,
     icon: Icon.MENU,
+    type: 'mutation',
   }],
 };
 

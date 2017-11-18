@@ -60,7 +60,7 @@ export default Vue.component(name, {
      * @param rightButton - Definition for right button
      */
     onRightButtonClicked(rightButton: RightButton) {
-      if (rightButton.type == 'mutation') {
+      if (rightButton.type === 'mutation') {
         this.$store.commit(rightButton.mutation);
       } else {
         this.$store.dispatch(rightButton.action);

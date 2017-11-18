@@ -1,4 +1,4 @@
-import { ToolbarState } from '@/store/modules/toolbar/types';
+import { GetterTypes, ToolbarState } from './types';
 import { GettersComposed } from '@/store/types';
 
 const getters: GettersComposed<ToolbarState> = {

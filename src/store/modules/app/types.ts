@@ -44,5 +44,7 @@ export enum GetterTypes {
 
 }
 
+/*---------------------- State ----------------------*/
+
 /** State structure for app module */
 export type AppState = typeof AppState;

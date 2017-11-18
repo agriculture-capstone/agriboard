@@ -7,15 +7,19 @@ export interface State {
   toolbar: ToolbarTypes.ToolbarState;
 }
 
-export type Mutations
+export type Mutation
   = AppTypes.MutationTypes
   | ToolbarTypes.MutationTypes;
 
-export type Actions
-  = AppTypes.ActionTypes
-  | ToolbarTypes.ActionTypes;
+export type Action
+  = (AppTypes.ActionTypes
+  | ToolbarTypes.ActionTypes
+  /* Due to not every module having an action, this is necessary to
+  *  ensure it has a string type so we can use in dispatch.
+  *  This is a limitation of string enums (can't intersect) */
+  ) & 'DO_NOT_USE';
 
-export type Getters
+export type Getter
   = AppTypes.GetterTypes
   | ToolbarTypes.GetterTypes;
 
