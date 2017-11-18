@@ -1,6 +1,7 @@
 import { AppState, ActionTypes } from './types';
+import { ActionsComposed } from '@/store/types';
 
-const actions = {
+const actions: ActionsComposed<AppState> = {
 
 };
 
