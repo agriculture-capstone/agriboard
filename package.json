@@ -11,8 +11,8 @@
     "build": "node build/build.js",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "mocha-webpack --webpack-config build/webpack.test.conf.js --require test/setup.ts test/unit/**/*.spec.ts",
-    "test:e2e": "npm run test:e2e:single",
-    "test:e2e:single": "echo 'No e2e tests'"
+    "test:inte": "npm run test:inte:single",
+    "test:inte:single": "echo 'No integration tests'"
   },
   "dependencies": {
     "vue": "^2.5.2",
