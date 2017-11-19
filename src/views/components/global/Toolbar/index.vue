@@ -5,10 +5,10 @@
     </md-button>
     <h3 class="md-title">{{title}}</h3>
     <div class="md-toolbar-section-end right-buttons" v-for="rightButton in rightButtons" :key="rightButton.name">
-      <md-button v-if="rightButton.icon" class="md-icon-button right-button icon-button" @click="onRightButtonClicked">
+      <md-button v-if="rightButton.icon" class="md-icon-button right-button icon-button" @click="onRightButtonClicked(rightButton)">
         <md-icon>{{rightButton.icon}}</md-icon>
       </md-button>
-      <md-button class="right-button text-button" @click="onRightButtonClicked" v-else>
+      <md-button class="right-button text-button" @click="onRightButtonClicked(rightButton)" v-else>
         {{rightButton.name}}
       </md-button>
     </div>
@@ -64,8 +64,10 @@ export default Vue.component(name, {
     onRightButtonClicked(rightButton: RightButton) {
       if (rightButton.type === 'mutation') {
         this.$store.commit(rightButton.mutation);
-      } else {
+      } else if (rightButton.type === 'action') {
         this.$store.dispatch(rightButton.action);
+      } else {
+        throw new Error('Invalid right button state');
       }
     },
 
