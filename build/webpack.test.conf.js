@@ -6,9 +6,13 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.conf')('test')
-const webpackNodeExternals = require('webpack-node-externals')
+const nodeExternals = require('webpack-node-externals')
 
-const webpackConfig = merge(baseConfig, {
+const isCoverage = process.env.NODE_ENV === 'coverage';
+
+const webpackConfig = merge.strategy({
+  'module.rules': 'prepend'
+})(baseConfig, {
 
   output: {
     // ...
@@ -18,10 +22,16 @@ const webpackConfig = merge(baseConfig, {
   },
   // use inline sourcemap for karma-sourcemap-loader
   module: {
-    rules: utils.styleLoaders()
+    rules: utils.styleLoaders().concat(
+      isCoverage ? {
+        test: /\.(ts)/,
+        include: utils.resolve('src'), // instrument only testing sources with Istanbul, after ts-loader runs
+        loader: 'istanbul-instrumenter-loader'
+      } : []
+    ),
   },
   devtool: 'inline-cheap-module-source-map',
-  externals: [webpackNodeExternals()],
+  externals: [nodeExternals()],
   resolveLoader: {
     alias: {
       // necessary to to make lang="scss" work in test when using vue-loader's ?inject option
