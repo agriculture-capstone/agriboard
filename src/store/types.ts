@@ -8,7 +8,7 @@ export interface State {
 }
 
 export type Mutation
-  = AppTypes.MutationTypes
+  = AppTypes.MutationType
   | ToolbarTypes.MutationTypes;
 
 export type Action

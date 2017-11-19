@@ -7,7 +7,7 @@ import { shallow, Wrapper, createLocalVue } from 'vue-test-utils';
 
 import Toolbar from '@/views/components/global/Toolbar/index.vue';
 import { MutationTypes as ToolbarMutations } from '@/store/modules/toolbar/types';
-import { MutationTypes as AppMutations } from '@/store/modules/app/types';
+import { MutationType as AppMutations } from '@/store/modules/app/types';
 import Icon from '@/models/icons';
 import { RightButton } from '@/models/toolbar';
 import { Mutation, Action } from '@/store/types';

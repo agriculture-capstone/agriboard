@@ -1,4 +1,4 @@
-import { AppState, MutationTypes, SetDrawerShownPayload, ToggleDrawerPayload, SetDrawerLockedPayload, SetTitlePayload } from './types';
+import { AppState, MutationType, SetDrawerShownPayload, ToggleDrawerPayload, SetDrawerLockedPayload, SetTitlePayload } from './types';
 import { MutationsComposed, State } from '@/store/types';
 
 const mutations: MutationsComposed<AppState> = {
@@ -10,7 +10,7 @@ const mutations: MutationsComposed<AppState> = {
    * @param payload - Payload to mutation
    * @param payload.open - whether to open or close the drawer
    */
-  [MutationTypes.SET_DRAWER_SHOWN](state: AppState, { open }: SetDrawerShownPayload) {
+  [MutationType.SET_DRAWER_SHOWN](state: AppState, { open }: SetDrawerShownPayload) {
     if (!state.drawerLocked) {
       state.drawerShown = open;
     }
@@ -23,7 +23,7 @@ const mutations: MutationsComposed<AppState> = {
    * @param state - Previous app state
    * @param payload - Payload to mutation
    */
-  [MutationTypes.TOGGLE_DRAWER](state: AppState, { }: ToggleDrawerPayload) {
+  [MutationType.TOGGLE_DRAWER](state: AppState, { }: ToggleDrawerPayload) {
     if (!state.drawerLocked) {
       state.drawerShown = !state.drawerShown;
     }
@@ -37,7 +37,7 @@ const mutations: MutationsComposed<AppState> = {
    * @param payload - Payload to mutation
    * @param payload.locked - Where to lock or unlock the drawer
    */
-  [MutationTypes.SET_DRAWER_LOCKED](state: AppState, { locked }: SetDrawerLockedPayload) {
+  [MutationType.SET_DRAWER_LOCKED](state: AppState, { locked }: SetDrawerLockedPayload) {
     state.drawerLocked = locked;
     if (state.drawerLocked) {
       state.drawerShown = false;
@@ -51,7 +51,7 @@ const mutations: MutationsComposed<AppState> = {
    * @param payload - Payload to mutation
    * @param payload.title - New title for application
    */
-  [MutationTypes.SET_TITLE] (state: AppState, { title }: SetTitlePayload) {
+  [MutationType.SET_TITLE] (state: AppState, { title }: SetTitlePayload) {
     state.title = title;
   },
 };

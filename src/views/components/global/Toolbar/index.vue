@@ -19,7 +19,7 @@
 import Vue from 'vue';
 
 import { State } from '@/store/types';
-import { MutationTypes as AppMutations, SetDrawerShownPayload } from '@/store/modules/app/types';
+import { MutationType as AppMutation, SetDrawerShownPayload } from '@/store/modules/app/types';
 import Icon from '@/models/icons';
 import { RightButton } from '@/models/toolbar';
 
@@ -49,7 +49,7 @@ export default Vue.component(name, {
     /*------------------- Mutations -------------------*/
 
     setDrawerShown(payload: SetDrawerShownPayload) {
-      this.$store.commit(AppMutations.SET_DRAWER_SHOWN, payload);
+      this.$store.commit(AppMutation.SET_DRAWER_SHOWN, payload);
     },
 
     /*-------------------- Actions --------------------*/

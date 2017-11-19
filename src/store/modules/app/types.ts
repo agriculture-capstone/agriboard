@@ -3,7 +3,7 @@ import AppState from './state';
 /*--------------------- Mutations ---------------------*/
 
 /** Mutation types for app module */
-export enum MutationTypes {
+export enum MutationType {
   SET_DRAWER_SHOWN = 'setDrawerShown',
   TOGGLE_DRAWER = 'toggleDrawer',
   SET_DRAWER_LOCKED = 'setDrawerLocked',
