@@ -1,14 +1,16 @@
 <template>
   <md-toolbar id="toolbar">
-    <md-button class="md-icon-button" @click="onLeftButtonClick">
-      <md-icon>{{leftIcon}}</md-icon>
+    <md-button class="md-icon-button left-button" @click="onLeftButtonClick">
+      <md-icon class="left-icon">{{leftIcon}}</md-icon>
     </md-button>
     <h3 class="md-title">{{title}}</h3>
-    <div class="md-toolbar-section-end" v-for="rightButton in rightButtons" :key="rightButton.name">
-      <md-button v-if="rightButton.icon" class="md-icon-button">
+    <div class="md-toolbar-section-end right-buttons" v-for="rightButton in rightButtons" :key="rightButton.name">
+      <md-button v-if="rightButton.icon" class="md-icon-button right-button icon-button" @click="onRightButtonClicked">
         <md-icon>{{rightButton.icon}}</md-icon>
       </md-button>
-      <md-button v-else>{{rightButton.name}}</md-button>
+      <md-button class="right-button text-button" @click="onRightButtonClicked" v-else>
+        {{rightButton.name}}
+      </md-button>
     </div>
   </md-toolbar>
 </template>
