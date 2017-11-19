@@ -1,13 +1,13 @@
 import Vue from 'vue';
-import Hello from '@/views/pages/Hello.vue';
 import 'mocha';
-import { expect } from 'chai';
+import * as expect from 'expect';
+import { shallow } from 'vue-test-utils';
+
+import Hello from '@/views/pages/Hello.vue';
 
 describe('Hello.vue', () => {
   it('should render correct contents', () => {
-    const constructor = Vue.extend(Hello);
-    const vm = new constructor().$mount();
-    expect(vm.$el.querySelector('.hello h1').textContent)
-      .to.equal('Welcome to Your Vue.js PWA');
+    const wrapper = shallow(Hello);
+    expect(wrapper.find('.hello h1').text()).toMatch('Welcome to Your Vue.js PWA');
   });
 });

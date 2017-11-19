@@ -15,5 +15,8 @@ yarn-error.log*
 # Test coverage
 test/unit/coverage/*
 
+# nyc
+.nyc_output/*
+
 # Secrets
 .env
