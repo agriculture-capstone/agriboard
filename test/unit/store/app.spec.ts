@@ -1,7 +1,17 @@
-import { expect } from 'chai';
+import * as expect from 'expect';
 
-import { MutationType, SetDrawerLockedPayload, SetTitlePayload } from '@/store/modules/app/types';
+import {
+  MutationType,
+  SetDrawerLockedPayload,
+  SetTitlePayload,
+  SetDrawerShownPayload,
+  AppState,
+  ToggleDrawerPayload,
+} from '@/store/modules/app/types';
 import mutations from '@/store/modules/app/mutations';
+import { createCallMutationsBuilder } from '../../unit/test-utils/buildCallMutations';
+
+const buildCallMutation = createCallMutationsBuilder<MutationType, AppState>(mutations);
 
 describe('App Store', function () {
 
@@ -24,8 +34,8 @@ describe('App Store', function () {
         const nextState = callMutation(prevState, { locked: true });
 
         // Assert
-        expect(nextState.drawerLocked).to.be.true;
-        expect(nextState.drawerShown).to.be.false;
+        expect(nextState.drawerLocked).toBe(true);
+        expect(nextState.drawerShown).toBe(false);
       });
 
       it('should close drawer if open', function () {
@@ -36,8 +46,8 @@ describe('App Store', function () {
         const nextState = callMutation(prevState, { locked: true });
 
         // Assert
-        expect(nextState.drawerLocked).to.be.true;
-        expect(nextState.drawerShown).to.be.false;
+        expect(nextState.drawerLocked).toBe(true);
+        expect(nextState.drawerShown).toBe(false);
       });
 
       it('should unlock drawer if locked', function () {
@@ -48,8 +58,8 @@ describe('App Store', function () {
         const nextState = callMutation(prevState, { locked: false });
 
         // Assert
-        expect(nextState.drawerLocked).to.be.false;
-        expect(nextState.drawerShown).to.be.false;
+        expect(nextState.drawerLocked).toBe(false);
+        expect(nextState.drawerShown).toBe(false);
       });
 
       it('should leave drawer locked if locked', function () {
@@ -60,8 +70,8 @@ describe('App Store', function () {
         const nextState = callMutation(prevState, { locked: true });
 
         // Assert
-        expect(nextState.drawerLocked).to.be.true;
-        expect(nextState.drawerShown).to.be.false;
+        expect(nextState.drawerLocked).toBe(true);
+        expect(nextState.drawerShown).toBe(false);
       });
 
       it('should leave drawer unlocked if unlocked', function () {
@@ -72,8 +82,8 @@ describe('App Store', function () {
         const nextState = callMutation(prevState, { locked: false });
 
         // Assert
-        expect(nextState.drawerLocked).to.be.false;
-        expect(nextState.drawerShown).to.be.true;
+        expect(nextState.drawerLocked).toBe(false);
+        expect(nextState.drawerShown).toBe(true);
       });
 
       function createState(drawerShown: boolean, drawerLocked: boolean): State {
@@ -87,46 +97,65 @@ describe('App Store', function () {
 
     describe(MutationType.SET_DRAWER_SHOWN, function () {
 
+      interface State {
+        drawerShown: boolean;
+        drawerLocked: boolean;
+      }
+
+      const callMutation = buildCallMutation<State, SetDrawerShownPayload>(MutationType.SET_DRAWER_SHOWN);
+
       it('should set drawer open if unlocked', function () {
         // Assign
+        const prevState = createState(false, false);
 
         // Act
+        const nextState = callMutation(prevState, { open: true });
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(true);
+        expect(nextState.drawerLocked).toBe(false);
       });
 
-      it('should leave drawer closed if drawer locked', function () {
+      it('should leave drawer closed if drawer locked and drawer set open', function () {
         // Assign
+        const prevState = createState(false, true);
 
         // Act
+        const nextState = callMutation(prevState, { open: true });
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(false);
+        expect(nextState.drawerLocked).toBe(true);
       });
 
       it('should set drawer closed if unlocked', function () {
         // Assign
+        const prevState = createState(true, false);
 
         // Act
+        const nextState = callMutation(prevState, { open: false });
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(false);
+        expect(nextState.drawerLocked).toBe(false);
       });
 
-      it('should leave drawer open if drawer locked', function () {
+      it('should leave drawer closed if drawer locked and drawer set closed', function () {
         // Assign
+        const prevState = createState(false, true);
 
         // Act
+        const nextState = callMutation(prevState, { open: false });
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(false);
+        expect(nextState.drawerLocked).toBe(true);
       });
 
-      function createState(shown: boolean, locked: boolean) {
+      function createState(drawerShown: boolean, drawerLocked: boolean): State {
         return {
-          shown,
-          locked,
+          drawerShown,
+          drawerLocked,
         };
       }
 
@@ -150,7 +179,7 @@ describe('App Store', function () {
         const nextState = callMutation(prevState, { title: NEXT_TITLE });
 
         // Assert
-        expect(nextState.title).to.be.eq(NEXT_TITLE);
+        expect(nextState.title).toEqual(NEXT_TITLE);
       });
 
       function createState(title: string): State {
@@ -163,48 +192,55 @@ describe('App Store', function () {
 
     describe(MutationType.TOGGLE_DRAWER, function () {
 
+      interface State {
+        drawerShown: boolean;
+        drawerLocked: boolean;
+      }
+
+      const callMutation = buildCallMutation<State, ToggleDrawerPayload>(MutationType.TOGGLE_DRAWER);
+
       it('should open drawer if drawer closed and unlocked', function () {
         // Assign
+        const prevState = createState(false, false);
 
         // Act
+        const nextState = callMutation(prevState, {});
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(true);
+        expect(nextState.drawerLocked).toBe(false);
       });
 
       it('should close drawer if drawer open and unlocked', function () {
         // Assign
+        const prevState = createState(true, false);
 
         // Act
+        const nextState = callMutation(prevState, {});
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(false);
+        expect(nextState.drawerLocked).toBe(false);
       });
 
       it('should leave drawer closed if drawer closed and locked', function () {
         // Assign
+        const prevState = createState(false, true);
 
         // Act
+        const nextState = callMutation(prevState, {});
 
         // Assert
-        expect.fail();
+        expect(nextState.drawerShown).toBe(false);
+        expect(nextState.drawerLocked).toBe(true);
       });
 
-      function createState(shown: boolean, locked: boolean) {
+      function createState(drawerShown: boolean, drawerLocked: boolean): State {
         return {
-          shown,
-          locked,
+          drawerShown,
+          drawerLocked,
         };
       }
-
     });
-
-    function buildCallMutation<S, P>(type: MutationType) {
-      return (prevState: S, payload: P): S => {
-        const nextState = { ...prevState as any };
-        mutations[type](nextState, payload);
-        return nextState;
-      };
-    }
   });
 });

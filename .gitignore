@@ -20,3 +20,7 @@ test/unit/coverage/*
 
 # Secrets
 .env
+
+# Editor
+.vscode/*
+

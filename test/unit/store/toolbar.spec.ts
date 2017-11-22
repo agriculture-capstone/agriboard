@@ -1,0 +1,5 @@
+
+
+describe('Toolbar store', function () {
+
+});

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import 'mocha';
 import { assert, stub, SinonStub } from 'sinon';
-import { expect } from 'chai';
+import * as expect from 'expect';
 import { shallow, Wrapper, createLocalVue } from 'vue-test-utils';
 
 import Toolbar from '@/views/components/global/Toolbar/index.vue';
@@ -63,9 +63,9 @@ describe('components/global/Toolbar', function () {
     const wrapper = shallow(Toolbar, { store, localVue });
 
     // Assertions
-    expect(wrapper.find(TITLE_SELECTOR).text()).to.be.eq(TEST_TITLE, 'expected title to match value in store');
-    expect(wrapper.findAll(RIGHT_BUTTON_SELECTOR).length).to.be.eq(0, 'expected there to be zero right buttons');
-    expect(wrapper.find(LEFT_BUTTON_ICON_SELECTOR).text()).to.be.eq(Icon.MENU, 'expected left button to contain menu icon');
+    expect(wrapper.find(TITLE_SELECTOR).text()).toEqual(TEST_TITLE, 'expected title to match value in store');
+    expect(wrapper.findAll(RIGHT_BUTTON_SELECTOR).length).toEqual(0, 'expected there to be zero right buttons');
+    expect(wrapper.find(LEFT_BUTTON_ICON_SELECTOR).text()).toEqual(Icon.MENU, 'expected left button to contain menu icon');
   });
 
   it('should render right buttons correctly', function () {
@@ -87,11 +87,11 @@ describe('components/global/Toolbar', function () {
     const expectedRightButtons = 2;
     const expectedRightIconButtons = 1;
     const expectedRightTextButtons = 1;
-    expect(wrapper.findAll(RIGHT_BUTTON_SELECTOR).length).to.be.eq(expectedRightButtons,
+    expect(wrapper.findAll(RIGHT_BUTTON_SELECTOR).length).toEqual(expectedRightButtons,
       `expected there to be ${expectedRightButtons} right buttons`);
-    expect(wrapper.findAll(RIGHT_ICON_BUTTON_SELECTOR).length).to.be.eq(expectedRightIconButtons,
+    expect(wrapper.findAll(RIGHT_ICON_BUTTON_SELECTOR).length).toEqual(expectedRightIconButtons,
       `expected there to be ${expectedRightIconButtons} right icon button`);
-    expect(wrapper.findAll(RIGHT_TEXT_BUTTON_SELECTOR).length).to.be.eq(expectedRightTextButtons,
+    expect(wrapper.findAll(RIGHT_TEXT_BUTTON_SELECTOR).length).toEqual(expectedRightTextButtons,
       `expected there to be ${expectedRightTextButtons} right text button`);
 
     // Click buttons
