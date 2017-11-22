@@ -6,6 +6,12 @@ import { ActionType, MutationType } from '@/store/types';
  */
 export type RightButton = RightButtonAction | RightButtonMutation;
 
+/** The type of right buttons */
+export enum RightButtonType {
+  MUTATION = 'mutation',
+  ACTION = 'action',
+}
+
 /**
  * RightButton that fires action on click
  */
@@ -15,7 +21,7 @@ interface RightButtonAction extends RightButtonRoot {
    */
   action: ActionType;
 
-  type: 'action';
+  type: RightButtonType.ACTION;
 }
 
 /**
@@ -27,7 +33,7 @@ interface RightButtonMutation extends RightButtonRoot {
    */
   mutation: MutationType;
 
-  type: 'mutation';
+  type: RightButtonType.MUTATION;
 }
 
 /**
@@ -49,5 +55,5 @@ interface RightButtonRoot {
   /**
    * Type of button
    */
-  type: string;
+  type: RightButtonType;
 }

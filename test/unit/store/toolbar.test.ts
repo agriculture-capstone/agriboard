@@ -1,5 +1,0 @@
-
-
-describe('Toolbar store', function () {
-
-});

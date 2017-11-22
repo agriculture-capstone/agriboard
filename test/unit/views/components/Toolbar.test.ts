@@ -9,7 +9,7 @@ import Toolbar from '@/views/components/global/Toolbar/index.vue';
 import { MutationType as ToolbarMutations } from '@/store/modules/toolbar/types';
 import { MutationType as AppMutations } from '@/store/modules/app/types';
 import Icon from '@/models/icons';
-import { RightButton } from '@/models/toolbar';
+import { RightButton, RightButtonType } from '@/models/toolbar';
 import { MutationType, ActionType } from '@/store/types';
 
 const localVue = createLocalVue();
@@ -115,12 +115,12 @@ describe('components/global/Toolbar', function () {
     return [
       {
         name: TEXT_BUTTON,
-        type: 'mutation',
+        type: RightButtonType.MUTATION,
         mutation: FAKE_MUTATION as MutationType,
       },
       {
         name: ICON_BUTTON,
-        type: 'action',
+        type: RightButtonType.ACTION,
         action: FAKE_ACTION as ActionType,
         icon: Icon.ARROW_BACK,
       },
