@@ -33,14 +33,14 @@ export interface SetTitlePayload {
 /*--------------------- Actions ---------------------*/
 
 /** Action types for app module */
-export enum ActionTypes {
+export enum ActionType {
 
 }
 
 /*--------------------- Getters ---------------------*/
 
 /** Getter types for app module */
-export enum GetterTypes {
+export enum GetterType {
 
 }
 

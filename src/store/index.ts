@@ -3,14 +3,14 @@ import Vue from 'vue';
 
 import app from './modules/app';
 import toolbar from './modules/toolbar';
-import { State } from '@/store/types';
+import { RootState } from '@/store/types';
 
 Vue.use(Vuex);
 
 /**
  * The Vuex store
  */
-const store = new Vuex.Store<State>({
+const store = new Vuex.Store<RootState>({
   modules: {
     app,
     toolbar,

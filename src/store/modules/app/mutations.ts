@@ -1,7 +1,7 @@
 import { AppState, MutationType, SetDrawerShownPayload, ToggleDrawerPayload, SetDrawerLockedPayload, SetTitlePayload } from './types';
-import { MutationsComposed, State } from '@/store/types';
+import { MutationHandlers, RootState } from '@/store/types';
 
-const mutations: MutationsComposed<AppState> = {
+const mutations: MutationHandlers<AppState> = {
   /**
    * Set the state of the drawer to open or closed.
    * Will have no effect if the drawer is locked.

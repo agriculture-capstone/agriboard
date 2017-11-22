@@ -1,7 +1,7 @@
-import { ActionTypes, ToolbarState } from './types';
-import { ActionsComposed } from '@/store/types';
+import { ActionType, ToolbarState } from './types';
+import { ActionHandlers } from '@/store/types';
 
-const actions: ActionsComposed<ToolbarState> = {
+const actions: ActionHandlers<ToolbarState> = {
 
 };
 

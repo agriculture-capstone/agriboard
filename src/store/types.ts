@@ -1,36 +1,40 @@
 import * as AppTypes from './modules/app/types';
 import * as ToolbarTypes from './modules/toolbar/types';
-import { Getter, Mutation, Action } from 'vuex';
+import { Getter, Mutation, Action, MutationTree, ActionTree, GetterTree } from 'vuex';
 
-export interface State {
+export interface RootState {
   app: AppTypes.AppState;
   toolbar: ToolbarTypes.ToolbarState;
 }
 
-export type Mutation
+/** Composed mutation types */
+export type MutationType
   = AppTypes.MutationType
-  | ToolbarTypes.MutationTypes;
+  | ToolbarTypes.MutationType;
 
-export type Action
-  = (AppTypes.ActionTypes
-  | ToolbarTypes.ActionTypes
-  /* Due to not every module having an action, this is necessary to
-  *  ensure it has a string type so we can use in dispatch.
-  *  This is a limitation of string enums (can't intersect) */
-  ) & 'DO_NOT_USE';
+type Commit = (type: MutationType, payload: any) => void;
 
-export type Getter
-  = AppTypes.GetterTypes
-  | ToolbarTypes.GetterTypes;
+/** Composed action types */
+export type ActionType
+  = (AppTypes.ActionType
+  | ToolbarTypes.ActionType
+    /* Due to not every module having an action, this is necessary to
+    *  ensure it has a string type so we can use in dispatch.
+    *  This is a limitation of string enums used for types */
+  ) & 'DO_NOT_USE_A';
 
-export interface GettersComposed<T> {
-  [key: string]: Getter<T, State>;
-}
+/** Composed getter types */
+export type GetterType
+  = (AppTypes.GetterType
+  | ToolbarTypes.GetterType
+  /* Refer to comment on {Action} */
+  ) & 'DO_NOT_USE_G';
 
-export interface MutationsComposed<T> {
-  [key: string]: Mutation<T>;
-}
+/** Structure of vuex mutation handlers */
+export type MutationHandlers<S>  = MutationTree<S>;
 
-export interface ActionsComposed<T> {
-  [key: string]: Action<T, State>;
-}
+/** Structure of vuex action handlers */
+export type ActionHandlers<S> = ActionTree<S, RootState>;
+
+/** Structure of vuex getter handlers */
+export type GetterHandlers<S> = GetterTree<S, RootState>;

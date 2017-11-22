@@ -1,5 +1,5 @@
 import Icon from './icons';
-import { Action, Mutation } from '@/store/types';
+import { ActionType, MutationType } from '@/store/types';
 
 /**
  * Information needed by toolbar to generate a button on the right side
@@ -13,7 +13,7 @@ interface RightButtonAction extends RightButtonRoot {
   /**
    * The action that will be fired when the button is clicked
    */
-  action: Action;
+  action: ActionType;
 
   type: 'action';
 }
@@ -25,7 +25,7 @@ interface RightButtonMutation extends RightButtonRoot {
   /**
    * The mutation that will be fired when button is clicked
    */
-  mutation: Mutation;
+  mutation: MutationType;
 
   type: 'mutation';
 }

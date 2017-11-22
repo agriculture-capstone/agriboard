@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import { State } from '@/store/types';
+import { RootState } from '@/store/types';
 import { MutationType as AppMutation, SetDrawerShownPayload } from '@/store/modules/app/types';
 import Icon from '@/models/icons';
 import { RightButton } from '@/models/toolbar';

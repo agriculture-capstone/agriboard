@@ -6,11 +6,11 @@ import * as expect from 'expect';
 import { shallow, Wrapper, createLocalVue } from 'vue-test-utils';
 
 import Toolbar from '@/views/components/global/Toolbar/index.vue';
-import { MutationTypes as ToolbarMutations } from '@/store/modules/toolbar/types';
+import { MutationType as ToolbarMutations } from '@/store/modules/toolbar/types';
 import { MutationType as AppMutations } from '@/store/modules/app/types';
 import Icon from '@/models/icons';
 import { RightButton } from '@/models/toolbar';
-import { Mutation, Action } from '@/store/types';
+import { MutationType, ActionType } from '@/store/types';
 
 const localVue = createLocalVue();
 
@@ -116,12 +116,12 @@ describe('components/global/Toolbar', function () {
       {
         name: TEXT_BUTTON,
         type: 'mutation',
-        mutation: FAKE_MUTATION as Mutation,
+        mutation: FAKE_MUTATION as MutationType,
       },
       {
         name: ICON_BUTTON,
         type: 'action',
-        action: FAKE_ACTION as Action,
+        action: FAKE_ACTION as ActionType,
         icon: Icon.ARROW_BACK,
       },
     ];

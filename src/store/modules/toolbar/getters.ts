@@ -1,7 +1,7 @@
-import { GetterTypes, ToolbarState } from './types';
-import { GettersComposed } from '@/store/types';
+import { GetterType, ToolbarState } from './types';
+import { GetterHandlers } from '@/store/types';
 
-const getters: GettersComposed<ToolbarState> = {
+const getters: GetterHandlers<ToolbarState> = {
 
 };
 

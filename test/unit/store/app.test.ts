@@ -8,14 +8,14 @@ import {
   AppState,
   ToggleDrawerPayload,
 } from '@/store/modules/app/types';
-import mutations from '@/store/modules/app/mutations';
-import { createCallMutationsBuilder } from '../../unit/test-utils/buildCallMutations';
-
-const buildCallMutation = createCallMutationsBuilder<MutationType, AppState>(mutations);
+import mutationHandlers from '@/store/modules/app/mutations';
+import { createCallMutationBuilder } from '../../unit/test-utils/buildCallHandlers';
 
 describe('App Store', function () {
 
   describe('mutations', function () {
+
+    const buildMutationCaller = createCallMutationBuilder<AppState, MutationType>(mutationHandlers);
 
     describe(MutationType.SET_DRAWER_LOCKED, function () {
 
@@ -24,14 +24,14 @@ describe('App Store', function () {
         drawerLocked: boolean;
       }
 
-      const callMutation = buildCallMutation<State, SetDrawerLockedPayload>(MutationType.SET_DRAWER_LOCKED);
+      const callSetDrawerLocked = buildMutationCaller<State, SetDrawerLockedPayload>(MutationType.SET_DRAWER_LOCKED);
 
       it('should lock drawer if unlocked', function () {
         // Assign
         const prevState = createState(false, false);
 
         // Act
-        const nextState = callMutation(prevState, { locked: true });
+        const nextState = callSetDrawerLocked(prevState, { locked: true });
 
         // Assert
         expect(nextState.drawerLocked).toBe(true);
@@ -43,7 +43,7 @@ describe('App Store', function () {
         const prevState = createState(true, false);
 
         // Act
-        const nextState = callMutation(prevState, { locked: true });
+        const nextState = callSetDrawerLocked(prevState, { locked: true });
 
         // Assert
         expect(nextState.drawerLocked).toBe(true);
@@ -55,7 +55,7 @@ describe('App Store', function () {
         const prevState = createState(false, true);
 
         // Act
-        const nextState = callMutation(prevState, { locked: false });
+        const nextState = callSetDrawerLocked(prevState, { locked: false });
 
         // Assert
         expect(nextState.drawerLocked).toBe(false);
@@ -67,7 +67,7 @@ describe('App Store', function () {
         const prevState = createState(false, true);
 
         // Act
-        const nextState = callMutation(prevState, { locked: true });
+        const nextState = callSetDrawerLocked(prevState, { locked: true });
 
         // Assert
         expect(nextState.drawerLocked).toBe(true);
@@ -79,7 +79,7 @@ describe('App Store', function () {
         const prevState = createState(true, false);
 
         // Act
-        const nextState = callMutation(prevState, { locked: false });
+        const nextState = callSetDrawerLocked(prevState, { locked: false });
 
         // Assert
         expect(nextState.drawerLocked).toBe(false);
@@ -102,14 +102,14 @@ describe('App Store', function () {
         drawerLocked: boolean;
       }
 
-      const callMutation = buildCallMutation<State, SetDrawerShownPayload>(MutationType.SET_DRAWER_SHOWN);
+      const callSetDrawerShown = buildMutationCaller<State, SetDrawerShownPayload>(MutationType.SET_DRAWER_SHOWN);
 
       it('should set drawer open if unlocked', function () {
         // Assign
         const prevState = createState(false, false);
 
         // Act
-        const nextState = callMutation(prevState, { open: true });
+        const nextState = callSetDrawerShown(prevState, { open: true });
 
         // Assert
         expect(nextState.drawerShown).toBe(true);
@@ -121,7 +121,7 @@ describe('App Store', function () {
         const prevState = createState(false, true);
 
         // Act
-        const nextState = callMutation(prevState, { open: true });
+        const nextState = callSetDrawerShown(prevState, { open: true });
 
         // Assert
         expect(nextState.drawerShown).toBe(false);
@@ -133,7 +133,7 @@ describe('App Store', function () {
         const prevState = createState(true, false);
 
         // Act
-        const nextState = callMutation(prevState, { open: false });
+        const nextState = callSetDrawerShown(prevState, { open: false });
 
         // Assert
         expect(nextState.drawerShown).toBe(false);
@@ -145,7 +145,7 @@ describe('App Store', function () {
         const prevState = createState(false, true);
 
         // Act
-        const nextState = callMutation(prevState, { open: false });
+        const nextState = callSetDrawerShown(prevState, { open: false });
 
         // Assert
         expect(nextState.drawerShown).toBe(false);
@@ -169,14 +169,14 @@ describe('App Store', function () {
         title: string;
       }
 
-      const callMutation = buildCallMutation<State, SetTitlePayload>(MutationType.SET_TITLE);
+      const callSetTitle = buildMutationCaller<State, SetTitlePayload>(MutationType.SET_TITLE);
 
       it('should set title', function () {
         // Assign
         const prevState = createState(PREV_TITLE);
 
         // Act
-        const nextState = callMutation(prevState, { title: NEXT_TITLE });
+        const nextState = callSetTitle(prevState, { title: NEXT_TITLE });
 
         // Assert
         expect(nextState.title).toEqual(NEXT_TITLE);
@@ -197,14 +197,14 @@ describe('App Store', function () {
         drawerLocked: boolean;
       }
 
-      const callMutation = buildCallMutation<State, ToggleDrawerPayload>(MutationType.TOGGLE_DRAWER);
+      const callToggleDrawer = buildMutationCaller<State, ToggleDrawerPayload>(MutationType.TOGGLE_DRAWER);
 
       it('should open drawer if drawer closed and unlocked', function () {
         // Assign
         const prevState = createState(false, false);
 
         // Act
-        const nextState = callMutation(prevState, {});
+        const nextState = callToggleDrawer(prevState, {});
 
         // Assert
         expect(nextState.drawerShown).toBe(true);
@@ -216,7 +216,7 @@ describe('App Store', function () {
         const prevState = createState(true, false);
 
         // Act
-        const nextState = callMutation(prevState, {});
+        const nextState = callToggleDrawer(prevState, {});
 
         // Assert
         expect(nextState.drawerShown).toBe(false);
@@ -228,7 +228,7 @@ describe('App Store', function () {
         const prevState = createState(false, true);
 
         // Act
-        const nextState = callMutation(prevState, {});
+        const nextState = callToggleDrawer(prevState, {});
 
         // Assert
         expect(nextState.drawerShown).toBe(false);

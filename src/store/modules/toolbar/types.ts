@@ -3,7 +3,7 @@ import { RightButton } from '@/models/toolbar';
 /*--------------------- Mutations ---------------------*/
 
 /** Mutation types for toolbar module */
-export enum MutationTypes {
+export enum MutationType {
   ADD_RIGHT_BUTTON = 'addRightButton',
   SET_RIGHT_BUTTONS = 'setRightButtons',
   CLEAR_RIGHT_BUTTONS = 'clearRightButtons',
@@ -27,14 +27,14 @@ export interface ClearRightButtonsPayload {
 /*--------------------- Actions ---------------------*/
 
 /** Action types for toolbar module */
-export enum ActionTypes {
+export enum ActionType {
 
 }
 
 /*--------------------- Getters ---------------------*/
 
 /** Getter types for toolbar module */
-export enum GetterTypes {
+export enum GetterType {
 
 }
 

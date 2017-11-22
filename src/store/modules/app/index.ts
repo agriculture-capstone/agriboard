@@ -3,10 +3,10 @@ import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
 import { Module } from 'vuex';
-import { State } from '@/store/types';
+import { RootState } from '@/store/types';
 import { AppState } from '@/store/modules/app/types';
 
-const appModule: Module<AppState, State> = {
+const appModule: Module<AppState, RootState> = {
   state,
   mutations,
   actions,

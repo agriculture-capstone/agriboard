@@ -1,7 +1,7 @@
-import { ActionTypes, AppState } from './types';
-import { ActionsComposed } from '@/store/types';
+import { ActionType, AppState } from './types';
+import { ActionHandlers } from '@/store/types';
 
-const actions: ActionsComposed<AppState> = {
+const actions: ActionHandlers<AppState> = {
 
 };
 
