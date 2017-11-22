@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 IMAGE_NAME="boresha/agriboard"
-DOCKER_HOME="/agriboard"
+DOCKER_HOME="/agriboard/"
 
 if [ "$1" == "init" ]; then
     docker build -t $IMAGE_NAME .
