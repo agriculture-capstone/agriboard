@@ -126,6 +126,8 @@ describe('Toolbar store mutations', function () {
         } catch (err) {
           expect(testProps.expectedError).toBe(true,
             'Did not expect mutation to throw error');
+
+          return;
         }
 
         // Assert

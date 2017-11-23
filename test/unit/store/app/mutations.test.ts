@@ -285,7 +285,7 @@ describe('App Store mutations', function () {
     it('should set title ${NEXT_TITLE} if previous title ${PREV_TITLE} and payload title is ${NEXT_TITLE}', function () {
       runTest({
         expectedState: {
-          title: PREV_TITLE,
+          title: NEXT_TITLE,
         },
         previousState: {
           title: NEXT_TITLE,

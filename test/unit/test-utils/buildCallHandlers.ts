@@ -87,4 +87,6 @@ function freezeProps(o: { [key: string]: any }) {
       deepFreeze(o[prop]);
     }
   });
+
+  return o;
 }

@@ -8,7 +8,10 @@ const mutations: MutationHandlers<ToolbarState> = {
     if (position < 0 || position > state.rightButtons.length) {
       throw new Error(`Attempted to add button at position ${position}, exceeded length of existing toolbar buttons: %{state.rightButtons.length}`);
     } else {
-      state.rightButtons = [...state.rightButtons].splice(position, 0, button);
+      const newRightButtons = [...state.rightButtons];
+      newRightButtons.splice(position, 0, button);
+
+      state.rightButtons = newRightButtons;
     }
   },
 
