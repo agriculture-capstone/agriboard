@@ -13,6 +13,10 @@ elif [ "$1" == "build" ]; then
     echo $DOCKER_HOME
     echo "DIR is "
     echo $DIR
+    ls $DIR
+    echo "pwd is "
+    pwd
+    ls pwd
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME yarn install --frozen-lockfile
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME npm run build
 elif [ "$1" == "run" ]; then
