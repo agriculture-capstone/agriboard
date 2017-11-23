@@ -12,6 +12,7 @@ export enum MutationType {
 /** Payload for addButton */
 export interface AddRightButtonPayload {
   button: RightButton;
+  position: number;
 }
 
 /** Payload for setRightButtons */

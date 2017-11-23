@@ -9,11 +9,11 @@ import {
   ToggleDrawerPayload,
 } from '@/store/modules/app/types';
 import mutationHandlers from '@/store/modules/app/mutations';
-import { createCallMutationBuilder } from '@test/unit/test-utils/buildCallHandlers';
+import { buildCallMutationHandler } from '@test/unit/test-utils/buildCallHandlers';
 
 describe('App Store mutations', function () {
 
-  const buildMutationCaller = createCallMutationBuilder<AppState, MutationType>(mutationHandlers);
+  const callMutationHandler = buildCallMutationHandler<AppState, MutationType>(mutationHandlers);
 
   describe(MutationType.SET_DRAWER_LOCKED, function () {
 
@@ -22,73 +22,88 @@ describe('App Store mutations', function () {
       drawerLocked: boolean;
     }
 
-    const callSetDrawerLocked = buildMutationCaller<State, SetDrawerLockedPayload>(MutationType.SET_DRAWER_LOCKED);
+    interface TestProps {
+      prevDrawerShown: boolean;
+      prevDrawerLocked: boolean;
+      setLocked: boolean;
+      expectedDrawerShown: boolean;
+      expectedDrawerLocked: boolean;
+    }
 
-    it('should lock drawer if unlocked', function () {
-      // Assign
-      const prevState = createState(false, false);
-
-      // Act
-      const nextState = callSetDrawerLocked(prevState, { locked: true });
-
-      // Assert
-      expect(nextState.drawerLocked).toBe(true);
-      expect(nextState.drawerShown).toBe(false);
+    it('should be locked and hidden if drawer was unlocked and hidden if set locked', function () {
+      runTest({
+        expectedDrawerLocked: true,
+        expectedDrawerShown: false,
+        prevDrawerLocked: false,
+        prevDrawerShown: false,
+        setLocked: true,
+      });
     });
 
-    it('should close drawer if open', function () {
-      // Assign
-      const prevState = createState(true, false);
-
-      // Act
-      const nextState = callSetDrawerLocked(prevState, { locked: true });
-
-      // Assert
-      expect(nextState.drawerLocked).toBe(true);
-      expect(nextState.drawerShown).toBe(false);
+    it('should be locked and hidden if drawer was unlocked and shown if set locked', function () {
+      runTest({
+        expectedDrawerLocked: true,
+        expectedDrawerShown: false,
+        prevDrawerLocked: false,
+        prevDrawerShown: true,
+        setLocked: true,
+      });
     });
 
-    it('should unlock drawer if locked', function () {
-      // Assign
-      const prevState = createState(false, true);
-
-      // Act
-      const nextState = callSetDrawerLocked(prevState, { locked: false });
-
-      // Assert
-      expect(nextState.drawerLocked).toBe(false);
-      expect(nextState.drawerShown).toBe(false);
+    it('should be locked and hidden if drawer was locked and hidden if set locked', function () {
+      runTest({
+        expectedDrawerLocked: true,
+        expectedDrawerShown: false,
+        prevDrawerLocked: true,
+        prevDrawerShown: false,
+        setLocked: true,
+      });
     });
 
-    it('should leave drawer locked if locked', function () {
-      // Assign
-      const prevState = createState(false, true);
-
-      // Act
-      const nextState = callSetDrawerLocked(prevState, { locked: true });
-
-      // Assert
-      expect(nextState.drawerLocked).toBe(true);
-      expect(nextState.drawerShown).toBe(false);
+    it('should be unlocked and hidden if drawer was unlocked and hidden if set unlocked', function () {
+      runTest({
+        expectedDrawerLocked: false,
+        expectedDrawerShown: false,
+        prevDrawerLocked: false,
+        prevDrawerShown: false,
+        setLocked: false,
+      });
     });
 
-    it('should leave drawer unlocked if unlocked', function () {
-      // Assign
-      const prevState = createState(true, false);
-
-      // Act
-      const nextState = callSetDrawerLocked(prevState, { locked: false });
-
-      // Assert
-      expect(nextState.drawerLocked).toBe(false);
-      expect(nextState.drawerShown).toBe(true);
+    it('should be unlocked and shown if drawer was unlocked and shown and set unlocked', function () {
+      runTest({
+        expectedDrawerLocked: false,
+        expectedDrawerShown: true,
+        prevDrawerLocked: false,
+        prevDrawerShown: true,
+        setLocked: false,
+      });
     });
 
-    function createState(drawerShown: boolean, drawerLocked: boolean): State {
-      return {
-        drawerShown,
-        drawerLocked,
+    it('should be unlocked and hidden if drawer was locked and hidden and set unlocked', function () {
+      runTest({
+        expectedDrawerLocked: false,
+        expectedDrawerShown: false,
+        prevDrawerLocked: true,
+        prevDrawerShown: false,
+        setLocked: false,
+      });
+    });
+
+    function runTest(testProps: TestProps) {
+      // Assign
+      const prevState: State = {
+        drawerShown: testProps.prevDrawerShown,
+        drawerLocked: testProps.prevDrawerLocked,
       };
+
+      // Act
+      const nextState = callMutationHandler<State, SetDrawerLockedPayload>
+        (prevState, { locked: testProps.setLocked }, MutationType.SET_DRAWER_LOCKED);
+
+      // Assert
+      expect(nextState.drawerShown).toBe(testProps.expectedDrawerShown);
+      expect(nextState.drawerLocked).toBe(testProps.expectedDrawerLocked);
     }
 
   });
@@ -100,61 +115,87 @@ describe('App Store mutations', function () {
       drawerLocked: boolean;
     }
 
-    const callSetDrawerShown = buildMutationCaller<State, SetDrawerShownPayload>(MutationType.SET_DRAWER_SHOWN);
+    interface TestProps {
+      prevDrawerShown: boolean;
+      prevDrawerLocked: boolean;
+      setShown: boolean;
+      expectedDrawerShown: boolean;
+      expectedDrawerLocked: boolean;
+    }
 
-    it('should set drawer open if unlocked', function () {
-      // Assign
-      const prevState = createState(false, false);
-
-      // Act
-      const nextState = callSetDrawerShown(prevState, { open: true });
-
-      // Assert
-      expect(nextState.drawerShown).toBe(true);
-      expect(nextState.drawerLocked).toBe(false);
+    it('should be open and unlocked if drawer was closed and unlocked and set open', function () {
+      runTest({
+        expectedDrawerShown: true,
+        expectedDrawerLocked: false,
+        prevDrawerShown: false,
+        prevDrawerLocked: false,
+        setShown: true,
+      });
     });
 
-    it('should leave drawer closed if drawer locked and drawer set open', function () {
-      // Assign
-      const prevState = createState(false, true);
-
-      // Act
-      const nextState = callSetDrawerShown(prevState, { open: true });
-
-      // Assert
-      expect(nextState.drawerShown).toBe(false);
-      expect(nextState.drawerLocked).toBe(true);
+    it('should be open and unlocked if drawer was open and unlocked and set open', function () {
+      runTest({
+        expectedDrawerShown: true,
+        expectedDrawerLocked: false,
+        prevDrawerShown: true,
+        prevDrawerLocked: false,
+        setShown: true,
+      });
     });
 
-    it('should set drawer closed if unlocked', function () {
-      // Assign
-      const prevState = createState(true, false);
-
-      // Act
-      const nextState = callSetDrawerShown(prevState, { open: false });
-
-      // Assert
-      expect(nextState.drawerShown).toBe(false);
-      expect(nextState.drawerLocked).toBe(false);
+    it('should be closed and unlocked if drawer was closed and unlocked and set closed', function () {
+      runTest({
+        expectedDrawerShown: false,
+        expectedDrawerLocked: false,
+        prevDrawerShown: false,
+        prevDrawerLocked: false,
+        setShown: false,
+      });
     });
 
-    it('should leave drawer closed if drawer locked and drawer set closed', function () {
-      // Assign
-      const prevState = createState(false, true);
-
-      // Act
-      const nextState = callSetDrawerShown(prevState, { open: false });
-
-      // Assert
-      expect(nextState.drawerShown).toBe(false);
-      expect(nextState.drawerLocked).toBe(true);
+    it('should be closed and unlocked if drawer was open and unlocked and set closed', function () {
+      runTest({
+        expectedDrawerShown: false,
+        expectedDrawerLocked: false,
+        prevDrawerShown: true,
+        prevDrawerLocked: false,
+        setShown: false,
+      });
     });
 
-    function createState(drawerShown: boolean, drawerLocked: boolean): State {
-      return {
-        drawerShown,
-        drawerLocked,
+    it('should be closed and locked if drawer was closed and locked and set open', function () {
+      runTest({
+        expectedDrawerShown: false,
+        expectedDrawerLocked: true,
+        prevDrawerShown: false,
+        prevDrawerLocked: true,
+        setShown: true,
+      });
+    });
+
+    it('should be closed and locked if drawer was closed and locked and set closed', function () {
+      runTest({
+        expectedDrawerShown: false,
+        expectedDrawerLocked: true,
+        prevDrawerShown: false,
+        prevDrawerLocked: true,
+        setShown: false,
+      });
+    });
+
+    function runTest(testProps: TestProps) {
+      // Assign
+      const prevState: State = {
+        drawerShown: testProps.prevDrawerShown,
+        drawerLocked: testProps.prevDrawerLocked,
       };
+
+      // Act
+      const nextState = callMutationHandler(prevState, testProps.setShown, MutationType.SET_DRAWER_SHOWN);
+
+      // Assert
+      expect(nextState.drawerShown).toBe(testProps.expectedDrawerShown);
+      expect(nextState.drawerLocked).toBe(testProps.expectedDrawerLocked);
     }
 
   });
@@ -184,6 +225,17 @@ describe('App Store mutations', function () {
       return {
         title,
       };
+    }
+
+    function test(
+      prevTitle: string,
+      expectedTitle: string,
+    ) {
+      // Assign
+
+      // Act
+
+      // Assert
     }
 
   });
@@ -238,6 +290,19 @@ describe('App Store mutations', function () {
         drawerShown,
         drawerLocked,
       };
+    }
+
+    function test(
+      prevDrawerShown: boolean,
+      prevDrawerLocked: boolean,
+      expectedDrawerShown: boolean,
+      expectedDrawerLocked: boolean,
+    ) {
+      // Assign
+
+      // Act
+
+      // Assert
     }
   });
 });
