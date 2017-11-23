@@ -9,14 +9,9 @@ DOCKER_HOME="/agriboard/"
 if [ "$1" == "init" ]; then
     docker build -t $IMAGE_NAME .
 elif [ "$1" == "build" ]; then
-    echo "DOCKER_HOME is "
-    echo $DOCKER_HOME
-    echo "DIR is "
-    echo $DIR
-    ls $DIR
-    echo "pwd is "
-    pwd
-    ls pwd
+    echo "===="
+    find / -name "package.json"
+    echo "===="
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME yarn install --frozen-lockfile
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME npm run build
 elif [ "$1" == "run" ]; then
