@@ -12,6 +12,10 @@ elif [ "$1" == "build" ]; then
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME yarn install --frozen-lockfile
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME npm run build
 elif [ "$1" == "run" ]; then
+    echo "DOCKER_HOME is "
+    echo $DOCKER_HOME
+    echo "DIR is "
+    echo $DIR
     docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME yarn install --frozen-lockfile
     docker run --rm --volume "$DIR:$DOCKER_HOME" -p 8080:8080 $IMAGE_NAME npm start
 else
