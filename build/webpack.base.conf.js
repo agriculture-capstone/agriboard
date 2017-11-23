@@ -23,7 +23,7 @@ module.exports = function baseConfig(env) {
         'vue$': 'vue/dist/vue.esm.js',
         '@': utils.resolve('src'),
         '@root': utils.resolve('.'),
-        '@test': utils.resolve('src')
+        '@test': utils.resolve('test')
       }
     },
     node: {

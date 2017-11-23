@@ -23,87 +23,121 @@ describe('App Store mutations', function () {
     }
 
     interface TestProps {
-      prevDrawerShown: boolean;
-      prevDrawerLocked: boolean;
-      setLocked: boolean;
-      expectedDrawerShown: boolean;
-      expectedDrawerLocked: boolean;
+      previousState: State;
+      expectedState: State;
+      payload: SetDrawerLockedPayload;
     }
 
     it('should be locked and hidden if drawer was unlocked and hidden if set locked', function () {
       runTest({
-        expectedDrawerLocked: true,
-        expectedDrawerShown: false,
-        prevDrawerLocked: false,
-        prevDrawerShown: false,
-        setLocked: true,
+        expectedState: {
+          drawerLocked: true,
+          drawerShown: false,
+        },
+        previousState: {
+          drawerLocked: false,
+          drawerShown: false,
+        },
+        payload: {
+          locked: true,
+        },
       });
     });
 
     it('should be locked and hidden if drawer was unlocked and shown if set locked', function () {
       runTest({
-        expectedDrawerLocked: true,
-        expectedDrawerShown: false,
-        prevDrawerLocked: false,
-        prevDrawerShown: true,
-        setLocked: true,
+        expectedState: {
+          drawerLocked: true,
+          drawerShown: false,
+        },
+        previousState: {
+          drawerLocked: false,
+          drawerShown: true,
+        },
+        payload: {
+          locked: true,
+        },
       });
     });
 
     it('should be locked and hidden if drawer was locked and hidden if set locked', function () {
       runTest({
-        expectedDrawerLocked: true,
-        expectedDrawerShown: false,
-        prevDrawerLocked: true,
-        prevDrawerShown: false,
-        setLocked: true,
+        expectedState: {
+          drawerLocked: true,
+          drawerShown: false,
+        },
+        previousState: {
+          drawerLocked: true,
+          drawerShown: false,
+        },
+        payload: {
+          locked: true,
+        },
       });
     });
 
     it('should be unlocked and hidden if drawer was unlocked and hidden if set unlocked', function () {
       runTest({
-        expectedDrawerLocked: false,
-        expectedDrawerShown: false,
-        prevDrawerLocked: false,
-        prevDrawerShown: false,
-        setLocked: false,
+        expectedState: {
+          drawerLocked: false,
+          drawerShown: false,
+        },
+        previousState: {
+          drawerLocked: false,
+          drawerShown: false,
+        },
+        payload: {
+          locked: false,
+        },
       });
     });
 
     it('should be unlocked and shown if drawer was unlocked and shown and set unlocked', function () {
       runTest({
-        expectedDrawerLocked: false,
-        expectedDrawerShown: true,
-        prevDrawerLocked: false,
-        prevDrawerShown: true,
-        setLocked: false,
+        expectedState: {
+          drawerLocked: false,
+          drawerShown: true,
+        },
+        previousState: {
+          drawerLocked: false,
+          drawerShown: true,
+        },
+        payload: {
+          locked: false,
+        },
       });
     });
 
     it('should be unlocked and hidden if drawer was locked and hidden and set unlocked', function () {
       runTest({
-        expectedDrawerLocked: false,
-        expectedDrawerShown: false,
-        prevDrawerLocked: true,
-        prevDrawerShown: false,
-        setLocked: false,
+        expectedState: {
+          drawerLocked: false,
+          drawerShown: false,
+        },
+        previousState: {
+          drawerLocked: true,
+          drawerShown: false,
+        },
+        payload: {
+          locked: false,
+        },
       });
     });
 
     function runTest(testProps: TestProps) {
       // Assign
       const prevState: State = {
-        drawerShown: testProps.prevDrawerShown,
-        drawerLocked: testProps.prevDrawerLocked,
+        drawerShown: testProps.previousState.drawerShown,
+        drawerLocked: testProps.previousState.drawerLocked,
       };
 
       // Act
       const nextState = callMutationHandler<State, SetDrawerLockedPayload>
-        (prevState, { locked: testProps.setLocked }, MutationType.SET_DRAWER_LOCKED);
+        (prevState, testProps.payload, MutationType.SET_DRAWER_LOCKED);
 
       // Assert
-      expect(nextState.drawerShown).toBe(testProps.expectedDrawerShown);
-      expect(nextState.drawerLocked).toBe(testProps.expectedDrawerLocked);
+      expect(nextState.drawerShown).toBe(testProps.expectedState.drawerShown);
+      expect(nextState.drawerLocked).toBe(testProps.expectedState.drawerLocked);
     }
 
   });
@@ -116,86 +150,120 @@ describe('App Store mutations', function () {
     }
 
     interface TestProps {
-      prevDrawerShown: boolean;
-      prevDrawerLocked: boolean;
-      setShown: boolean;
-      expectedDrawerShown: boolean;
-      expectedDrawerLocked: boolean;
+      previousState: State;
+      expectedState: State;
+      payload: SetDrawerShownPayload;
     }
 
     it('should be open and unlocked if drawer was closed and unlocked and set open', function () {
       runTest({
-        expectedDrawerShown: true,
-        expectedDrawerLocked: false,
-        prevDrawerShown: false,
-        prevDrawerLocked: false,
-        setShown: true,
+        expectedState: {
+          drawerShown: true,
+          drawerLocked: false,
+        },
+        previousState: {
+          drawerShown: false,
+          drawerLocked: false,
+        },
+        payload: {
+          open: true,
+        },
       });
     });
 
     it('should be open and unlocked if drawer was open and unlocked and set open', function () {
       runTest({
-        expectedDrawerShown: true,
-        expectedDrawerLocked: false,
-        prevDrawerShown: true,
-        prevDrawerLocked: false,
-        setShown: true,
+        expectedState: {
+          drawerShown: true,
+          drawerLocked: false,
+        },
+        previousState: {
+          drawerShown: true,
+          drawerLocked: false,
+        },
+        payload: {
+          open: true,
+        },
       });
     });
 
     it('should be closed and unlocked if drawer was closed and unlocked and set closed', function () {
       runTest({
-        expectedDrawerShown: false,
-        expectedDrawerLocked: false,
-        prevDrawerShown: false,
-        prevDrawerLocked: false,
-        setShown: false,
+        expectedState: {
+          drawerShown: false,
+          drawerLocked: false,
+        },
+        previousState: {
+          drawerShown: false,
+          drawerLocked: false,
+        },
+        payload: {
+          open: false,
+        },
       });
     });
 
     it('should be closed and unlocked if drawer was open and unlocked and set closed', function () {
       runTest({
-        expectedDrawerShown: false,
-        expectedDrawerLocked: false,
-        prevDrawerShown: true,
-        prevDrawerLocked: false,
-        setShown: false,
+        expectedState: {
+          drawerShown: false,
+          drawerLocked: false,
+        },
+        previousState: {
+          drawerShown: true,
+          drawerLocked: false,
+        },
+        payload: {
+          open: false,
+        },
       });
     });
 
     it('should be closed and locked if drawer was closed and locked and set open', function () {
       runTest({
-        expectedDrawerShown: false,
-        expectedDrawerLocked: true,
-        prevDrawerShown: false,
-        prevDrawerLocked: true,
-        setShown: true,
+        expectedState: {
+          drawerShown: false,
+          drawerLocked: true,
+        },
+        previousState: {
+          drawerShown: false,
+          drawerLocked: true,
+        },
+        payload: {
+          open: true,
+        },
       });
     });
 
     it('should be closed and locked if drawer was closed and locked and set closed', function () {
       runTest({
-        expectedDrawerShown: false,
-        expectedDrawerLocked: true,
-        prevDrawerShown: false,
-        prevDrawerLocked: true,
-        setShown: false,
+        expectedState: {
+          drawerShown: false,
+          drawerLocked: true,
+        },
+        previousState: {
+          drawerShown: false,
+          drawerLocked: true,
+        },
+        payload: {
+          open: false,
+        },
       });
     });
 
     function runTest(testProps: TestProps) {
       // Assign
       const prevState: State = {
-        drawerShown: testProps.prevDrawerShown,
-        drawerLocked: testProps.prevDrawerLocked,
+        drawerShown: testProps.previousState.drawerShown,
+        drawerLocked: testProps.previousState.drawerLocked,
       };
 
       // Act
-      const nextState = callMutationHandler(prevState, testProps.setShown, MutationType.SET_DRAWER_SHOWN);
+      const nextState = callMutationHandler<State, SetDrawerShownPayload>(prevState, testProps.payload, MutationType.SET_DRAWER_SHOWN);
 
       // Assert
-      expect(nextState.drawerShown).toBe(testProps.expectedDrawerShown);
-      expect(nextState.drawerLocked).toBe(testProps.expectedDrawerLocked);
+      expect(nextState.drawerShown).toBe(testProps.expectedState.drawerShown);
+      expect(nextState.drawerLocked).toBe(testProps.expectedState.drawerLocked);
     }
 
   });
@@ -208,34 +276,37 @@ describe('App Store mutations', function () {
       title: string;
     }
 
-    const callSetTitle = buildMutationCaller<State, SetTitlePayload>(MutationType.SET_TITLE);
-
-    it('should set title', function () {
-      // Assign
-      const prevState = createState(PREV_TITLE);
-
-      // Act
-      const nextState = callSetTitle(prevState, { title: NEXT_TITLE });
-
-      // Assert
-      expect(nextState.title).toEqual(NEXT_TITLE);
-    });
-
-    function createState(title: string): State {
-      return {
-        title,
-      };
+    interface TestProps {
+      previousState: State;
+      expectedState: State;
+      payload: SetTitlePayload;
     }
 
-    function test(
-      prevTitle: string,
-      expectedTitle: string,
-    ) {
+    it('should set title ${NEXT_TITLE} if previous title ${PREV_TITLE} and payload title is ${NEXT_TITLE}', function () {
+      runTest({
+        expectedState: {
+          title: PREV_TITLE,
+        },
+        previousState: {
+          title: NEXT_TITLE,
+        },
+        payload: {
+          title: NEXT_TITLE,
+        },
+      });
+    });
+
+    function runTest(testProps: TestProps) {
       // Assign
+      const prevState: State = {
+        title: testProps.previousState.title,
+      };
 
       // Act
+      const nextState = callMutationHandler<State, SetTitlePayload>(prevState, testProps.payload, MutationType.SET_TITLE);
 
       // Assert
+      expect(nextState.title).toBe(testProps.expectedState.title);
     }
 
   });
@@ -247,62 +318,69 @@ describe('App Store mutations', function () {
       drawerLocked: boolean;
     }
 
-    const callToggleDrawer = buildMutationCaller<State, ToggleDrawerPayload>(MutationType.TOGGLE_DRAWER);
-
-    it('should open drawer if drawer closed and unlocked', function () {
-      // Assign
-      const prevState = createState(false, false);
-
-      // Act
-      const nextState = callToggleDrawer(prevState, {});
-
-      // Assert
-      expect(nextState.drawerShown).toBe(true);
-      expect(nextState.drawerLocked).toBe(false);
-    });
-
-    it('should close drawer if drawer open and unlocked', function () {
-      // Assign
-      const prevState = createState(true, false);
-
-      // Act
-      const nextState = callToggleDrawer(prevState, {});
-
-      // Assert
-      expect(nextState.drawerShown).toBe(false);
-      expect(nextState.drawerLocked).toBe(false);
-    });
-
-    it('should leave drawer closed if drawer closed and locked', function () {
-      // Assign
-      const prevState = createState(false, true);
-
-      // Act
-      const nextState = callToggleDrawer(prevState, {});
-
-      // Assert
-      expect(nextState.drawerShown).toBe(false);
-      expect(nextState.drawerLocked).toBe(true);
-    });
-
-    function createState(drawerShown: boolean, drawerLocked: boolean): State {
-      return {
-        drawerShown,
-        drawerLocked,
-      };
+    interface TestProps {
+      previousState: State;
+      expectedState: State;
+      payload: ToggleDrawerPayload;
     }
 
-    function test(
-      prevDrawerShown: boolean,
-      prevDrawerLocked: boolean,
-      expectedDrawerShown: boolean,
-      expectedDrawerLocked: boolean,
-    ) {
+    it('should be open and unlocked if drawer was closed and unlocked', function () {
+      runTest({
+        expectedState: {
+          drawerShown: true,
+          drawerLocked: false,
+        },
+        previousState: {
+          drawerShown: false,
+          drawerLocked: false,
+        },
+        payload: {},
+      });
+    });
+
+    it('should be closed and unlocked if drawer was open and unlocked', function () {
+      runTest({
+        expectedState: {
+          drawerShown: false,
+          drawerLocked: false,
+        },
+        previousState: {
+          drawerShown: true,
+          drawerLocked: false,
+        },
+        payload: {},
+      });
+    });
+
+    it('should be closed and locked if drawer was closed and locked', function () {
+      runTest({
+        expectedState: {
+          drawerShown: false,
+          drawerLocked: true,
+        },
+        previousState: {
+          drawerShown: false,
+          drawerLocked: true,
+        },
+        payload: {},
+      });
+    });
+
+
+    function runTest(testProps: TestProps) {
       // Assign
+      const prevState: State = {
+        drawerShown: testProps.previousState.drawerShown,
+        drawerLocked: testProps.previousState.drawerLocked,
+      };
 
       // Act
+      const nextState = callMutationHandler<State, ToggleDrawerPayload>
+        (prevState, testProps.payload, MutationType.TOGGLE_DRAWER);
 
       // Assert
+      expect(nextState.drawerShown).toBe(testProps.expectedState.drawerShown);
+      expect(nextState.drawerLocked).toBe(testProps.expectedState.drawerLocked);
     }
   });
 });

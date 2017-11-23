@@ -19,7 +19,7 @@ describe('Toolbar store mutations', function () {
   const BUTTON_TEMPLATE = 'button_';
   const TEST_ICON = 'test_icon';
 
-  const buildCallMutation = buildCallMutationHandler<ToolbarState, MutationType>(mutationHandlers);
+  const callMutationHandler = buildCallMutationHandler<ToolbarState, MutationType>(mutationHandlers);
 
   describe('right button state', function () {
 
@@ -27,37 +27,99 @@ describe('Toolbar store mutations', function () {
 
       interface TestProps {
         numPrevButtons: number;
-        prevButtonType: RightButtonType;
-        newButtonType: RightButtonType;
         position: number;
         expectedError: boolean;
       }
 
-      const callAddRightButton = buildCallMutation<ButtonState, AddRightButtonPayload>(MutationType.ADD_RIGHT_BUTTON);
-
-      it('', function () {
-        test({
-          expectedError: true,
-          numPrevButtons: 5,
+      it('should add button at position 0 when no current buttons', function () {
+        runTest({
+          position: 0,
+          numPrevButtons: 0,
+          expectedError: false,
         });
       });
 
-      function test(testProps: TestProps) {
+      it('should add button at position 0 when 1 current button', function () {
+        runTest({
+          position: 0,
+          numPrevButtons: 1,
+          expectedError: false,
+        });
+      });
+
+      it('should add button at position 0 when 2 current buttons', function () {
+        runTest({
+          position: 0,
+          numPrevButtons: 2,
+          expectedError: false,
+        });
+      });
+
+      it('should add button at position 1 when 2 current buttons', function () {
+        runTest({
+          position: 1,
+          numPrevButtons: 2,
+          expectedError: false,
+        });
+      });
+
+      it('should add button at position 2 when 2 current buttons', function () {
+        runTest({
+          position: 2,
+          numPrevButtons: 2,
+          expectedError: false,
+        });
+      });
+
+      it('should throw error when adding button at position -1 when 2 current buttons', function () {
+        runTest({
+          position: -1,
+          numPrevButtons: 2,
+          expectedError: true,
+        });
+      });
+
+      it('should throw error when adding button at position -1 when no current buttons', function () {
+        runTest({
+          position: -1,
+          numPrevButtons: 0,
+          expectedError: true,
+        });
+      });
+
+      it('should throw error when adding button at position 3 when 2 current buttons', function () {
+        runTest({
+          position: 3 ,
+          numPrevButtons: 2,
+          expectedError: true,
+        });
+      });
+
+      it('should throw error when adding button at position 1 when no current buttons', function () {
+        runTest({
+          position: 1 ,
+          numPrevButtons: 0,
+          expectedError: true,
+        });
+      });
+
+
+      function runTest(testProps: TestProps) {
         // Arrange
-        const prevState = createButtonState(testProps.numPrevButtons, testProps.prevButtonType);
+        const prevState = createButtonState(testProps.numPrevButtons, RightButtonType.ACTION);
 
         const newButtonId = testProps.numPrevButtons + 1;
-        const newButton = createButton(newButtonId, testProps.newButtonType);
+        const newButton = createButton(newButtonId, RightButtonType.ACTION);
 
         const expectedRightButtonLength = testProps.numPrevButtons + 1;
 
         // Act
         let nextState: ButtonState = null;
         try {
-          nextState = callAddRightButton(prevState, {
+          nextState = callMutationHandler<ButtonState, AddRightButtonPayload>(prevState, {
             position: testProps.position,
             button: newButton,
-          });
+          }, MutationType.ADD_RIGHT_BUTTON);
 
           expect(testProps.expectedError).toBe(false,
             'Expected to throw error');
@@ -69,26 +131,147 @@ describe('Toolbar store mutations', function () {
         // Assert
         const nextButtons = nextState.rightButtons;
         expect(nextButtons.length).toBe(expectedRightButtonLength);
-
+        expect(nextButtons[testProps.position].name).toBe(createButtonName(newButtonId),
+          `expected new button to be at position: ${testProps.position}`);
       }
+
     });
 
     describe(MutationType.CLEAR_RIGHT_BUTTONS, function () {
+      const EXPECTED_BUTTONS_LENGTH = 0;
 
-      const callAddRightButton = buildCallMutation<ButtonState, ClearRightButtonsPayload>(MutationType.CLEAR_RIGHT_BUTTONS);
+      interface TestProps {
+        numPrevButtons: number;
+      }
 
-      it('', function () {
-
+      it('should clear 0 exsting buttons', function () {
+        runTest({
+          numPrevButtons: 0,
+        });
       });
+
+      it('should clear 1 existing button', function () {
+        runTest({
+          numPrevButtons: 1,
+        });
+      });
+
+      it('should clear 2 existing buttons', function () {
+        runTest({
+          numPrevButtons: 2,
+        });
+      });
+
+
+      function runTest(testProps: TestProps) {
+        // Arrange
+        const prevButtons = createButtons(testProps.numPrevButtons, RightButtonType.ACTION);
+        const prevState: ButtonState = {
+          rightButtons: prevButtons,
+        };
+
+        // Act
+        const nextState = callMutationHandler<ButtonState, ClearRightButtonsPayload>(prevState, {}, MutationType.CLEAR_RIGHT_BUTTONS);
+
+        // Assert
+        expect(nextState.rightButtons.length).toBe(EXPECTED_BUTTONS_LENGTH, `expected ${EXPECTED_BUTTONS_LENGTH} right buttons`);
+      }
     });
 
     describe(MutationType.SET_RIGHT_BUTTONS, function () {
 
-      const callAddRightButton = buildCallMutation<ButtonState, SetRightButtonsPayload>(MutationType.SET_RIGHT_BUTTONS);
+      interface TestProps {
+        numPrevButtons: number;
+        numNewButtons: number;
+      }
 
-      it('', function () {
-
+      it('should set to 0 buttons when 0 previous buttons', function () {
+        runTest({
+          numNewButtons: 0,
+          numPrevButtons: 0,
+        });
       });
+
+      it('should set to 1 button when 0 previous buttons', function () {
+        runTest({
+          numNewButtons: 1,
+          numPrevButtons: 0,
+        });
+      });
+
+      it('should set to 2 buttons when 0 previous buttons', function () {
+        runTest({
+          numNewButtons: 2,
+          numPrevButtons: 0,
+        });
+      });
+
+      it('should set to 0 buttons when 1 previous button', function () {
+        runTest({
+          numNewButtons: 0,
+          numPrevButtons: 1,
+        });
+      });
+
+      it('should set to 1 buttons when 1 previous button', function () {
+        runTest({
+          numNewButtons: 1,
+          numPrevButtons: 1,
+        });
+      });
+
+      it('should set to 2 buttons when 1 previous button', function () {
+        runTest({
+          numNewButtons: 2,
+          numPrevButtons: 1,
+        });
+      });
+
+      it('should set to 0 buttons when 2 previous buttons', function () {
+        runTest({
+          numNewButtons: 0,
+          numPrevButtons: 2,
+        });
+      });
+
+      it('should set to 1 button when 2 previous buttons', function () {
+        runTest({
+          numNewButtons: 1,
+          numPrevButtons: 2,
+        });
+      });
+
+      it('should set to 2 buttons when 2 previous buttons', function () {
+        runTest({
+          numNewButtons: 2,
+          numPrevButtons: 2,
+        });
+      });
+
+      function runTest(testProps: TestProps) {
+        // Arrange
+        const prevButtons = createButtons(testProps.numPrevButtons, RightButtonType.ACTION);
+        const prevState: ButtonState = {
+          rightButtons: prevButtons,
+        };
+
+        const newButtons = createButtons(testProps.numNewButtons, RightButtonType.ACTION, testProps.numPrevButtons);
+        const payload: SetRightButtonsPayload = {
+          buttons: newButtons,
+        };
+
+        // Act
+        const nextState = callMutationHandler<ButtonState, SetRightButtonsPayload>(prevState, payload, MutationType.SET_RIGHT_BUTTONS);
+
+        // Assert
+        expect(nextState.rightButtons.length).toBe(testProps.numNewButtons,
+          `expected right buttons to have length ${testProps.numNewButtons}`);
+
+        nextState.rightButtons.map((rightButton, index) => {
+          expect(rightButton.name).toBe(createButtonName(index + testProps.numPrevButtons));
+        });
+      }
+
     });
 
     /*----------------------------------- Helper Functions -----------------------------------*/
@@ -98,14 +281,18 @@ describe('Toolbar store mutations', function () {
      *
      * @param numberOfButtons - The number of buttons to generate
      */
-    function createButtons(numberOfButtons: number, buttonType: RightButtonType): RightButton[] {
-      return Array(numberOfButtons).map((_, i) => createButton(i, buttonType));
+    function createButtons(
+      numberOfButtons: number,
+      buttonType: RightButtonType,
+      startingId = 0,
+    ): RightButton[] {
+      return Array(numberOfButtons).map((_, i) => createButton(startingId + i, buttonType));
     }
 
     function createButton(buttonIndex: number, buttonType: RightButtonType): RightButton {
       const button = {
         buttonType,
-        name: `${BUTTON_TEMPLATE}${buttonIndex}`,
+        name: createButtonName(buttonIndex),
         icon: TEST_ICON,
       };
       Object.defineProperty(button, buttonType, {
@@ -133,6 +320,10 @@ describe('Toolbar store mutations', function () {
       return {
         rightButtons: createButtons(numberOfButtons, buttonType),
       };
+    }
+
+    function createButtonName(id: number) {
+      return `${BUTTON_TEMPLATE}${id}`;
     }
   });
 });
