@@ -1,6 +1,6 @@
 <template>
   <md-toolbar id="toolbar">
-    <md-button class="md-icon-button left-button" @click="onLeftButtonClick">
+    <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
     </md-button>
     <h3 class="md-title">{{title}}</h3>
@@ -74,7 +74,7 @@ export default Vue.component(name, {
     /**
      * Handle clicks to the left button (menu|back) based on icon type
     */
-    onLeftButtonClick() {
+    handleLeftButtonClicked() {
       switch (this.leftIcon) {
         case Icon.ARROW_BACK:
           this.handleBackButtonClicked();
