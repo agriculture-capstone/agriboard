@@ -1,14 +1,17 @@
 <template>
   <md-toolbar id="toolbar">
+    <!-- Left Button -->
     <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
     </md-button>
+    <!-- Title -->
     <h3 class="md-title">{{title}}</h3>
+    <!-- Right Buttons -->
     <div class="md-toolbar-section-end right-buttons" v-for="rightButton in rightButtons" :key="rightButton.name">
-      <md-button v-if="rightButton.icon" class="md-icon-button right-button icon-button" @click="onRightButtonClicked(rightButton)">
+      <md-button v-if="rightButton.icon" :class="generateRightIconButtonClasses(rightButton.name)" @click="onRightButtonClicked(rightButton)">
         <md-icon>{{rightButton.icon}}</md-icon>
       </md-button>
-      <md-button class="right-button text-button" @click="onRightButtonClicked(rightButton)" v-else>
+      <md-button :class="generateRightTextButtonClasses(rightButton.name)" @click="onRightButtonClicked(rightButton)" v-else>
         {{rightButton.name}}
       </md-button>
     </div>
@@ -21,7 +24,7 @@ import Vue from 'vue';
 import { RootState } from '@/store/types';
 import { MutationType as AppMutation, SetDrawerShownPayload } from '@/store/modules/app/types';
 import Icon from '@/models/icons';
-import { RightButton } from '@/models/toolbar';
+import { RightButton, RightButtonType } from '@/models/toolbar';
 
 const name = 'toolbar';
 
@@ -62,9 +65,9 @@ export default Vue.component(name, {
      * @param rightButton - Definition for right button
      */
     onRightButtonClicked(rightButton: RightButton) {
-      if (rightButton.type === 'mutation') {
+      if (rightButton.type === RightButtonType.MUTATION) {
         this.$store.commit(rightButton.mutation);
-      } else if (rightButton.type === 'action') {
+      } else if (rightButton.type === RightButtonType.ACTION) {
         this.$store.dispatch(rightButton.action);
       } else {
         throw new Error('Invalid right button state');
@@ -90,6 +93,24 @@ export default Vue.component(name, {
     },
 
     /**
+     * Generate classes for a right icon button
+     *
+     * @param name - Name of button
+     */
+    generateRightIconButtonClasses(name: string) {
+      return this.generateRightButtonClasses(name, 'md-icon-button', 'icon-button');
+    },
+
+    /**
+     * Generate classes for a right text button
+     *
+     * @param name - Name of button
+     */
+    generateRightTextButtonClasses(name: string) {
+      return this.generateRightButtonClasses(name, 'text-button');
+    },
+
+    /**
      * Handle menu button being clicked
      *
      * Opens the drawer
@@ -105,6 +126,16 @@ export default Vue.component(name, {
      */
     handleBackButtonClicked() {
       this.$router.back();
+    },
+
+    generateRightButtonClasses(name: string, ...extraClasses: string[]) {
+      const classNames = [
+        ...extraClasses,
+        'right-button',
+        `${name}-button`,
+      ];
+
+      return classNames.join(' ');
     },
   },
 });
