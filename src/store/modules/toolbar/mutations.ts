@@ -1,6 +1,5 @@
 import { MutationType, AddRightButtonPayload, ToolbarState, SetRightButtonsPayload, ClearRightButtonsPayload } from '@/store/modules/toolbar/types';
 import { MutationHandlers } from '@/store/types';
-import logger from '@/utils/logger';
 
 const mutations: MutationHandlers<ToolbarState> = {
 
