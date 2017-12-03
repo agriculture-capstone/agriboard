@@ -22,9 +22,9 @@
 import Vue from 'vue';
 
 import { RootState } from '@/store/types';
-import { MutationType as AppMutation, SetDrawerShownPayload } from '@/store/modules/app/types';
+import { MutationType as AppMutation, SetDrawerShownPayload } from '@/store/modules/drawer/types';
 import Icon from '@/models/icons';
-import { RightButton, RightButtonType } from '@/models/toolbar';
+import { RightButton, RightButtonType } from '@/models/toolbar/rightButton';
 
 const name = 'toolbar';
 
@@ -34,7 +34,7 @@ export default Vue.component(name, {
   computed: {
 
     leftIcon(): Icon {
-      return (this.$store.state.app.drawerLocked) ? Icon.ARROW_BACK : Icon.MENU;
+      return (this.$store.state.drawer.drawerLocked) ? Icon.ARROW_BACK : Icon.MENU;
     },
 
     title(): string {

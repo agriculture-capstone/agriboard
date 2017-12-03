@@ -9,7 +9,7 @@ import {
 } from '@/store/modules/toolbar/types';
 import { buildCallMutationHandler } from '@test/unit/test-utils/buildCallHandlers';
 import mutationHandlers from '@/store/modules/toolbar/mutations';
-import { RightButton, RightButtonType } from '@/models/toolbar';
+import { RightButton, RightButtonType } from '@/models/toolbar/rightButton';
 
 interface ButtonState {
   rightButtons: RightButton[];

@@ -1,4 +1,4 @@
-import Icon from './icons';
+import Icon from '@/models/icons';
 import { ActionType, MutationType } from '@/store/types';
 
 /**

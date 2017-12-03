@@ -1,4 +1,4 @@
-import { RightButton } from '@/models/toolbar';
+import { RightButton } from '@/models/toolbar/rightButton';
 
 /*--------------------- Mutations ---------------------*/
 

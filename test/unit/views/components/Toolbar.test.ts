@@ -7,9 +7,9 @@ import { shallow, Wrapper, createLocalVue } from 'vue-test-utils';
 
 import Toolbar from '@/views/components/global/Toolbar/index.vue';
 import { MutationType as ToolbarMutations } from '@/store/modules/toolbar/types';
-import { MutationType as AppMutations, SetDrawerShownPayload } from '@/store/modules/app/types';
+import { MutationType as DrawerMutations, SetDrawerShownPayload } from '@/store/modules/drawer/types';
 import Icon from '@/models/icons';
-import { RightButton, RightButtonType } from '@/models/toolbar';
+import { RightButton, RightButtonType } from '@/models/toolbar/rightButton';
 import { MutationType, ActionType } from '@/store/types';
 import { VueConstructor } from 'vue/types/vue';
 
@@ -41,7 +41,7 @@ describe('components/global/Toolbar', function () {
       [ToolbarMutations.ADD_RIGHT_BUTTON]: stub(),
       [ToolbarMutations.SET_RIGHT_BUTTONS]: stub(),
       [ToolbarMutations.CLEAR_RIGHT_BUTTONS]: stub(),
-      [AppMutations.SET_DRAWER_SHOWN]: stub(),
+      [DrawerMutations.SET_DRAWER_SHOWN]: stub(),
       [FAKE_MUTATION]: stub(),
     };
 
@@ -56,8 +56,10 @@ describe('components/global/Toolbar', function () {
       // Setup store
       const wrapper = createWrapper({
         app: {
-          drawerLocked: false,
           title: TEST_TITLE,
+        },
+        drawer: {
+          drawerLocked: false,
         },
         toolbar: {
           buttons: [],
@@ -74,8 +76,10 @@ describe('components/global/Toolbar', function () {
       // Setup wrapper
       const wrapper = createWrapper({
         app: {
-          drawerLocked: false,
           title: TEST_TITLE,
+        },
+        drawer: {
+          drawerLocked: false,
         },
         toolbar: {
           rightButtons: createRightButtonState(),
@@ -118,6 +122,9 @@ describe('components/global/Toolbar', function () {
       beforeEach(function () {
         wrapper = createWrapper({
           app: {
+            title: TEST_TITLE,
+          },
+          drawer: {
             drawerLocked: false,
           },
           toolbar: {
@@ -202,15 +209,17 @@ describe('components/global/Toolbar', function () {
         wrapper.find(LEFT_BUTTON_ICON_SELECTOR).trigger('click');
 
         // Assert
-        assert.calledOnce(mutations[AppMutations.SET_DRAWER_SHOWN]);
-        assert.calledWith(mutations[AppMutations.SET_DRAWER_SHOWN], state, { open: true } as SetDrawerShownPayload);
+        assert.calledOnce(mutations[DrawerMutations.SET_DRAWER_SHOWN]);
+        assert.calledWith(mutations[DrawerMutations.SET_DRAWER_SHOWN], state, { open: true } as SetDrawerShownPayload);
       });
 
       function createLeftButtonWrapper(type: Icon.ARROW_BACK | Icon.MENU) {
         const state = {
           app: {
-            drawerLocked: (type === Icon.ARROW_BACK),
             title: TEST_TITLE,
+          },
+          drawer: {
+            drawerLocked: (type === Icon.ARROW_BACK),
           },
           toolbar: {
             rightButtons: [] as any[],
