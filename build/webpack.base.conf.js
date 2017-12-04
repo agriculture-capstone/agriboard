@@ -21,9 +21,9 @@ module.exports = function baseConfig(env) {
       extensions: ['.ts', '.js', '.vue', '.json'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
-        '@': utils.resolve('src'),
-        '@root': utils.resolve('.'),
-        '@test': utils.resolve('test')
+        '@': utils.resolve('src/'),
+        '@root': utils.resolve('./'),
+        '@test': utils.resolve('test/')
       }
     },
     node: {
