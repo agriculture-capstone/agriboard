@@ -1,0 +1,114 @@
+= Agriboard
+
+Agriboard is an administrative dashboard for the agriculture software stack.
+It is used to manage users and view advanced analytics.
+
+== Running Using Docker
+
+The repository can be run with docker and not installing any other dependencies.
+The `dockerize.sh` script has been made for this purpose.
+The `./dockerize.sh` script can be used with the following arguments:
+
+* `init` - creates a Docker image based on the Dockerfile
+* `build` - installs the node modules and build the project using `npm run build`
+* `run` - installs the node modules and starts a development web server at `<docker_ip>:8080`
+== Dependencies
+
+. link:https://nodejs.org/en/[NodeJS] (version 8.9.0 or higher) is the base framework
+
+. link:https://yarnpkg.com/lang/en/docs/install/[Yarn] installs/manages all other dependencies
+
+To install all other dependencies, run `yarn`
+
+IMPORTANT: Please use yarn to manage your dependencies.
+
+=== Using Yarn
+
+*The following commands should never be used in this repository.*
+
+* `npm install`
+* `npm install <package>`
+* `npm install --dev <package>`
+* `npm remove <package>`
+
+The following should be used instead.
+
+* `yarn`
+* `yarn add <package>`
+* `yarn add --dev <package>`
+* `yarn remove <package>`
+
+== Development
+
+To start developing, run:
+
+	npm start
+
+And navigate to `localhost:8080` in a browser.
+
+Hot reloading is enabled, so the server does not needed to be restarted or the any page reloaded when changes are made.
+Any changes will automatically propogate to the browser while maintaining the previous state of agriboard.
+
+=== Style Guide
+
+Agriboard adheres to the link:https://github.com/airbnb/javascript[AirBnB] style guide.
+Read over this briefly to understand the reasoning behind the linting rules.
+
+=== Tests
+
+To perform a single run of the tests:
+
+	npm run test
+
+This will run both the unit tests, and the integration tests.
+Testing will fail if any of the tests do not adhere to the styleguide.
+
+To only run unit tests:
+
+	npm run test:unit:single
+
+To run only the integration tests:
+
+	npm run test:inte:single
+
+To rebuild the tests on changes, remove `:single`.
+For example:
+
+	npm run test:unit
+
+=== Typescript
+
+This project uses link:http://www.typescriptlang.org/docs/home.html[Typescript].
+As such if a package is added that does not include a type definition file, the types must be added as a dependency as well.
+This can be determined if:
+
+* An editor complains it cannot find types for `<package>`.
+* The installed package does not have a type definition at its root.
+The type definition file has a `.d.ts` suffix.
+* Typescript throws a compilation error complaining that `<package> is implicitly of type any`.
+
+To install types for a package:
+
+	yarn add --dev @types/<package>
+
+Where `<package>` is the name of the package.
+
+== Building for Production
+
+To build for production:
+
+	npm run build
+
+To serve the files, `http-server` can be installed via:
+
+	yarn global add http-server
+
+and the files served using:
+
+	http-server dist/ -p 8080
+
+== Configuration
+
+Configuration for the agriboard server is done in the `config` directory using javascript files.
+A different file exists for each environment.
+
