@@ -6,12 +6,19 @@ DOCKER_HOME="/agriboard/"
 
 if [ "$1" == "init" ]; then
     docker build -t $IMAGE_NAME .
-elif [ "$1" == "build" ]; then
-    docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME yarn install --frozen-lockfile
-    docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME npm run build
+elif [ "$1" == "install" ]; then
+    docker run --rm \
+        --volume "$DIR:$DOCKER_HOME" \
+        $IMAGE_NAME yarn install --frozen-lockfile
+elif [ "$1" == "start" ]; then
+    docker run --rm \
+        --volume "$DIR:$DOCKER_HOME" \
+        -p 8080:8080 \
+        $IMAGE_NAME npm start
 elif [ "$1" == "run" ]; then
-    docker run --rm --volume "$DIR:$DOCKER_HOME" $IMAGE_NAME yarn install --frozen-lockfile
-    docker run --rm --volume "$DIR:$DOCKER_HOME" -p 8080:8080 $IMAGE_NAME npm start
+    docker run --rm \
+        --volume "$DIR:$DOCKER_HOME" \
+        $IMAGE_NAME npm run "${@:2}"
 else
-    echo "usage: docker_build [init | build | run]"
+    echo "usage: $0 [ init | install | start | run [args] ]"
 fi
