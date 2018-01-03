@@ -14,6 +14,11 @@ yarn-error.log*
 
 # Test coverage
 test/unit/coverage/*
+.nyc_output/*
 
 # Secrets
 .env
+
+# Editor
+.vscode/*
+

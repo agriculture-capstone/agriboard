@@ -11,9 +11,10 @@
     "sourceMap": true,
     "baseUrl": "./",
     "paths": {
+      "vue$": ["vue/dist/vue.esm.js"],
       "@/*": ["src/*"],
       "@root/*": ["./*"],
-      "vue$": ["vue/dist/vue.esm.js"]
+      "@test/*": ["test/*"]
     },
     "types": [
       "node",
@@ -25,7 +26,7 @@
     "lib": [
       "dom",
       "es5",
-      "es2015.promise"
+      "es6"
     ]
   },
   "exclude": [
@@ -34,6 +35,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    "types/**/*.d.ts"
   ]
 }
