@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Hello from '@/views/pages/Hello.vue';
+import Agriboard from '@/views/pages/Agriboard.vue';
 import Lookup from '@/views/pages/Lookup.vue';
 
 Vue.use(Router);
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello,
+      name: 'Agriboard',
+      component: Agriboard,
     },
     {
     	path: '/lookup',
