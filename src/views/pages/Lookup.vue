@@ -2,8 +2,8 @@
   <div class="Lookup">
     <h1>{{ title }}</h1>
     <md-field md-inline>
-      <label>Inline</label>
-      <md-input v-model="inline"></md-input>
+      <label>Placeholder</label>
+      <md-input v-model="initial"></md-input>
     </md-field>
     <h2>Results</h2>
     <agritable />
@@ -18,7 +18,7 @@ export default Vue.extend({
   data () {
     return {
       title: 'Lookup',
-      initial: 'Initial Value',
+      initial: '',
       type: null,
       withLabel: null,
       inline: null,
@@ -31,10 +31,11 @@ export default Vue.extend({
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style <style lang="scss" scoped>
 
 .md-field {
   margin: auto;
 }
+
 </style>
+
