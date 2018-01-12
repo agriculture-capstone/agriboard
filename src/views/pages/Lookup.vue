@@ -1,6 +1,9 @@
 <template>
   <div class="Lookup">
-    <h1>{{ msg }}</h1>
+    <h1>{{ title }}</h1>
+    <input type="text" name="lookup_field">
+    <h2>Results</h2>
+    <agritable />
   </div>
 </template>
 
@@ -16,7 +19,27 @@ export default Vue.extend({
   },
   data () {
     return {
-      msg: 'Lookup',
+      title: 'Lookup',
+      results: [
+        {
+          name: 'bobby safali',
+          type: 'Farmer',
+          dateCreated:  '01/10/2018',
+          lastModified:  '01/10/2018',
+        },
+        {
+          name: 'Alex Joe',
+          type: 'Farmer',
+          dateCreated:  '03/10/2017',
+          lastModified:  '01/10/2018',
+        },
+        {
+          name: 'Donna Donair',
+          type: 'Trader',
+          dateCreated:  '04/10/2018',
+          lastModified:  '01/10/2018',
+        },
+      ]
     };
   },
 });
@@ -41,4 +64,10 @@ li {
 a {
   color: #35495E;
 }
+
+input[type="text"]{
+  font-size: 2em;
+  padding: 9px;
+}
+
 </style>
