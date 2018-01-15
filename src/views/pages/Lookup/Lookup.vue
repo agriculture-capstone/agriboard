@@ -31,7 +31,7 @@ export default Vue.extend({
 });
 </script>
 
-<style <style lang="scss" scoped>
+<style lang="scss" scoped>
 
 .md-field {
   margin: auto;

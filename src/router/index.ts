@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Agriboard from '@/views/pages/Agriboard.vue';
-import Lookup from '@/views/pages/Lookup.vue';
+import Lookup from '@/views/pages/Lookup/Lookup.vue';
 
 Vue.use(Router);
 
