@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Agriboard from '@/views/pages/Agriboard.vue';
+import Lookup from '@/views/pages/Lookup/Lookup.vue';
 
 Vue.use(Router);
 
@@ -11,6 +12,11 @@ export default new Router({
       path: '/',
       name: 'Agriboard',
       component: Agriboard,
+    },
+    {
+    	path: '/lookup',
+    	name: 'Lookup',
+    	component: Lookup,
     },
   ],
 });
