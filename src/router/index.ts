@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Agriboard from '@/views/pages/Agriboard/Agriboard.vue';
+import Agriboard from '@/views/pages/Agriboard/index.vue';
 
 Vue.use(Router);
 
