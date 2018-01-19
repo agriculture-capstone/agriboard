@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Agriboard from '@/views/pages/Agriboard/index.vue';
+import Home from '@/views/pages/Home/Home.vue';
 
 Vue.use(Router);
 
@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Agriboard',
-      component: Agriboard,
+      name: 'Home',
+      component: Home,
     },
   ],
 });
