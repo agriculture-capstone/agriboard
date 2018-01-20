@@ -1,5 +1,5 @@
 <template>
-  <div class="Agriboard">
+  <div class="Home">
     <h1>{{ msg }}</h1>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Agriboard',
+  name: 'Home',
   methods: {
     test() {
       return 'hi';
@@ -16,7 +16,7 @@ export default Vue.extend({
   },
   data () {
     return {
-      msg: 'Agriboard',
+      msg: 'Home',
     };
   },
 });
