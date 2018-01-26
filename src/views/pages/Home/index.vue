@@ -1,6 +1,28 @@
 <template>
   <div class="Home">
     <h1>{{ msg }}</h1>
+    <md-card class="actions_section">
+      <md-card md-with-hover class="action_card">
+        <md-ripple>
+          <md-card-header>
+            <div class="md-title">Manage</div>
+          </md-card-header>
+          <md-card-content>
+            Register and delete users, change their permissions and passwords.
+          </md-card-content>
+        </md-ripple>
+      </md-card>
+      <md-card md-with-hover class="action_card">
+        <md-ripple>
+          <md-card-header>
+            <div class="md-title">Analytics</div>
+          </md-card-header>
+          <md-card-content>
+            View analytics and statistics on traders, farmers, and exports.
+          </md-card-content>
+        </md-ripple>
+      </md-card>
+    </md-card>
   </div>
 </template>
 
@@ -22,23 +44,18 @@ export default Vue.extend({
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
+<style lang="scss" scoped>
+.action_card {
+  width: 320px;
+  margin: 4px;
   display: inline-block;
-  margin: 0 10px;
+  vertical-align: top;
 }
 
-a {
-  color: #35495E;
+.actions_section {
+  margin: auto;
+  width: 90%;
+  padding: 3em;
+  display: flex;
 }
 </style>

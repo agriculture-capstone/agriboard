@@ -5,6 +5,7 @@ import {
   MdToolbar,
   MdButton,
   MdField,
+  MdCard,
   MdIcon,
 } from 'vue-material/dist/components';
 
@@ -18,7 +19,11 @@ Vue.config.productionTip = false;
 // Use material components
 Vue.use(MdToolbar);
 Vue.use(MdButton);
+<<<<<<< HEAD
 Vue.use(MdField);
+=======
+Vue.use(MdCard);
+>>>>>>> master
 Vue.use(MdIcon);
 
 /* eslint-disable no-new */
