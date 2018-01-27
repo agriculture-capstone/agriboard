@@ -2,6 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 IMAGE_NAME="boresha/agriboard"
+CONTAINER_NAME="agriboard"
 DOCKER_HOME="/agriboard/"
 
 if [ "$1" == "init" ]; then
@@ -11,7 +12,9 @@ elif [ "$1" == "install" ]; then
         --volume "$DIR:$DOCKER_HOME" \
         $IMAGE_NAME yarn install --frozen-lockfile
 elif [ "$1" == "start" ]; then
+    docker rm -f "$CONTAINER_NAME"
     docker run --rm \
+        --name "$CONTAINER_NAME" \
         --volume "$DIR:$DOCKER_HOME" \
         -p 8080:8080 \
         $IMAGE_NAME npm start
