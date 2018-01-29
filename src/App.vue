@@ -23,7 +23,6 @@ export default Vue.extend({
   primary: md-get-palette-color(blue, A200), // The primary color of your application
   accent: md-get-palette-color(red, A200) // The accent and secondary color
 ));
-
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 body {

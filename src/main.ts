@@ -4,6 +4,7 @@ import 'vue-material/dist/vue-material.min.css';
 import {
   MdToolbar,
   MdButton,
+  MdField,
   MdCard,
   MdIcon,
   MdTable,
@@ -20,6 +21,7 @@ Vue.config.productionTip = false;
 // Use material components
 Vue.use(MdToolbar);
 Vue.use(MdButton);
+Vue.use(MdField);
 Vue.use(MdCard);
 Vue.use(MdIcon);
 Vue.use(MdTable);
