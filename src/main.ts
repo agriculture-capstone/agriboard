@@ -8,7 +8,6 @@ import {
   MdCard,
   MdIcon,
   MdTable,
-  MdField,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
