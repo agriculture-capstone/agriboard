@@ -12,11 +12,10 @@
       </md-table-toolbar>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label ="Gender" md-sort-by="gender">{{ item.gender }}</md-table-cell>
-        <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell>
+        <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
+        <md-table-cell md-label="Category" md-sort-by="category">{{ item.category }}</md-table-cell>
+        <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -26,11 +25,10 @@
 import Vue from 'vue';
 
 interface Person {
-  id: number;
   name: string;
-  email: string;
-  gender: string;
-  title: string;
+  phoneNumber: string;
+  category: string;
+  lastModified: string;
 }
 
 const toLower = function (text: string) {
@@ -63,81 +61,70 @@ export default Vue.extend({
       searched: [],
       people: [
         {
-          id: 1,
           name: 'Shawna Dubbin',
-          email: 'sdubbin0@geocities.com',
-          gender: 'Male',
-          title: 'Assistant Media Planner',
+          phoneNumber: '(029) 263-8652',
+          category: 'Farmer',
+          lastModified: 'January 2, 2018 02:25:51.098',
         },
         {
-          id: 2,
           name: 'Odette Demageard',
-          email: 'odemageard1@spotify.com',
-          gender: 'Female',
-          title: 'Account Coordinator',
+          phoneNumber: '(029) 019-2534',
+          category: 'Farmer',
+          lastModified: 'September 15, 2017 03:25:50.345',
         },
         {
-          id: 3,
           name: 'Vera Taleworth',
-          email: 'vtaleworth2@google.ca',
-          gender: 'Male',
-          title: 'Community Outreach Specialist',
+          phoneNumber: '(234) 023-9487',
+          category: 'Farmer',
+          lastModified: 'January 24, 2017 03:25:50.464',
         },
         {
-          id: 4,
           name: 'Lonnie Izkovitz',
-          email: 'lizkovitz3@youtu.be',
-          gender: 'Female',
-          title: 'Operator',
+          phoneNumber: '(029) 209-3834',
+          category: 'Trader',
+          lastModified: 'February 26, 2017 03:25:50.098',
         },
         {
-          id: 5,
           name: 'Thatcher Stave',
-          email: 'tstave4@reference.com',
-          gender: 'Male',
-          title: 'Software Test Engineer III',
+          phoneNumber: '(029) 263-7487',
+          category: 'Trader',
+          lastModified: 'November 25, 2017 03:25:50.465',
         },
         {
-          id: 6,
           name: 'Karim Chipping',
-          email: 'kchipping5@scribd.com',
-          gender: 'Female',
-          title: 'Safety Technician II',
+          phoneNumber: '(029) 263-7487',
+          category: 'Trader',
+          lastModified: 'January 6, 2018 08:23:50.198',
         },
         {
-          id: 7,
           name: 'Helge Holyard',
-          email: 'hholyard6@howstuffworks.com',
-          gender: 'Female',
-          title: 'Internal Auditor',
+          phoneNumber: '(029) 263-7487',
+          category: 'Farmer',
+          lastModified: 'February 27, 2017 08:55:20.375',
         },
         {
-          id: 8,
           name: 'Rod Titterton',
-          email: 'rtitterton7@nydailynews.com',
-          gender: 'Male',
-          title: 'Technical Writer',
+          phoneNumber: '(122) 029-3841',
+          category: 'Trader',
+          lastModified: 'August 18, 2017 23:55:20.953',
         },
         {
-          id: 9,
           name: 'Gawen Applewhite',
-          email: 'gapplewhite8@reverbnation.com',
-          gender: 'Female',
-          title: 'GIS Technical Architect',
+          phoneNumber: '(028) 123-4209',
+          category: 'Farmer',
+          lastModified: 'May 1, 2017 23:23:20.123',
         },
         {
-          id: 10,
           name: 'Nero Mulgrew',
-          email: 'nmulgrew9@plala.or.jp',
-          gender: 'Female',
-          title: 'Staff Scientist',
+          phoneNumber: '(028) 123-4209',
+          category: 'Farmer',
+          lastModified: 'January 18, 2018 23:23:20.364',
         },
         {
-          id: 11,
           name: 'Cybill Rimington',
-          email: 'crimingtona@usnews.com',
-          gender: 'Female',
-          title: 'Assistant Professor',
+          phoneNumber: '(028) 123-4567',
+          category: 'Farmer',
+          lastModified: 'September 23, 2017 00:57:43.954',
         },
       ],
     };
