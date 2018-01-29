@@ -7,6 +7,7 @@ import {
   MdField,
   MdCard,
   MdIcon,
+  MdTable,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
@@ -22,6 +23,8 @@ Vue.use(MdButton);
 Vue.use(MdField);
 Vue.use(MdCard);
 Vue.use(MdIcon);
+Vue.use(MdTable);
+Vue.use(MdField);
 
 /* eslint-disable no-new */
 new Vue({

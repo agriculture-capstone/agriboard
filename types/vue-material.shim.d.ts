@@ -4,4 +4,5 @@ declare module 'vue-material/dist/components' {
   export const MdField: any;
   export const MdCard: any;
   export const MdIcon: any;
+  export const MdTable: any;
 }

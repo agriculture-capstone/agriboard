@@ -19,13 +19,12 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
-
 @include md-register-theme("default", (
   primary: md-get-palette-color(blue, A200), // The primary color of your application
   accent: md-get-palette-color(red, A200) // The accent and secondary color
 ));
-
 @import "~vue-material/dist/theme/all"; // Apply the theme
+
 body {
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -33,10 +32,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
   }
+
   margin: 0;
-    main {
+
+  main {
     text-align: center;
-    margin-top: 40px;
   }
 }
 </style>

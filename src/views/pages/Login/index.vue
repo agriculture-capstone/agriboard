@@ -10,7 +10,9 @@
         <label>Password</label>
         <md-input v-model="initial"></md-input>
       </md-field>
-      <md-button class="md-raised md-primary login_button">Login</md-button>
+      <router-link :to="{ path: '/' }">
+        <md-button class="md-raised md-primary login_button">Login</md-button>
+      </router-link>
     </div>
   </div>
 </template>
