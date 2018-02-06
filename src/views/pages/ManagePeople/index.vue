@@ -59,20 +59,20 @@ export default Vue.extend({
     // get people types
     const personCategories: any[] = [];
     await axios.get('http://172.17.0.2:9090/people/categories')
-      .then(async function (response: any) {
+      .then(function (response: any) {
         response.data.forEach(function (category: any) {
           personCategories.push(category.name);
         });
       })
-      .catch(async function (error: any) {
+      .catch(function (error: any) {
         console.log(error.message);
       });
 
     // get all people
-    personCategories.forEach(async function (category: string) {
+    personCategories.forEach(function (category: string) {
       // get all people of particular category
       axios.get('http://172.17.0.2:9090/people/' + category)
-        .then(async function (response: any) {
+        .then(function (response: any) {
           // construct each person
           response.data.forEach(function (person: any) {
             // construct full name
@@ -99,7 +99,7 @@ export default Vue.extend({
             });
           });
         })
-        .catch(async function (error: any) {
+        .catch(function (error: any) {
           console.log(error.message);
         });
     });
