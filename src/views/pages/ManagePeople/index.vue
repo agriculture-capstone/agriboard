@@ -58,9 +58,9 @@ export default Vue.extend({
 
     // get people types
     const personCategories: any[] = [];
-    await axios.get('http://boresha.tech:9090/people/categories')
+    await axios.get('http://172.17.0.2:9090/people/categories')
       .then(async function (response: any) {
-        response.data.forEach(function(category: any) {
+        response.data.forEach(function (category: any) {
           personCategories.push(category.name);
         });
       })
@@ -69,34 +69,26 @@ export default Vue.extend({
       });
 
     // get all people
-    personCategories.forEach(async function(category: string) {
+    personCategories.forEach(async function (category: string) {
       // get all people of particular category
-      axios.get('http://boresha.tech:9090/people/' + category)
+      axios.get('http://172.17.0.2:9090/people/' + category)
         .then(async function (response: any) {
           // construct each person
           response.data.forEach(function (person: any) {
             // construct full name
-            let fullName: string = "";
-            if(person.firstName) {
-              fullName += person.firstName;
-            }
-            if(person.middleName) {
-              fullName += " " + person.middleName;
-            }
-            if(person.lastName) {
-              fullName += " " + person.lastName;
-            }
+            const fullName: string =
+              `${person.firstName} ${person.middleName} ${person.lastName}`;
 
             // construct phone number
-            let fullPhone: string = "";
-            if(person.phoneCountry) {
-              fullPhone += "+" + person.phoneCountry;
+            let fullPhone: string = '';
+            if (person.phoneCountry) {
+              fullPhone += `+${person.phoneCountry}`;
             }
-            if(person.phoneArea) {
-              fullPhone += " (" + person.phoneArea + ") ";
+            if (person.phoneArea) {
+              fullPhone += ` (${person.phoneArea})`;
             }
-            if(person.phoneNumber) {
-              fullPhone += person.phoneNumber.slice(0, 3) + "-" + person.phoneNumber.slice(3);
+            if (person.phoneNumber) {
+              fullPhone += ` ${person.phoneNumber.slice(0, 3)}-${person.phoneNumber.slice(3)}`;
             }
 
             self.people.push({
@@ -104,13 +96,13 @@ export default Vue.extend({
               phoneNumber: fullPhone,
               peopleCategory: person.peopleCategory,
               lastModified: new Date(person.lastModified).toUTCString(),
-            })
-          })
+            });
+          });
         })
         .catch(async function (error: any) {
           console.log(error.message);
         });
-    })
+    });
 
     // update list
     self.searched = self.people;
