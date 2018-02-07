@@ -5,11 +5,12 @@
         <div class="md-toolbar-section-start">
           <h1 class="md-title">People</h1>
         </div>
-
         <md-field md-clearable class="md-toolbar-section-end">
           <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
         </md-field>
       </md-table-toolbar>
+
+      <h2 class="error md-subheader">{{error}}</h2>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
@@ -58,26 +59,27 @@ export default Vue.extend({
 
     // get people types
     const personCategories: any[] = [];
-    await axios.get('http://172.17.0.2:9090/people/categories')
-      .then(function (response: any) {
-        response.data.forEach(function (category: any) {
+    await axios.get('http://172.17.0.4:9090/people/categories')
+      .then((response: any) => {
+        response.data.map((category: any) => {
           personCategories.push(category.name);
         });
       })
-      .catch(function (error: any) {
+      .catch((error: any) => {
         console.log(error.message);
+        self.error = error.message;
       });
 
     // get all people
-    personCategories.forEach(function (category: string) {
+    personCategories.map((category: string) => {
       // get all people of particular category
-      axios.get('http://172.17.0.2:9090/people/' + category)
-        .then(function (response: any) {
+      axios.get('http://172.17.0.4:9090/people/' + category)
+        .then((response: any) => {
           // construct each person
-          response.data.forEach(function (person: any) {
+          response.data.map((person: any) => {
             // construct full name
             const fullName: string =
-              `${person.firstName} ${person.middleName} ${person.lastName}`;
+              `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
 
             // construct phone number
             let fullPhone: string = '';
@@ -99,8 +101,9 @@ export default Vue.extend({
             });
           });
         })
-        .catch(function (error: any) {
+        .catch((error: any) => {
           console.log(error.message);
+          self.error = error.message;
         });
     });
 
@@ -112,6 +115,7 @@ export default Vue.extend({
       search: null,
       searched: [],
       people: [],
+      error: '',
     };
   },
 });
@@ -133,4 +137,9 @@ export default Vue.extend({
   height: 1vh;
 }
 
+.error {
+  text-align: center;
+  margin: auto;
+  color: red;
+}
 </style>
