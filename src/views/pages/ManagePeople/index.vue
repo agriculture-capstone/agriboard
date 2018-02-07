@@ -59,7 +59,7 @@ export default Vue.extend({
 
     // get people types
     const personCategories: any[] = [];
-    await axios.get('http://172.17.0.4:9090/people/categories')
+    await axios.get('http://boresha.tech:9090/people/categories')
       .then((response: any) => {
         response.data.map((category: any) => {
           personCategories.push(category.name);
@@ -73,7 +73,7 @@ export default Vue.extend({
     // get all people
     personCategories.map((category: string) => {
       // get all people of particular category
-      axios.get('http://172.17.0.4:9090/people/' + category)
+      axios.get('http://boresha.tech:9090/people/' + category)
         .then((response: any) => {
           // construct each person
           response.data.map((person: any) => {
