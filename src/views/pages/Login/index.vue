@@ -20,24 +20,23 @@
 
 <script lang="ts">
 import Vue from 'vue';
-const axios = require('axios');
+import axios from 'axios';
 
 export default Vue.extend({
   name: 'Login',
   methods: {
     async login() {
       console.log('attempting login');
-      const self = this;
       await axios.post('http://boresha.tech:9090/actions/authenticate', {
-        username: self.credentials.username,
-        password: self.credentials.password,
+        username: this.credentials.username,
+        password: this.credentials.password,
       })
-      .then(function (response: any) {
+      .then(function (this: any, response: any) {
         localStorage.setItem('token', response.data.token);
-        self.$router.push('/');
+        this.$router.push('/');
       })
-      .catch(function (error: any) {
-        self.error = 'Invalid username or password';
+      .catch(function (this: any, error: any) {
+        this.error = 'Invalid username or password';
       });
     },
   },
