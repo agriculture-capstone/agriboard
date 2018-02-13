@@ -24,7 +24,7 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-const axios = require('axios');
+import axios from 'axios';
 
 interface Person {
   name: string;
@@ -55,11 +55,9 @@ export default Vue.extend({
     },
   },
   created: async function created() {
-    const self = this;
-
     // get people types
     const personCategories: any[] = [];
-    await axios.get('http://boresha.tech:9090/people/categories')
+    await axios.get('https://boresha.tech:19443/people/categories')
       .then((response: any) => {
         response.data.map((category: any) => {
           personCategories.push(category.name);
@@ -67,16 +65,16 @@ export default Vue.extend({
       })
       .catch((error: any) => {
         console.log(error.message);
-        self.error = error.message;
+        this.error = error.message;
       });
 
     // get all people
-    personCategories.map((category: string) => {
+    const allPeople: Promise<Person[]>[] = personCategories.map((category: string) => {
       // get all people of particular category
-      axios.get('http://boresha.tech:9090/people/' + category)
+      return axios.get('https://boresha.tech:19443/people/' + category)
         .then((response: any) => {
           // construct each person
-          response.data.map((person: any) => {
+          return response.data.map((person: any) => {
             // construct full name
             const fullName: string =
               `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
@@ -93,22 +91,28 @@ export default Vue.extend({
               fullPhone += ` ${person.phoneNumber.slice(0, 3)}-${person.phoneNumber.slice(3)}`;
             }
 
-            self.people.push({
+            // construct person
+            return {
               name: fullName,
               phoneNumber: fullPhone,
               peopleCategory: person.peopleCategory,
               lastModified: new Date(person.lastModified).toUTCString(),
-            });
+            };
           });
         })
         .catch((error: any) => {
           console.log(error.message);
-          self.error = error.message;
+          this.error = error.message;
         });
     });
 
+    const allPeopleFlat = (await Promise.all(allPeople)).reduce(function(prev: Person[], curr: Person[]) {
+      return prev.concat(curr);
+    });
+
     // update list
-    self.searched = self.people;
+    this.people = await allPeopleFlat;
+    this.searched = this.people;
   },
   data () {
     return {
