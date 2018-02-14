@@ -5,16 +5,17 @@
         <div class="md-toolbar-section-start">
           <h1 class="md-title">People</h1>
         </div>
-
         <md-field md-clearable class="md-toolbar-section-end">
           <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
         </md-field>
       </md-table-toolbar>
 
+      <h2 class="error md-subheader">{{error}}</h2>
+
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
-        <md-table-cell md-label="Category" md-sort-by="category">{{ item.category }}</md-table-cell>
+        <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
         <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -23,11 +24,12 @@
 
 <script lang='ts'>
 import Vue from 'vue';
+import axios from 'axios';
 
 interface Person {
   name: string;
   phoneNumber: string;
-  category: string;
+  peopleCategory: string;
   lastModified: string;
 }
 
@@ -52,81 +54,72 @@ export default Vue.extend({
       this.searched = searchByName(this.people, this.search);
     },
   },
-  created: function created() {
+  created: async function created() {
+    // get people types
+    const personCategories: any[] = [];
+    await axios.get('https://boresha.tech:19443/people/categories')
+      .then((response: any) => {
+        response.data.map((category: any) => {
+          personCategories.push(category.name);
+        });
+      })
+      .catch((error: any) => {
+        console.log(error.message);
+        this.error = error.message;
+      });
+
+    // get all people
+    const allPeople: Promise<Person[]>[] = personCategories.map((category: string) => {
+      // get all people of particular category
+      return axios.get('https://boresha.tech:19443/people/' + category)
+        .then((response: any) => {
+          // construct each person
+          return response.data.map((person: any) => {
+            // construct full name
+            const fullName: string =
+              `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
+
+            // construct phone number
+            let fullPhone: string = '';
+            if (person.phoneCountry) {
+              fullPhone += `+${person.phoneCountry}`;
+            }
+            if (person.phoneArea) {
+              fullPhone += ` (${person.phoneArea})`;
+            }
+            if (person.phoneNumber) {
+              fullPhone += ` ${person.phoneNumber.slice(0, 3)}-${person.phoneNumber.slice(3)}`;
+            }
+
+            // construct person
+            return {
+              name: fullName,
+              phoneNumber: fullPhone,
+              peopleCategory: person.peopleCategory,
+              lastModified: new Date(person.lastModified).toUTCString(),
+            };
+          });
+        })
+        .catch((error: any) => {
+          console.log(error.message);
+          this.error = error.message;
+        });
+    });
+
+    const allPeopleFlat = (await Promise.all(allPeople)).reduce(function(prev: Person[], curr: Person[]) {
+      return prev.concat(curr);
+    });
+
+    // update list
+    this.people = await allPeopleFlat;
     this.searched = this.people;
   },
   data () {
     return {
       search: null,
       searched: [],
-      people: [
-        {
-          name: 'Shawna Dubbin',
-          phoneNumber: '(029) 263-8652',
-          category: 'Farmer',
-          lastModified: 'January 2, 2018 02:25:51.098',
-        },
-        {
-          name: 'Odette Demageard',
-          phoneNumber: '(029) 019-2534',
-          category: 'Farmer',
-          lastModified: 'September 15, 2017 03:25:50.345',
-        },
-        {
-          name: 'Vera Taleworth',
-          phoneNumber: '(234) 023-9487',
-          category: 'Farmer',
-          lastModified: 'January 24, 2017 03:25:50.464',
-        },
-        {
-          name: 'Lonnie Izkovitz',
-          phoneNumber: '(029) 209-3834',
-          category: 'Trader',
-          lastModified: 'February 26, 2017 03:25:50.098',
-        },
-        {
-          name: 'Thatcher Stave',
-          phoneNumber: '(029) 263-7487',
-          category: 'Trader',
-          lastModified: 'November 25, 2017 03:25:50.465',
-        },
-        {
-          name: 'Karim Chipping',
-          phoneNumber: '(029) 263-7487',
-          category: 'Trader',
-          lastModified: 'January 6, 2018 08:23:50.198',
-        },
-        {
-          name: 'Helge Holyard',
-          phoneNumber: '(029) 263-7487',
-          category: 'Farmer',
-          lastModified: 'February 27, 2017 08:55:20.375',
-        },
-        {
-          name: 'Rod Titterton',
-          phoneNumber: '(122) 029-3841',
-          category: 'Trader',
-          lastModified: 'August 18, 2017 23:55:20.953',
-        },
-        {
-          name: 'Gawen Applewhite',
-          phoneNumber: '(028) 123-4209',
-          category: 'Farmer',
-          lastModified: 'May 1, 2017 23:23:20.123',
-        },
-        {
-          name: 'Nero Mulgrew',
-          phoneNumber: '(028) 123-4209',
-          category: 'Farmer',
-          lastModified: 'January 18, 2018 23:23:20.364',
-        },
-        {
-          name: 'Cybill Rimington',
-          phoneNumber: '(028) 123-4567',
-          category: 'Farmer',
-          lastModified: 'September 23, 2017 00:57:43.954',
-        },
-      ],
+      people: [],
+      error: '',
     };
   },
 });
@@ -148,4 +141,9 @@ export default Vue.extend({
   height: 1vh;
 }
 
+.error {
+  text-align: center;
+  margin: auto;
+  color: red;
+}
 </style>
