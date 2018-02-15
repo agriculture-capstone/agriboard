@@ -57,7 +57,7 @@ export default Vue.extend({
   created: async function created() {
     // get people types
     const personCategories: any[] = [];
-    await axios.get('https://boresha.tech:19443/people/categories')
+    await axios.get('https://boresha.live:19443/people/categories')
       .then((response: any) => {
         response.data.map((category: any) => {
           personCategories.push(category.name);
@@ -71,7 +71,7 @@ export default Vue.extend({
     // get all people
     const allPeople: Promise<Person[]>[] = personCategories.map((category: string) => {
       // get all people of particular category
-      return axios.get('https://boresha.tech:19443/people/' + category)
+      return axios.get('https://boresha.live:19443/people/' + category)
         .then((response: any) => {
           // construct each person
           return response.data.map((person: any) => {
