@@ -46,7 +46,7 @@ export default Vue.extend({
       const auth = `Bearer ${localStorage.getItem("token")}`;
       const response = await fetch(
         new Request(
-          "http://localhost:9081/transactions/products/milk/download",
+          "https://boresha.live:19443/transactions/products/milk/download",
           {
             method: "get",
             headers: new Headers({
