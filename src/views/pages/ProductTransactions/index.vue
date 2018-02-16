@@ -24,8 +24,10 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
-import axios from 'axios';
+import Vue from "vue";
+import axios from "axios";
+import { saveAs } from "file-saver";
+import * as moment from "moment";
 
 interface ProductTransaction {
   productType: string;
@@ -38,16 +40,32 @@ interface ProductTransaction {
 }
 
 export default Vue.extend({
-  name: 'ProductTransactions',
+  name: "ProductTransactions",
   methods: {
-    downloadCsv: function downloadCsv() {
-      alert('TODO bea :)');
-    },
+    downloadCsv: async function downloadCsv() {
+      const auth = `Bearer ${localStorage.getItem("token")}`;
+      const response = await fetch(
+        new Request(
+          "http://localhost:9081/transactions/products/milk/download",
+          {
+            method: "get",
+            headers: new Headers({
+              Authorization: auth
+            })
+          }
+        )
+      );
+      const blob = await response.blob();
+      const date = moment().format('YYYY-MM-DD'); 
+      const filename = `${date}-collections.csv`;
+      saveAs(blob, filename);
+    }
   },
   created: async function created() {
     // get productTransactions types
     const productTypes: any[] = [];
-    await axios.get('https://boresha.live:19443/products')
+    await axios
+      .get("https://boresha.live:19443/products")
       .then((response: any) => {
         response.data.map((productType: any) => {
           productTypes.push(productType.name);
@@ -59,9 +77,12 @@ export default Vue.extend({
       });
 
     // get all productTransactions
-    const allProductTransactions: Promise<ProductTransaction[]>[] = productTypes.map((productType: string) => {
+    const allProductTransactions: Promise<
+      ProductTransaction[]
+    >[] = productTypes.map((productType: string) => {
       // get all productTransactions of particular productType
-      return axios.get('https://boresha.live:19443/transactions/products/' + productType)
+      return axios
+        .get("https://boresha.live:19443/transactions/products/" + productType)
         .then((response: any) => {
           // construct each product transaction
           return response.data.map((transaction: any) => {
@@ -73,7 +94,7 @@ export default Vue.extend({
               productUnits: transaction.productUnits,
               costPerUnit: transaction.costPerUnit,
               currency: transaction.currency,
-              lastModified: new Date(transaction.lastModified).toUTCString(),
+              lastModified: new Date(transaction.lastModified).toUTCString()
             };
           });
         })
@@ -83,21 +104,21 @@ export default Vue.extend({
         });
     });
 
-    const allProductTransactionsFlat =
-      (await Promise.all(allProductTransactions))
-      .reduce(function (prev: ProductTransaction[], curr: ProductTransaction[]) {
-        return prev.concat(curr);
-      });
+    const allProductTransactionsFlat = (await Promise.all(
+      allProductTransactions
+    )).reduce(function(prev: ProductTransaction[], curr: ProductTransaction[]) {
+      return prev.concat(curr);
+    });
 
     // update list
     this.productTransactions = allProductTransactionsFlat;
   },
-  data () {
+  data() {
     return {
       productTransactions: [],
-      error: '',
+      error: ""
     };
-  },
+  }
 });
 </script>
 
