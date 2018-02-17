@@ -8,6 +8,8 @@ import {
   MdCard,
   MdIcon,
   MdTable,
+  MdRipple,
+  MdContent,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
@@ -25,6 +27,8 @@ Vue.use(MdCard);
 Vue.use(MdIcon);
 Vue.use(MdTable);
 Vue.use(MdField);
+Vue.use(MdRipple);
+Vue.use(MdContent);
 
 /* eslint-disable no-new */
 new Vue({
