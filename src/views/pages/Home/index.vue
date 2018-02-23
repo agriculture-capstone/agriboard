@@ -2,6 +2,7 @@
   <div class="Home">
     <h1>{{ msg }}</h1>
     <md-card class="actions_section">
+
       <router-link :to="{ path: '/manage/people' }">
         <md-card md-with-hover class="action_card">
           <md-ripple>
@@ -14,6 +15,7 @@
           </md-ripple>
         </md-card>
       </router-link>
+
       <md-card md-with-hover class="action_card">
         <md-ripple>
           <md-card-header>
@@ -24,6 +26,20 @@
           </md-card-content>
         </md-ripple>
       </md-card>
+
+      <router-link :to="{ path: '/transactions/products' }">
+      <md-card md-with-hover class="action_card">
+        <md-ripple>
+          <md-card-header>
+            <div class="md-title">Product Transactions</div>
+          </md-card-header>
+          <md-card-content>
+            View all product transactions and download reports.
+          </md-card-content>
+        </md-ripple>
+      </md-card>
+      </router-link>
+
     </md-card>
   </div>
 </template>
@@ -33,11 +49,6 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Home',
-  methods: {
-    test() {
-      return 'hi';
-    },
-  },
   data () {
     return {
       msg: 'Home',
@@ -47,17 +58,20 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.action_card {
-  width: 320px;
-  margin: 0.8em;
-  display: inline-block;
-  vertical-align: top;
-}
-
 .actions_section {
   margin: auto;
   padding: 1em;
   width: 90%;
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action_card {
+  width: 300px;
+  min-width: 300px;
+  margin: 0.8em;
+  display: inline-block;
+  vertical-align: top;
 }
 </style>
