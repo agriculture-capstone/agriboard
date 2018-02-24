@@ -111,7 +111,7 @@ export default Vue.extend({
     });
 
     // update list
-    this.people = await allPeopleFlat;
+    this.people = allPeopleFlat;
     this.searched = this.people;
   },
   data () {
