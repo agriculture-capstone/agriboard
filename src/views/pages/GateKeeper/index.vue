@@ -16,6 +16,7 @@ export default Vue.extend({
     };
   },
   created(){
+    // TODO update this when we use cookies
     if (localStorage.getItem("token")) {
       this.$router.push({ path: 'home'});
     } else {

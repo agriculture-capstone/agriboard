@@ -32,6 +32,7 @@ export default Vue.extend({
         password: this.credentials.password,
       })
       .then(function (this: any, response: any) {
+        // TODO needs to be fixed
         localStorage.setItem('token', response.data.token);
         this.$router.push({ path: 'home' });
       })
