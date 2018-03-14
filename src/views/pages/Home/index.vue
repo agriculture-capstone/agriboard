@@ -1,8 +1,8 @@
 <template>
-  <div class="Home">
-    <h1>{{ msg }}</h1>
-    <md-card class="actions_section">
-
+  <div class="home">
+    <h1 class="md-headline"> Services </h1>
+    <div class="actions_section">
+      
       <router-link :to="{ path: '/manage/people' }">
         <md-card md-with-hover class="action_card">
           <md-ripple>
@@ -39,8 +39,7 @@
         </md-ripple>
       </md-card>
       </router-link>
-
-    </md-card>
+      </div>
   </div>
 </template>
 
@@ -51,7 +50,6 @@ export default Vue.extend({
   name: 'Home',
   data () {
     return {
-      msg: 'Home',
     };
   },
 });
@@ -61,7 +59,7 @@ export default Vue.extend({
 .actions_section {
   margin: auto;
   padding: 1em;
-  width: 90%;
+  // width: 90%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -73,5 +71,13 @@ export default Vue.extend({
   margin: 0.8em;
   display: inline-block;
   vertical-align: top;
+}
+
+.home {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  // width: 80%;
+  // align-items: center;
 }
 </style>

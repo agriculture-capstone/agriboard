@@ -10,6 +10,7 @@ import {
   MdTable,
   MdRipple,
   MdContent,
+  MdSubheader,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
@@ -29,6 +30,7 @@ Vue.use(MdTable);
 Vue.use(MdField);
 Vue.use(MdRipple);
 Vue.use(MdContent);
+Vue.use(MdSubheader);
 
 /* eslint-disable no-new */
 new Vue({

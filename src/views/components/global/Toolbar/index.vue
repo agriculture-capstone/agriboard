@@ -1,5 +1,5 @@
 <template>
-  <md-toolbar id="toolbar">
+  <md-toolbar id="toolbar" class="md-primary">
     <!-- Left Button -->
     <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
