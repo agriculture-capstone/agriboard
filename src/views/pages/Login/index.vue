@@ -33,7 +33,7 @@ export default Vue.extend({
       })
       .then(function (this: any, response: any) {
         localStorage.setItem('token', response.data.token);
-        this.$router.push('/');
+        this.$router.push({ path: 'home' });
       })
       .catch(function (this: any, error: any) {
         this.error = 'Invalid username or password';
