@@ -70,7 +70,6 @@ export default Vue.extend({
 
 .action_card {
   width: 300px;
-  min-width: 300px;
   margin: 0.8em;
   display: inline-block;
   vertical-align: center;
