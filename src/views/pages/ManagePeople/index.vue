@@ -12,7 +12,7 @@
 
       <h2 class="error md-subheader">{{error}}</h2>
       <div>
-        <md-button v-on:click="addUser" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
+        <md-button @click="showAddDialog = true" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
           <md-icon>add</md-icon>
         </md-button>
       </div>
@@ -23,6 +23,15 @@
         <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
+    
+    <md-dialog :md-active.sync="showAddDialog">
+      <md-dialog-title>Preferences</md-dialog-title>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showAddDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showAddDialog = false">Save</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
   </div>
 </template>
 
@@ -127,6 +136,7 @@ export default Vue.extend({
       searched: [],
       people: [],
       error: '',
+      showAddDialog: false,
     };
   },
 });
