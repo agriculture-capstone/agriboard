@@ -12,7 +12,7 @@
 
       <h2 class="error md-subheader">{{error}}</h2>
       <div>
-        <md-button class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
+        <md-button v-on:click="addUser" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
           <md-icon>add</md-icon>
         </md-button>
       </div>
@@ -56,6 +56,9 @@ export default Vue.extend({
   methods: {
     searchOnTable: function searchOnTable() {
       this.searched = searchByName(this.people, this.search);
+    },
+    addUser: function () {
+      
     },
   },
   created: async function created() {
