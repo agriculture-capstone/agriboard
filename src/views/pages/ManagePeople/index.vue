@@ -11,7 +11,11 @@
       </md-table-toolbar>
 
       <h2 class="error md-subheader">{{error}}</h2>
-
+      <div>
+        <md-button class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
+          <md-icon>add</md-icon>
+        </md-button>
+      </div>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
