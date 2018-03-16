@@ -1,10 +1,6 @@
 <template>
   <div class='ManagePeople'>
-    <div>
-      <md-button @click="showAddDialog = true" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
-        <md-icon>add</md-icon>
-      </md-button>
-    </div>
+
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
@@ -16,7 +12,11 @@
       </md-table-toolbar>
 
       <h2 class="error md-subheader">{{error}}</h2>
-
+      <div>
+        <md-button @click="showAddDialog = true" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
+          <md-icon>add</md-icon>
+        </md-button>
+      </div>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
@@ -28,52 +28,46 @@
     <div class="dialog-wrapper">
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
-        
-        <md-card class="md-layout-item md-size-100 md-small-size-100">
-          <md-card-content class="card-content">
             
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>First Name</label>
-                  <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
-                </md-field>
-              </div>
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Last Name</label>
-                  <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
-                </md-field>
-              </div>
-            </div>
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item md-small-size-100">
+            <md-field>
+              <label>First Name</label>
+              <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100">
+            <md-field>
+              <label>Last Name</label>
+              <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+            </md-field>
+          </div>
+        </div>
 
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Phone Number</label>
-                  <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                </md-field>
-              </div>
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Email</label>
-                  <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
-                </md-field>
-              </div>
-            </div>
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item md-small-size-100">
+            <md-field>
+              <label>Phone Number</label>
+              <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100">
+            <md-field>
+              <label>Email</label>
+              <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
+            </md-field>
+          </div>
+        </div>
 
-            <div class="md-layout md-gutter">
-              <md-field>
-                <md-select v-model="form.type" name="user-type" id="user-type" placeholder="User Type">
-                  <md-option value="farmer">Farmer</md-option>
-                  <md-option value="trader">Trader</md-option>
-                  <md-option value="admin">Admin</md-option>
-                </md-select>
-              </md-field>
-            </div>
-
-          </md-card-content>
-        </md-card>
+        <div class="md-layout md-gutter">
+          <md-field>
+            <md-select v-model="form.type" name="user-type" id="user-type" placeholder="User Type">
+              <md-option value="farmer">Farmer</md-option>
+              <md-option value="trader">Trader</md-option>
+              <md-option value="admin">Admin</md-option>
+            </md-select>
+          </md-field>
+        </div>
 
         <md-dialog-actions>
           <md-button class="md-info" @click="showAddDialog = false">Cancel</md-button>
@@ -218,6 +212,14 @@ export default Vue.extend({
 
 .card-content {
   width: 768px;
+}
+
+.md-layout-item {
+  &:after {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 }
 
 .error {
