@@ -76,8 +76,8 @@
         </md-card>
 
         <md-dialog-actions>
-          <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
-          <md-button class="md-primary" @click="showAddDialog = false">Save</md-button>
+          <md-button class="md-info" @click="showAddDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showAddDialog = false">Create</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
