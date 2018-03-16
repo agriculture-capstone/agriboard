@@ -26,31 +26,6 @@
     
     <md-dialog :md-active.sync="showAddDialog">
       <md-dialog-title>Create New User</md-dialog-title>
-      <!-- ---------------- -->
-       <form novalidate class="md-layout" @submit.prevent="validateUser">
-        <md-card class="md-layout-item md-size-50 md-small-size-100">
-
-          <md-card-content>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('firstName')">
-                  <label for="first-name">First Name</label>
-                  <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName" :disabled="sending" />
-                  <span class="md-error" v-if="!$v.form.firstName.required">The first name is required</span>
-                  <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first name</span>
-                </md-field>
-              </div>
-
-          <md-progress-bar md-mode="indeterminate" v-if="sending" />
-
-          <md-card-actions>
-            <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
-          </md-card-actions>
-        </md-card>
-
-        <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
-      </form>
-      <!-- ---------------- -->
       <md-dialog-actions>
         <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
         <md-button class="md-primary" @click="showAddDialog = false">Save</md-button>
@@ -90,17 +65,6 @@ export default Vue.extend({
   methods: {
     searchOnTable: function searchOnTable() {
       this.searched = searchByName(this.people, this.search);
-    },
-    getValidationClass: function (fieldName: any): any {
-      const field = this.$v.form[fieldName]
-      if (field) {
-        return {
-          'md-invalid': field.$invalid && field.$dirty
-        }
-      }
-    },
-    addUser: function () {
-      
     },
   },
   created: async function created() {
