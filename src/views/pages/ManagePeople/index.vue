@@ -26,12 +26,37 @@
     
     <md-dialog :md-active.sync="showAddDialog">
       <md-dialog-title>Create New User</md-dialog-title>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
-        <md-button class="md-primary" @click="showAddDialog = false">Save</md-button>
-      </md-dialog-actions>
-    </md-dialog>
+      
+      <div class="add-form">
+          <md-field>
+            <label>First Name</label>
+            <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+          </md-field>
+          <md-field>
+            <label>Last Name</label>
+            <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+          </md-field>
+          <md-field>
+            <label>Phone Number</label>
+            <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+          </md-field>
+          <md-field>
+            <label>Email</label>
+            <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
+          </md-field>
+          <md-field>
+            <md-select v-model="form.type" name="user-type" id="user-type" placeholder="User Type">
+              <md-option value="farmer">Farmer</md-option>
+              <md-option value="trader">Trader</md-option>
+            </md-select>
+        </md-field>
+      </div>
 
+        <md-dialog-actions>
+          <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showAddDialog = false">Save</md-button>
+        </md-dialog-actions>
+      </md-dialog>
   </div>
 </template>
 
@@ -134,6 +159,13 @@ export default Vue.extend({
       people: [],
       error: '',
       showAddDialog: false,
+      form: {
+        type: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
+      },
     };
   },
 });
@@ -153,6 +185,11 @@ export default Vue.extend({
 
 .md-content {
   height: 1vh;
+}
+
+.md-dialog {
+  // max-width: 768px;
+  width: 768px;  
 }
 
 .error {
