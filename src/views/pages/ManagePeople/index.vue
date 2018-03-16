@@ -27,7 +27,8 @@
     <md-dialog :md-active.sync="showAddDialog">
       <md-dialog-title>Create New User</md-dialog-title>
       
-      <div class="add-form">
+      <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card-content>
           <md-field>
             <label>First Name</label>
             <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
@@ -49,8 +50,9 @@
               <md-option value="farmer">Farmer</md-option>
               <md-option value="trader">Trader</md-option>
             </md-select>
-        </md-field>
-      </div>
+          </md-field>
+        </md-card-content>
+      </md-card>
 
         <md-dialog-actions>
           <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
