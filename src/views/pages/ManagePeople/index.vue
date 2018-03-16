@@ -66,6 +66,7 @@
                 <md-select v-model="form.type" name="user-type" id="user-type" placeholder="User Type">
                   <md-option value="farmer">Farmer</md-option>
                   <md-option value="trader">Trader</md-option>
+                  <md-option value="admin">Admin</md-option>
                 </md-select>
               </md-field>
             </div>
