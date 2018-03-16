@@ -29,7 +29,7 @@
         <md-dialog-title>Create New User</md-dialog-title>
         
         <md-card class="md-layout-item md-size-100 md-small-size-100">
-          <md-card-content>
+          <md-card-content class="card-content">
             
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
@@ -212,6 +212,10 @@ export default Vue.extend({
 .md-dialog {
   // max-width: 768px;
   width: 768px;  
+}
+
+.card-content {
+  width: 768px;
 }
 
 .error {
