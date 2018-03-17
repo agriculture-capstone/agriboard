@@ -5,24 +5,24 @@
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="md-title">collected</div>
-                    <div class="md-subhead">3453</div>
+                    <div class="md-body-2">Collected this Week</div>
+                    <div class="md-subhead">3453 L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="md-title">exported</div>
-                    <div class="md-subhead">3453</div>
+                    <div class="md-body-2">Exported this Week</div>
+                    <div class="md-subhead">3453 L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="md-title">loans</div>
-                    <div class="md-subhead">3453</div>
+                    <div class="md-body-2">Loans Dispersed this Week</div>
+                    <div class="md-subhead">3453 L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
@@ -83,12 +83,19 @@ export default {
   align-items: center;
 }
 
+.center {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
 .graph {
   height: 35vh;
+  margin-top:.5%;
 }
 
 .stats {
-  height: 13vh;
+  margin-top:1%;
+  height: 12vh;
   align-items: center;
 
 }

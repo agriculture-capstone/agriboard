@@ -1,5 +1,5 @@
 <template>
-    <svg id="money"  width="80vw" height='40vh'></svg>
+    <svg id="money"  width="80vw" height='33vh'></svg>
 </template>
 <script>
 import * as d3 from "d3";
@@ -20,7 +20,7 @@ export default {
       let data = [];
 
       let currentValue = 100;
-      let random = d3.randomNormal(200, 1000);
+      let random = d3.randomNormal(200, 300);
 
       for(let i=0; i<40; i++) {
         let currentDate = new Date();
@@ -249,7 +249,7 @@ export default {
 
     }
 
-    drawLinesGraph(260, 960, values, 'Score');  }
+    drawLinesGraph(200, 1200, values, 'Score');  }
 };
 </script>
 <style>
