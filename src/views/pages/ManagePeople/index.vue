@@ -64,9 +64,12 @@
             </div>
 
             <div class="md-layout md-gutter">
-              <md-radio v-model="radio" value="farmer">Farmer</md-radio>
-              <md-radio v-model="radio" value="trader">Trader</md-radio>
-              <md-radio v-model="radio" value="admin">Admin</md-radio>
+              <div class="md-card-header">User Type:</div>
+              <div class="md-layout-item md-small-size-100">
+                <md-radio v-model="radio" value="farmer">Farmer</md-radio>
+                <md-radio v-model="radio" value="trader">Trader</md-radio>
+                <md-radio v-model="radio" value="admin">Admin</md-radio>
+              </div>
             </div>
           </md-card-content>
         </md-card>
