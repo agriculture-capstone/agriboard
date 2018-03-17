@@ -24,9 +24,8 @@
         <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
-    <p>Selected:</p>
-    {{ selected }}
-    <div class="dialog-wrapper">
+
+    <div class="create-dialog-wrapper">
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
         
@@ -80,6 +79,46 @@
         </md-dialog-actions>
       </md-dialog>
     </div>
+    
+    <div class="edit-dialog-wrapper">
+      <md-dialog :md-active.sync="showViewDialog">
+        <md-dialog-title>User Details</md-dialog-title>
+        
+        <md-card class="md-layout-item md-size-100 md-small-size-100">
+          <md-card-header>
+            <div class="md-title">{{ selected.name }}</div>
+          </md-card-header>
+          <md-card-content class="card-content">
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <h3 class="md-subheading">Phone Number</h3>
+                <br/>
+                {{ selected.phoneNumber }}
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <h3 class="md-subheading">Category</h3>                
+                <br/>
+                {{ selected.peopleCategory }}
+              </div>
+            </div>
+
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <h3 class="md-subheading">Last Modified</h3> 
+                <br/>
+                {{ selected.lastModified }}
+              </div>
+            </div>
+
+          </md-card-content>
+        </md-card>
+
+        <md-dialog-actions>
+          <md-button class="md-info" @click="showViewDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showViewDialog = false">Edit</md-button>
+        </md-dialog-actions>
+      </md-dialog>
+    </div>
   </div>
 </template>
 
@@ -116,6 +155,7 @@ export default Vue.extend({
     },
     onSelect: function (item: any) {
       this.selected = item;
+      this.showViewDialog = true;
     }
     
   },
@@ -187,6 +227,8 @@ export default Vue.extend({
       error: '',
       selected: {},
       showAddDialog: false,
+      showViewDialog: false,
+      showEditDialog: false,
       radio: false,
       form: {
         type: '',
