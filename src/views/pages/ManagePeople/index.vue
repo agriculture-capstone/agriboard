@@ -1,7 +1,7 @@
 <template>
   <div class='ManagePeople'>
 
-    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card>
+    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <h1 class="md-title">People</h1>
@@ -17,14 +17,15 @@
           <md-icon>add</md-icon>
         </md-button>
       </div>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" md-auto-select>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
         <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
         <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
-    
+    <p>Selected:</p>
+    {{ selected }}
     <div class="dialog-wrapper">
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
@@ -110,9 +111,11 @@ export default Vue.extend({
     searchOnTable: function searchOnTable() {
       this.searched = searchByName(this.people, this.search);
     },
-    onSelect: function (item: any) {
+    onSelect (item: any) {
+      console.log('SELECTEDDD');
       this.selected = item;
     }
+    
   },
   created: async function created() {
     // get people types
