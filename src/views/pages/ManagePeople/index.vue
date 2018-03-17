@@ -111,7 +111,7 @@ export default Vue.extend({
     searchOnTable: function searchOnTable() {
       this.searched = searchByName(this.people, this.search);
     },
-    onSelect (item: any) {
+    onSelect: function (item: any) {
       this.selected = item;
     }
     
