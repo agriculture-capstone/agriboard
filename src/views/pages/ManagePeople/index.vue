@@ -110,6 +110,9 @@ export default Vue.extend({
     searchOnTable: function searchOnTable() {
       this.searched = searchByName(this.people, this.search);
     },
+    onSelect: function (item: any) {
+      this.selected = item;
+    }
   },
   created: async function created() {
     // get people types
@@ -177,6 +180,7 @@ export default Vue.extend({
       searched: [],
       people: [],
       error: '',
+      selected: {},
       showAddDialog: false,
       radio: false,
       form: {
