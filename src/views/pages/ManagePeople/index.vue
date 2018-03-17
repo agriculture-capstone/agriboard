@@ -112,7 +112,6 @@ export default Vue.extend({
       this.searched = searchByName(this.people, this.search);
     },
     onSelect (item: any) {
-      console.log('SELECTEDDD');
       this.selected = item;
     }
     
