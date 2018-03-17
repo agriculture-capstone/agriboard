@@ -28,46 +28,48 @@
     <div class="dialog-wrapper">
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
+        
+        <md-card class="md-layout-item md-size-100 md-small-size-100">
+          <md-card-content class="card-content">
             
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <md-field>
-              <label>First Name</label>
-              <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
-            </md-field>
-          </div>
-          <div class="md-layout-item md-small-size-100">
-            <md-field>
-              <label>Last Name</label>
-              <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
-            </md-field>
-          </div>
-        </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>First Name</label>
+                  <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>Last Name</label>
+                  <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                </md-field>
+              </div>
+            </div>
 
-        <div class="md-layout md-gutter">
-          <div class="md-layout-item md-small-size-100">
-            <md-field>
-              <label>Phone Number</label>
-              <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
-            </md-field>
-          </div>
-          <div class="md-layout-item md-small-size-100">
-            <md-field>
-              <label>Email</label>
-              <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
-            </md-field>
-          </div>
-        </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>Phone Number</label>
+                  <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>Email</label>
+                  <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
+                </md-field>
+              </div>
+            </div>
 
-        <div class="md-layout md-gutter">
-          <md-field>
-            <md-select v-model="form.type" name="user-type" id="user-type" placeholder="User Type">
-              <md-option value="farmer">Farmer</md-option>
-              <md-option value="trader">Trader</md-option>
-              <md-option value="admin">Admin</md-option>
-            </md-select>
-          </md-field>
-        </div>
+            <div class="md-layout md-gutter">
+              <md-radio v-model="radio" value="farmer">Farmer</md-radio>
+              <md-radio v-model="radio" value="trader">Trader</md-radio>
+              <md-radio v-model="radio" value="admin">Admin</md-radio>
+            </div>
+
+          </md-card-content>
+        </md-card>
 
         <md-dialog-actions>
           <md-button class="md-info" @click="showAddDialog = false">Cancel</md-button>
@@ -177,6 +179,7 @@ export default Vue.extend({
       people: [],
       error: '',
       showAddDialog: false,
+      radio: false,
       form: {
         type: '',
         firstName: '',
