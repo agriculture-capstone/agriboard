@@ -1,12 +1,11 @@
 <template>
-    <svg id="money" width="960" height="500"></svg>
+    <svg id="users" width="960" height="300"></svg>
 </template>
 <script>
 import * as d3 from "d3";
 export default {
-  name: "money",
+  name: "users",
   mounted() {
-
   // generate data
     let values = [];
 
@@ -39,7 +38,7 @@ export default {
 
     let drawLinesGraph = function(containerHeight, containerWidth, data, yLabel){
 
-      let svg = d3.select('#money').append('svg')
+      let svg = d3.select('#users').append('svg')
                   .attr('width', containerWidth)
                   .attr('height', containerHeight);
 
@@ -249,7 +248,7 @@ export default {
 
     }
 
-    drawLinesGraph(window.innerHeight, window.innerWidth/3, values, 'Score');  }
+    drawLinesGraph(window.innerHeight/2, window.innerWidth/3, values, 'Score');  }
 };
 </script>
 <style>
