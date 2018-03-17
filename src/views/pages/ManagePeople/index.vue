@@ -17,7 +17,7 @@
 
       <h2 class="error md-subheader">{{error}}</h2>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" md-auto-select>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single" md-auto-select>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
         <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
