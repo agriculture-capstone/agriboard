@@ -1,20 +1,35 @@
 <template>
   <div>
-    <md-field id='stats'>
-      <md-card>
+      <md-card id='stats'>
+          <div class='md-layout'>
+            <div class="md-layout-item">
+              test
+            </div>
+            <div class="md-layout-item">
+              test2
+            </div>
+            <div class="md-layout-item">
+              test3
+            </div>
+          </div>
       </md-card>
-    </md-field>
-    <md-field id='graphs'>
-      <md-card>
-        <product/>
-      </md-card>
-      <md-card>
-        <money/>
-      </md-card>
-      <md-card>
-        <users/>
-      </md-card>
-    </md-field>
+    <div class='md-layout'>
+      <div class="md-layout-item">
+        <md-card>
+          <product/>
+        </md-card>
+      </div>
+      <div class="md-layout-item">
+        <md-card>
+          <money/>
+        </md-card>
+      </div>
+      <div class="md-layout-item">
+        <md-card>
+          <users/>
+        </md-card>
+      </div>
+      </div>
   </div>
 </template>
 
@@ -41,8 +56,14 @@ export default {
 <style scoped>
 .md-card {
   width: 30vw;
-  height: 90vh;
-  margin: 4px;
+  height: 60vh;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#stats {
+  height: 10vh;
+  width: 100vw;
   display: inline-block;
   vertical-align: top;
 }
