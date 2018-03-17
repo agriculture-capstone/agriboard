@@ -12,7 +12,7 @@
       </md-table-toolbar>
 
       <h2 class="error md-subheader">{{error}}</h2>
-      <div>
+      <div class="add-button">
         <md-button @click="showAddDialog = true" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
           <md-icon>add</md-icon>
         </md-button>
@@ -67,7 +67,6 @@
               <md-radio v-model="radio" value="trader">Trader</md-radio>
               <md-radio v-model="radio" value="admin">Admin</md-radio>
             </div>
-
           </md-card-content>
         </md-card>
 
