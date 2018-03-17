@@ -29,7 +29,7 @@
           </div>
       </md-card>
       <md-card class='md-elevation-10 graph'>
-        <product/>
+        <product v-bind:values="productTransactions"/>
       </md-card>
 
       <md-card class='md-elevation-10 graph'>
@@ -63,7 +63,10 @@ import users from "../../components/graphs/Users";
 export default {
   name: "analytics",
   data() {
-    return {};
+    return {
+      productTransactions: [],
+      error: '',
+    };
   },
   components: {
     product,

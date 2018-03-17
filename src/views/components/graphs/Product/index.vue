@@ -5,14 +5,17 @@
 import * as d3 from "d3";
 export default {
   name: "product",
+  data () {
+    return {
+    };
+  },
+  props : ['values'],
   mounted() {
-
+  
   // generate data
-    let values = [];
-
-    values.push(fillData ());
-    values.push(fillData ());
-    values.push(fillData ());
+    this.values.push(fillData ());
+    this.values.push(fillData ());
+    this.values.push(fillData ());
     //add more pushes for more lines
 
     function fillData () {
@@ -150,7 +153,6 @@ export default {
 
       let voronoiRadius = width;
 
-
       //focus
 
       let focus = g.append('g').style('display', 'none');
@@ -249,7 +251,7 @@ export default {
 
     }
 
-    drawLinesGraph(200, 1200, values, 'Score');
+    drawLinesGraph(200, 1200, this.values, 'Score');
   }
 };
 </script>
