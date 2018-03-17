@@ -4,6 +4,8 @@ import Home from '@/views/pages/Home/index.vue';
 import Login from '@/views/pages/Login/index.vue';
 import ManagePeople from '@/views/pages/ManagePeople/index.vue';
 import ProductTransactions from '@/views/pages/ProductTransactions/index.vue';
+import Analytics from '@/views/pages/Analytics/index.vue';
+
 
 Vue.use(Router);
 
@@ -29,6 +31,11 @@ export default new Router({
       path: '/transactions/products',
       name: 'ProductTransactions',
       component: ProductTransactions,
+    },
+    {
+      path: '/analytics',
+      name: 'Analytics',
+      component: Analytics,
     },
   ],
 });
