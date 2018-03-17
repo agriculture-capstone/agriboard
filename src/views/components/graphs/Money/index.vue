@@ -1,5 +1,5 @@
 <template>
-    <svg id="money" width="960" height="500"></svg>
+    <svg id="money"  width="80vw" height='40vh'></svg>
 </template>
 <script>
 import * as d3 from "d3";
@@ -249,7 +249,7 @@ export default {
 
     }
 
-    drawLinesGraph(window.innerHeight, window.innerWidth/3, values, 'Score');  }
+    drawLinesGraph(260, 960, values, 'Score');  }
 };
 </script>
 <style>

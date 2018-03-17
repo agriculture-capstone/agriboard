@@ -248,7 +248,7 @@ export default {
 
     }
 
-    drawLinesGraph(window.innerHeight/2, window.innerWidth/3, values, 'Score');  }
+    drawLinesGraph(window.innerHeight/2, window.innerWidth/2, values, 'Score');  }
 };
 </script>
 <style>
