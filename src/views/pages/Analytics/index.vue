@@ -29,11 +29,10 @@
           </div>
       </md-card>
       <md-card class='md-elevation-10 graph'>
-        <graph v-bind:values="values" type="product"/>
+        <graph v-bind:values="productTranscations" type="product"/>
       </md-card>
-
       <md-card class='md-elevation-10 graph'>
-        <graph v-bind:values="values" type="money"/>
+        <graph v-bind:values="moneyTranscations" type="money"/>
       </md-card>
   </div>
 </template>
@@ -46,7 +45,8 @@ export default {
   name: "analytics",
   data() {
     return {
-      values: [],
+      productTranscations: [],
+      moneyTranscations: [],
       error: '',
     };
   },
@@ -55,8 +55,10 @@ export default {
   },
   created() {
   // generate data
-    this.values.push(fillData ());
-    this.values.push(fillData ());
+    this.productTranscations.push(fillData ());
+    this.productTranscations.push(fillData ());
+    this.moneyTranscations.push(fillData ());
+    this.moneyTranscations.push(fillData ());
     //add more pushes for more lines
 
     function fillData () {

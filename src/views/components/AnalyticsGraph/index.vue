@@ -1,5 +1,7 @@
 <template>
+  <div id="graph" width="80vw" height='33vh'>
     <svg :id="this.type" width="80vw" height='33vh'></svg>
+  </div>
 </template>
 <script>
 import * as d3 from "d3";
@@ -7,17 +9,51 @@ export default {
   name: "graph",
   data () {
     return {
+      containerHeight: 0,
+      containerWidth: 0,
     };
   },
   props : ['values' , 'type'],
   mounted() {
-    console.log(this.type);
-    let drawLinesGraph = function(containerHeight, containerWidth, data, yLabel, type){
+    this.$nextTick(function() {
+      window.addEventListener('resize', this.getWindowWidth);
+      window.addEventListener('resize', this.getWindowHeight);
+      window.addEventListener('resize', this.redrawGraph);
+      //Init
+      this.getWindowWidth()
+      this.getWindowHeight()
+    })
+
+    this.drawLinesGraph(document.getElementById("graph").offsetHeight, document.getElementById("graph").offsetWidth, this.values, this.type, this.type);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.getWindowWidth);
+    window.removeEventListener('resize', this.getWindowHeight);
+    window.removeEventListener('resize', this.redrawGraph);
+
+  },
+  methods : {
+    redrawGraph() {
+      d3.select('svg').remove();
+      this.drawLinesGraph(document.getElementById("graph").offsetHeight, document.getElementById("graph").offsetWidth, this.values, this.type, this.type);
+    },
+
+    getWindowWidth(event) {
+      this.containerWidth = document.getElementById("graph").offsetWidth;
+      console.log(this.containerWidth);
+    },
+
+    getWindowHeight(event) {
+      this.containerHeight = document.getElementById("graph").offsetHeight;
+      console.log(this.containerHeight);
+    },
+
+    drawLinesGraph(containerHeight, containerWidth, data, yLabel, type){
+      
       let svg = d3.select('#' + type).append('svg')
                   .attr('width', containerWidth)
                   .attr('height', containerHeight);
-
-      let margin = {top: 50, left: 50, bottom: 50, right: 50};
+      let margin = {top: 10, left: 30, bottom: 30, right: 10};
 
       let height = containerHeight - margin.top - margin.bottom;
       let width = containerWidth - margin.right - margin.left;
@@ -218,11 +254,7 @@ export default {
         g.select(".axis--x").call(xAxis);
         g.select(".axis--y").call(yAxis);
       }
-
-
     }
-
-    drawLinesGraph(200, 1200, this.values, 'Score', this.type);
   }
 };
 </script>
