@@ -10,35 +10,10 @@ export default {
     };
   },
   props : ['values'],
+  methods: {
+
+  },
   mounted() {
-  
-  // generate data
-    this.values.push(fillData ());
-    this.values.push(fillData ());
-    //add more pushes for more lines
-
-    function fillData () {
-
-      let data = [];
-
-      let currentValue = 100;
-      let random = d3.randomNormal(200, 1000);
-
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + i);
-
-        data.push([currentDate, currentValue]);
-        currentValue = d3.randomUniform(10, 200)();
-
-      }
-
-    return data;
-
-    }
-
-//-------------------------------
-
     let drawLinesGraph = function(containerHeight, containerWidth, data, yLabel){
 
       let svg = d3.select('#product').append('svg')

@@ -59,6 +59,7 @@
 import product from "../../components/graphs/Product";
 import money from "../../components/graphs/Money";
 import users from "../../components/graphs/Users";
+import * as d3 from "d3";
 
 export default {
   name: "analytics",
@@ -73,7 +74,33 @@ export default {
     money,
     users
   },
-  mounted() {},
+  created() {
+  // generate data
+    this.productTransactions.push(fillData ());
+    this.productTransactions.push(fillData ());
+    //add more pushes for more lines
+
+    function fillData () {
+
+      let data = [];
+
+      let currentValue = 100;
+      let random = d3.randomNormal(200, 1000);
+
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + i);
+
+        data.push([currentDate, currentValue]);
+        currentValue = d3.randomUniform(10, 200)();
+
+      }
+
+    return data;
+
+    }
+
+  },
   methods: {}
 };
 </script>
