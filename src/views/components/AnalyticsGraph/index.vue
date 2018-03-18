@@ -19,7 +19,7 @@ export default {
       window.addEventListener('resize', this.redrawGraph);
     })
 
-      this.drawLinesGraph(document.getElementById(this.type).offsetHeight, document.getElementById(this.type).offsetWidth, 
+      this.drawLinesGraph(document.getElementById(this.type).offsetHeight * 0.90, document.getElementById(this.type).offsetWidth * 0.85, 
       this.values, this.type, this.type);
   },
   beforeDestroy() {
@@ -28,7 +28,7 @@ export default {
   methods : {
     redrawGraph() {
       d3.select('#' + this.type).selectAll('g').remove();
-      this.drawLinesGraph(document.getElementById(this.type).offsetHeight, document.getElementById(this.type).offsetWidth, 
+      this.drawLinesGraph(document.getElementById(this.type).offsetHeight * 0.90, document.getElementById(this.type).offsetWidth * 0.85, 
       this.values, this.type, this.type);
     },
 
