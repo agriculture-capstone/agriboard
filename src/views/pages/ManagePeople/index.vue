@@ -258,10 +258,10 @@ export default Vue.extend({
   }
 }
 
-.add-button {
-  position:relative;
-  z-index:1000;
-}
+// .add-button {
+//   position:relative;
+//   z-index:1000;
+// }
 
 .error {
   text-align: center;
