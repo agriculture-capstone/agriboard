@@ -39,6 +39,9 @@
                   <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
                 </md-field>
               </div>
+            </div>
+
+            <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Last Name</label>
@@ -241,10 +244,6 @@ export default Vue.extend({
   // width: 768px;
   display: inline-block;
 }
-
-// .card-content {
-//   width: 768px;
-// }
 
 .md-layout-item {
   &:after {
