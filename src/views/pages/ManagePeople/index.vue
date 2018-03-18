@@ -84,21 +84,19 @@
       <md-dialog :md-active.sync="showViewDialog">
         <md-dialog-title>User Details</md-dialog-title>
         
-        <md-card class="md-layout-item md-size-100 md-small-size-100">
-          <md-card-area md-inset>
-            <md-card-header>
-              <h2 class="md-title">{{ selected.name }}</h2>
-              <div class="md-subhead">
-                <md-icon>access_time</md-icon>
-                <span>Last Modified: {{ selected.lastModified }}</span>
-              </div>
-            </md-card-header>
-          </md-card-area>
-          <md-card-content>
+        <md-card class="md-layout md-size-100 md-small-size-100">
+          
+          <md-card-header class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <span class="md-headline">{{ selected.name }}</span>
+            <div class="md-subhead">
+              <md-icon>access_time</md-icon>
+              <span>Last Modified: {{ selected.lastModified }}</span>
+            </div>
+          </md-card-header>
+
+          <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
             <h3 class="md-subheading"><b>Phone Number</b></h3>
             {{ selected.phoneNumber }}
-          </md-card-content>
-          <md-card-content>
             <h3 class="md-subheading"><b>Category</b></h3>
             {{ selected.peopleCategory }}
           </md-card-content>
