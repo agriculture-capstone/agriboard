@@ -106,9 +106,69 @@
         </div>
         <md-dialog-actions>
           <md-button class="md-info" @click="showViewDialog = false">Cancel</md-button>
-          <md-button class="md-primary" @click="showViewDialog = false">Edit</md-button>
+          <md-button class="md-primary" @click="showViewDialog = false, showEditDialog = true">Edit</md-button>
         </md-dialog-actions>
       </md-dialog>
+    </div>
+
+    <div class="edit-dialog-wrapper">
+      <md-dialog :md-active.sync="showEditDialog">
+        <md-dialog-title>Edit User</md-dialog-title>
+
+        <div class="md-layout md-size-100 md-small-size-100">
+          <md-card-header class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <span class="md-headline">{{ selected.name }}</span>
+            <div class="md-subhead">
+              <md-icon>access_time</md-icon>
+              <span>Last Modified: {{ selected.lastModified }}</span>
+            </div>
+          </md-card-header>
+          <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>First Name</label>
+                  <md-input v-model="selected.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                </md-field>
+              </div>
+            </div>
+
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>Last Name</label>
+                  <md-input v-model="selected.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                </md-field>
+              </div>
+            </div>
+
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>Phone Number</label>
+                  <md-input v-model="selected.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                </md-field>
+              </div>
+            </div>
+            
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <label>User Type</label>
+                <md-radio v-model="selected.peopleCategory" value="farmer">Farmer</md-radio>
+                <md-radio v-model="selected.peopleCategory" value="trader">Trader</md-radio>
+                <md-radio v-model="selected.peopleCategory" value="admin">Admin</md-radio>
+              </div>
+            </div>
+
+          </md-card-content>
+        </div>
+        <md-dialog-actions>
+          <md-button class="md-info" @click="showEditDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showEditDialog = false">Save</md-button>
+        </md-dialog-actions>
+      </md-dialog>
+
     </div>
   </div>
 </template>
@@ -190,6 +250,8 @@ export default Vue.extend({
             // construct person
             return {
               name: fullName,
+              firstName: person.firstName,
+              lastName: person.lastName,
               phoneNumber: fullPhone,
               peopleCategory: person.peopleCategory,
               lastModified: new Date(person.lastModified).toUTCString(),
