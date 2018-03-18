@@ -1,45 +1,19 @@
 <template>
-    <svg id="money"  width="80vw" height='33vh'></svg>
+    <svg :id="this.type" width="80vw" height='33vh'></svg>
 </template>
 <script>
 import * as d3 from "d3";
 export default {
-  name: "money",
+  name: "graph",
+  data () {
+    return {
+    };
+  },
+  props : ['values' , 'type'],
   mounted() {
-
-  // generate data
-    let values = [];
-
-    values.push(fillData ());
-    values.push(fillData ());
-    values.push(fillData ());
-    //add more pushes for more lines
-
-    function fillData () {
-
-      let data = [];
-
-      let currentValue = 100;
-      let random = d3.randomNormal(200, 300);
-
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + i);
-
-        data.push([currentDate, currentValue]);
-        currentValue = currentValue + random();
-
-      }
-
-    return data;
-
-    }
-
-//-------------------------------
-
-    let drawLinesGraph = function(containerHeight, containerWidth, data, yLabel){
-
-      let svg = d3.select('#money').append('svg')
+    console.log(this.type);
+    let drawLinesGraph = function(containerHeight, containerWidth, data, yLabel, type){
+      let svg = d3.select('#' + type).append('svg')
                   .attr('width', containerWidth)
                   .attr('height', containerHeight);
 
@@ -150,7 +124,6 @@ export default {
 
       let voronoiRadius = width;
 
-
       //focus
 
       let focus = g.append('g').style('display', 'none');
@@ -249,7 +222,8 @@ export default {
 
     }
 
-    drawLinesGraph(200, 1200, values, 'Score');  }
+    drawLinesGraph(200, 1200, this.values, 'Score', this.type);
+  }
 };
 </script>
 <style>

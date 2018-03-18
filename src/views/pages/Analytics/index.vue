@@ -29,55 +29,34 @@
           </div>
       </md-card>
       <md-card class='md-elevation-10 graph'>
-        <product v-bind:values="productTransactions"/>
+        <graph v-bind:values="values" type="product"/>
       </md-card>
 
       <md-card class='md-elevation-10 graph'>
-        <money/>
+        <graph v-bind:values="values" type="money"/>
       </md-card>
-    <!-- <div class='"md-layout md-gutter md-alignment-center"'>
-      <div class="md-layout-item">
-        <md-card class='md-elevation-10'>
-          <product/>
-        </md-card>
-      </div>
-      <div class="md-layout-item">
-        <md-card class='md-elevation-10'>
-          <money/>
-        </md-card>
-      </div>
-      <div class="md-layout-item">
-        <md-card class='md-elevation-10'>
-          <users/>
-        </md-card>
-      </div>
-      </div> -->
   </div>
 </template>
 
 <script>
-import product from "../../components/graphs/Product";
-import money from "../../components/graphs/Money";
-import users from "../../components/graphs/Users";
+import graph from "../../components/AnalyticsGraph";
 import * as d3 from "d3";
 
 export default {
   name: "analytics",
   data() {
     return {
-      productTransactions: [],
+      values: [],
       error: '',
     };
   },
   components: {
-    product,
-    money,
-    users
+    graph
   },
   created() {
   // generate data
-    this.productTransactions.push(fillData ());
-    this.productTransactions.push(fillData ());
+    this.values.push(fillData ());
+    this.values.push(fillData ());
     //add more pushes for more lines
 
     function fillData () {
