@@ -15,7 +15,6 @@ export default {
   // generate data
     this.values.push(fillData ());
     this.values.push(fillData ());
-    this.values.push(fillData ());
     //add more pushes for more lines
 
     function fillData () {
@@ -30,7 +29,7 @@ export default {
         currentDate.setDate(currentDate.getDate() + i);
 
         data.push([currentDate, currentValue]);
-        currentValue = currentValue + random();
+        currentValue = d3.randomUniform(10, 200)();
 
       }
 
