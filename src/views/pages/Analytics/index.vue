@@ -1,33 +1,35 @@
 <template>
   <div class='center'>
       <md-card class='md-elevation-10 stats'>
+            <div class="md-title"> Weekly Statistics </div>
           <div class="md-layout">
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="md-body-2">Collected this Week</div>
-                    <div class="md-subhead">3453 L</div>
+                    <div class="stat-heading">Milk Collected</div>
+                    <div class="stat">341 L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="md-body-2">Exported this Week</div>
-                    <div class="md-subhead">3453 L</div>
+                    <div class="stat-heading">Milk Delivered</div>
+                    <div class="stat">333 L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="md-body-2">Loans Dispersed this Week</div>
-                    <div class="md-subhead">3453 L</div>
+                    <div class="stat-heading">Loans Dispersed</div>
+                    <div class="stat">3454 L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
           </div>
       </md-card>
+
       <md-card class='md-elevation-10 graph'>
         <graph 
           v-bind:values="productTranscations" 
@@ -120,6 +122,19 @@ export default {
   margin-top:1%;
   height: 12vh;
   align-items: center;
+}
 
+.stat {
+  font-size:1.8vh;
+  color: grey
+}
+
+.stat-heading {
+  font-size:2vh;
+  color: blue;
+}
+
+#stats-title {
+  font-size:3vh;
 }
 </style>
