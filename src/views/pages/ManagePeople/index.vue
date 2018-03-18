@@ -71,9 +71,9 @@
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <h3 class="md-subheading"><b>Category</b></h3>
-                <md-radio v-model="form.personType" value="farmer">Farmer</md-radio>
-                <md-radio v-model="form.personType" value="trader">Trader</md-radio>
-                <md-radio v-model="form.personType" value="admin">Admin</md-radio>
+                <md-radio v-model="form.personType" value="farmers">Farmer</md-radio>
+                <md-radio v-model="form.personType" value="traders">Trader</md-radio>
+                <md-radio v-model="form.personType" value="admins">Admin</md-radio>
               </div>
             </div>
 
@@ -166,9 +166,9 @@
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <h3 class="md-subheading"><b>Category</b></h3>
-                <md-radio v-model="selected.peopleCategory" value="farmer">Farmer</md-radio>
-                <md-radio v-model="selected.peopleCategory" value="trader">Trader</md-radio>
-                <md-radio v-model="selected.peopleCategory" value="admin">Admin</md-radio>
+                <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
+                <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
+                <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
               </div>
             </div>
 
