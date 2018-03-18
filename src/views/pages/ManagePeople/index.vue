@@ -61,7 +61,7 @@
 
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <h3 class="md-subheading"><b>User Type</b></h3>
+                <h3 class="md-subheading"><b>Category</b></h3>
                 <md-radio v-model="form.personType" value="farmer">Farmer</md-radio>
                 <md-radio v-model="form.personType" value="trader">Trader</md-radio>
                 <md-radio v-model="form.personType" value="admin">Admin</md-radio>
@@ -116,15 +116,8 @@
         <md-dialog-title>Edit User</md-dialog-title>
 
         <div class="md-layout md-size-100 md-small-size-100">
-          <md-card-header class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-            <span class="md-headline">{{ selected.name }}</span>
-            <div class="md-subhead">
-              <md-icon>access_time</md-icon>
-              <span>Last Modified: {{ selected.lastModified }}</span>
-            </div>
-          </md-card-header>
           <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-            
+
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
@@ -154,10 +147,19 @@
             
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <label>User Type</label>
+                <h3 class="md-subheading"><b>Category</b></h3>
                 <md-radio v-model="selected.peopleCategory" value="farmer">Farmer</md-radio>
                 <md-radio v-model="selected.peopleCategory" value="trader">Trader</md-radio>
                 <md-radio v-model="selected.peopleCategory" value="admin">Admin</md-radio>
+              </div>
+            </div>
+
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <div class="md-subhead">
+                  <md-icon>access_time</md-icon>
+                  <span>Last Modified: {{ selected.lastModified }}</span>
+                </div>
               </div>
             </div>
 
