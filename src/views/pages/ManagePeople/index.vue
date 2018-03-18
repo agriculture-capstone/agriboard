@@ -17,7 +17,7 @@
 
       <h2 class="error md-subheader">{{error}}</h2>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }" class="md-primary" md-selectable="single" md-auto-select>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" md-auto-select>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
         <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
@@ -77,9 +77,7 @@
     <div class="view-dialog-wrapper">
       <md-dialog :md-active.sync="showViewDialog">
         <md-dialog-title>User Details</md-dialog-title>
-        
-        <md-card class="md-layout md-size-100 md-small-size-100">
-          
+        <div class="md-layout md-size-100 md-small-size-100">
           <md-card-header class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
             <span class="md-headline">{{ selected.name }}</span>
             <div class="md-subhead">
@@ -87,15 +85,13 @@
               <span>Last Modified: {{ selected.lastModified }}</span>
             </div>
           </md-card-header>
-
           <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
             <h3 class="md-subheading"><b>Phone Number</b></h3>
             {{ selected.phoneNumber }}
             <h3 class="md-subheading"><b>Category</b></h3>
             {{ selected.peopleCategory }}
           </md-card-content>
-        </md-card>
-
+        </div>
         <md-dialog-actions>
           <md-button class="md-info" @click="showViewDialog = false">Cancel</md-button>
           <md-button class="md-primary" @click="showViewDialog = false">Edit</md-button>
