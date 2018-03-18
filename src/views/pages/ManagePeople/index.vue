@@ -80,36 +80,27 @@
       </md-dialog>
     </div>
     
-    <div class="edit-dialog-wrapper">
+    <div class="view-dialog-wrapper">
       <md-dialog :md-active.sync="showViewDialog">
         <md-dialog-title>User Details</md-dialog-title>
         
         <md-card class="md-layout-item md-size-100 md-small-size-100">
-          <md-card-header>
-            <div class="md-title">{{ selected.name }}</div>
-          </md-card-header>
-          <md-card-content class="card-content">
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <h3 class="md-subheading">Phone Number</h3>
-                <br/>
-                {{ selected.phoneNumber }}
+          <md-card-area md-inset>
+            <md-card-header>
+              <h2 class="md-title">{{ selected.name }}</h2>
+              <div class="md-subhead">
+                <md-icon>access_time</md-icon>
+                <span>Last Modified: {{ selected.lastModified }}</span>
               </div>
-              <div class="md-layout-item md-small-size-100">
-                <h3 class="md-subheading">Category</h3>                
-                <br/>
-                {{ selected.peopleCategory }}
-              </div>
-            </div>
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <h3 class="md-subheading">Last Modified</h3> 
-                <br/>
-                {{ selected.lastModified }}
-              </div>
-            </div>
-
+            </md-card-header>
+          </md-card-area>
+          <md-card-content>
+            <h3 class="md-subheading"><b>Phone Number</b></h3>
+            {{ selected.phoneNumber }}
+          </md-card-content>
+          <md-card-content>
+            <h3 class="md-subheading"><b>Category</b></h3>
+            {{ selected.peopleCategory }}
           </md-card-content>
         </md-card>
 
@@ -263,9 +254,9 @@ export default Vue.extend({
   width: 768px;  
 }
 
-.card-content {
-  width: 768px;
-}
+// .card-content {
+//   width: 768px;
+// }
 
 .md-layout-item {
   &:after {
