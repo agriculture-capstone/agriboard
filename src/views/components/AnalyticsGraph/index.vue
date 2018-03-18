@@ -1,12 +1,12 @@
 <template>
-  <div id="graph" width="80vw" height='33vh'>
-    <svg :id="this.type" width="80vw" height='33vh'></svg>
+  <div :id="this.type">
+    <svg width="80vw" height='33vh'></svg>
   </div>
 </template>
 <script>
 import * as d3 from "d3";
 export default {
-  name: "graph",
+  name: 'graph',
   data () {
     return {
       containerHeight: 0,
@@ -16,43 +16,25 @@ export default {
   props : ['values' , 'type'],
   mounted() {
     this.$nextTick(function() {
-      window.addEventListener('resize', this.getWindowWidth);
-      window.addEventListener('resize', this.getWindowHeight);
       window.addEventListener('resize', this.redrawGraph);
-      //Init
-      this.getWindowWidth()
-      this.getWindowHeight()
     })
 
-    this.drawLinesGraph(document.getElementById("graph").offsetHeight, document.getElementById("graph").offsetWidth, this.values, this.type, this.type);
+      this.drawLinesGraph(document.getElementById(this.type).offsetHeight, document.getElementById(this.type).offsetWidth, 
+      this.values, this.type, this.type);
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.getWindowWidth);
-    window.removeEventListener('resize', this.getWindowHeight);
     window.removeEventListener('resize', this.redrawGraph);
-
   },
   methods : {
     redrawGraph() {
-      d3.select('svg').remove();
-      this.drawLinesGraph(document.getElementById("graph").offsetHeight, document.getElementById("graph").offsetWidth, this.values, this.type, this.type);
-    },
-
-    getWindowWidth(event) {
-      this.containerWidth = document.getElementById("graph").offsetWidth;
-      console.log(this.containerWidth);
-    },
-
-    getWindowHeight(event) {
-      this.containerHeight = document.getElementById("graph").offsetHeight;
-      console.log(this.containerHeight);
+      d3.select('#' + this.type).selectAll('g').remove();
+      this.drawLinesGraph(document.getElementById(this.type).offsetHeight, document.getElementById(this.type).offsetWidth, 
+      this.values, this.type, this.type);
     },
 
     drawLinesGraph(containerHeight, containerWidth, data, yLabel, type){
       
-      let svg = d3.select('#' + type).append('svg')
-                  .attr('width', containerWidth)
-                  .attr('height', containerHeight);
+      let svg = d3.select('#' + type).select('svg');
       let margin = {top: 10, left: 30, bottom: 30, right: 10};
 
       let height = containerHeight - margin.top - margin.bottom;

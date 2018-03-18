@@ -39,6 +39,7 @@
 
 <script>
 import graph from "../../components/AnalyticsGraph";
+
 import * as d3 from "d3";
 
 export default {
@@ -51,8 +52,9 @@ export default {
     };
   },
   components: {
-    graph
+    graph,
   },
+
   created() {
   // generate data
     this.productTranscations.push(fillData ());
