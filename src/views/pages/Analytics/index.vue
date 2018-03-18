@@ -33,15 +33,15 @@
           v-bind:values="productTranscations" 
           title="Milk-Collections-and-Deliveries" 
           xUnits="Date" 
-          yUnits="L"
+          yUnits="Litres"
         />
       </md-card>
       <md-card class='md-elevation-10 graph'>
         <graph 
           v-bind:values="moneyTranscations" 
           title="Loan-Dispersals-and-Payments" 
-          Xunits="Date" 
-          Yunits="UGX"
+          xUnits="Date" 
+          yUnits="UGX"
         />
       </md-card>
   </div>

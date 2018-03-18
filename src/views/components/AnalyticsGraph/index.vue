@@ -18,7 +18,7 @@ export default {
     })
 
       this.drawLinesGraph(document.getElementById(this.title).offsetHeight * 0.90, document.getElementById(this.title).offsetWidth * 0.85, 
-      this.values, this.title, this.title);
+      this.values, this.title, this.xUnits, this.yUnits);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.redrawGraph);
@@ -27,12 +27,12 @@ export default {
     redrawGraph() {
       d3.select('#' + this.title).selectAll('g').remove();
       this.drawLinesGraph(document.getElementById(this.title).offsetHeight * 0.90, document.getElementById(this.title).offsetWidth * 0.85, 
-      this.values, this.title, this.title);
+      this.values, this.title, this.xUnits, this.yUnits);
     },
 
-    drawLinesGraph(containerHeight, containerWidth, data, yLabel, type){
+    drawLinesGraph(containerHeight, containerWidth, data, title, xUnits, yUnits){
       
-      let svg = d3.select('#' + type).select('svg');
+      let svg = d3.select('#' + title).select('svg');
       let margin = {top: 10, left: 50, bottom: 30, right: 10};
 
       let height = containerHeight - margin.top - margin.bottom;
@@ -45,7 +45,7 @@ export default {
       let minX = d3.min(data, function(d){ return d3.min(d, function(e){return e[0]})});
       let maxX = d3.max(data, function(d){ return d3.max(d, function(e){return e[0]})});
       let minY = d3.min(data, function(d){ return d3.min(d, function(e){return e[1]})});
-      let maxY = d3.max(data, function(d){ return d3.max(d, function(e){return e[1]})});
+      let maxY = d3.max(data, function(d){ return d3.max(d, function(e){return e[1]})}) * 1.30;
 
       let ratio =  height / width;
 
@@ -55,7 +55,7 @@ export default {
 
       let yScale = d3.scaleLinear()
                      .range([height, 0])
-                     .domain([minY, maxY * 1.30]);
+                     .domain([minY, maxY]);
 
       let zScale = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -227,32 +227,34 @@ export default {
         g.select(".axis--x").call(xAxis);
         g.select(".axis--y").call(yAxis);
       }
-
+      //Graph Title from props
       g.append("text")
         .attr("transform",
             "translate(" + (width/2) + " ," + 
                            (height / 10 ) + ")")
         .attr("text-anchor", "middle")  
-        .style("font-size", "14px") 
+        .style("font-size", "2.2vh") 
         .style("text-decoration", "underline")  
-        .text(type);
+        .text(title);
 
-          // text label for the x axis
+      // text label for the x axis taken from props
       g.append("text")             
         .attr("transform",
             "translate(" + (width/2) + " ," + 
                            (height + (margin.top * 4)) + ")")
         .style("text-anchor", "middle")
-        .text("Date");
+        .style("font-size", "2vh") 
+        .text(xUnits);
 
-        // text label for the y axis
+        // text label for the y axis taken from props
       g.append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", 0 - margin.left)
           .attr("x",0 - (height / 2))
           .attr("dy", "1em")
           .style("text-anchor", "middle")
-          .text("Value"); 
+          .style("font-size", "2vh") 
+          .text(yUnits); 
     }
   }
 };
@@ -268,14 +270,6 @@ svg {
 
 .axis path {
   stroke: black;
-}
-
-.text {
-  font-size: 12px;
-}
-
-.title-text {
-  font-size: 12px;
 }
 </style>
 
