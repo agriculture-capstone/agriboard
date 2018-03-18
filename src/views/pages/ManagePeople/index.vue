@@ -140,7 +140,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Middle Name</label>
-                  <md-input v-model="selected.lastName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                  <md-input v-model="selected.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
                 </md-field>
               </div>
             </div>
