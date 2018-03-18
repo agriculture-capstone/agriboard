@@ -44,6 +44,15 @@
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
+                  <label>Middle Name</label>
+                  <md-input v-model="form.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                </md-field>
+              </div>
+            </div>
+
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
                   <label>Last Name</label>
                   <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
                 </md-field>
@@ -123,6 +132,15 @@
                 <md-field>
                   <label>First Name</label>
                   <md-input v-model="selected.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                </md-field>
+              </div>
+            </div>
+
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label>Middle Name</label>
+                  <md-input v-model="selected.lastName" name="middle-name" id="middle-name" autocomplete="middle-name" />
                 </md-field>
               </div>
             </div>
@@ -253,6 +271,7 @@ export default Vue.extend({
             return {
               name: fullName,
               firstName: person.firstName,
+              middleName: person.middleName,
               lastName: person.lastName,
               phoneNumber: fullPhone,
               peopleCategory: person.peopleCategory,
@@ -287,6 +306,7 @@ export default Vue.extend({
       form: {
         personType: '',
         firstName: '',
+        middleName: '',
         lastName: '',
         phoneNumber: '',
         notes: '',
