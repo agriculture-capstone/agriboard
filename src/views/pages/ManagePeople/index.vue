@@ -57,9 +57,8 @@
             </div>
 
             <div class="md-layout md-gutter">
-              <!-- <div class="md-card-header"><b>User Type:</b></div> -->
-              <h3 class="md-subheading"><b>User Type:</b></h3>
               <div class="md-layout-item md-small-size-100">
+                <h3 class="md-subheading"><b>User Type:</b></h3>
                 <md-radio v-model="radio" value="farmer">Farmer</md-radio>
                 <md-radio v-model="radio" value="trader">Trader</md-radio>
                 <md-radio v-model="radio" value="admin">Admin</md-radio>
@@ -239,8 +238,8 @@ export default Vue.extend({
 }
 
 .md-dialog {
-  // max-width: 768px;
-  width: 768px;  
+  // width: 768px;
+  display: inline-block;
 }
 
 // .card-content {
