@@ -1,5 +1,5 @@
 <template>
-  <div :id="this.type">
+  <div :id="this.title">
     <svg width="80vw" height='33vh'></svg>
   </div>
 </template>
@@ -9,33 +9,31 @@ export default {
   name: 'graph',
   data () {
     return {
-      containerHeight: 0,
-      containerWidth: 0,
     };
   },
-  props : ['values' , 'type'],
+  props : ['values' , 'title', 'xUnits', 'yUnits'],
   mounted() {
     this.$nextTick(function() {
       window.addEventListener('resize', this.redrawGraph);
     })
 
-      this.drawLinesGraph(document.getElementById(this.type).offsetHeight * 0.90, document.getElementById(this.type).offsetWidth * 0.85, 
-      this.values, this.type, this.type);
+      this.drawLinesGraph(document.getElementById(this.title).offsetHeight * 0.90, document.getElementById(this.title).offsetWidth * 0.85, 
+      this.values, this.title, this.title);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.redrawGraph);
   },
   methods : {
     redrawGraph() {
-      d3.select('#' + this.type).selectAll('g').remove();
-      this.drawLinesGraph(document.getElementById(this.type).offsetHeight * 0.90, document.getElementById(this.type).offsetWidth * 0.85, 
-      this.values, this.type, this.type);
+      d3.select('#' + this.title).selectAll('g').remove();
+      this.drawLinesGraph(document.getElementById(this.title).offsetHeight * 0.90, document.getElementById(this.title).offsetWidth * 0.85, 
+      this.values, this.title, this.title);
     },
 
     drawLinesGraph(containerHeight, containerWidth, data, yLabel, type){
       
       let svg = d3.select('#' + type).select('svg');
-      let margin = {top: 10, left: 30, bottom: 30, right: 10};
+      let margin = {top: 10, left: 50, bottom: 30, right: 10};
 
       let height = containerHeight - margin.top - margin.bottom;
       let width = containerWidth - margin.right - margin.left;
@@ -57,7 +55,10 @@ export default {
 
       let yScale = d3.scaleLinear()
                      .range([height, 0])
-                     .domain([minY, maxY]);
+                     .domain([minY, maxY * 1.30]);
+
+      let zScale = d3.scaleOrdinal(d3.schemeCategory10);
+
 
      let line = d3.line()
          .x(function(d) { return xScale(d[0]); })
@@ -88,14 +89,6 @@ export default {
       g.append('g')
          .attr('class', 'axis--y')
          .call(yAxis)
-         .append('text')
-             .attr('transform', 'rotate(-90)')
-             .attr('y', 10)
-             .attr('dy', '.1em')
-             .attr('text-anchor', 'end')
-             .attr('fill', 'rgb(54, 54, 54)')
-             .attr('font-size', '1.2em')
-             .text(yLabel)
 
       g.append('defs')
          .append('clipPath')
@@ -110,8 +103,6 @@ export default {
          .attr('class', 'main')
          .attr('clip-path', 'url(#clip)');
 
-
-
       for( let i = 0; i < data.length; i++ ){
           main.append('path')
             .datum(data[i])
@@ -124,7 +115,7 @@ export default {
           main.selectAll('.circle').data(data[i]).enter().append('circle')
             .attr('cx', function(d) { return xScale(d[0]); })
             .attr('cy', function(d) { return yScale(d[1]); })
-            .attr('r', 4)
+            .attr('r', 2)
             .attr('fill', 'white')
             .attr('stroke', d => colors(i))
             .attr('stroke-width', 1)
@@ -236,6 +227,32 @@ export default {
         g.select(".axis--x").call(xAxis);
         g.select(".axis--y").call(yAxis);
       }
+
+      g.append("text")
+        .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height / 10 ) + ")")
+        .attr("text-anchor", "middle")  
+        .style("font-size", "14px") 
+        .style("text-decoration", "underline")  
+        .text(type);
+
+          // text label for the x axis
+      g.append("text")             
+        .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + (margin.top * 4)) + ")")
+        .style("text-anchor", "middle")
+        .text("Date");
+
+        // text label for the y axis
+      g.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 0 - margin.left)
+          .attr("x",0 - (height / 2))
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text("Value"); 
     }
   }
 };

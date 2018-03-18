@@ -29,10 +29,20 @@
           </div>
       </md-card>
       <md-card class='md-elevation-10 graph'>
-        <graph v-bind:values="productTranscations" type="product"/>
+        <graph 
+          v-bind:values="productTranscations" 
+          title="Milk-Collections-and-Deliveries" 
+          xUnits="Date" 
+          yUnits="L"
+        />
       </md-card>
       <md-card class='md-elevation-10 graph'>
-        <graph v-bind:values="moneyTranscations" type="money"/>
+        <graph 
+          v-bind:values="moneyTranscations" 
+          title="Loan-Dispersals-and-Payments" 
+          Xunits="Date" 
+          Yunits="UGX"
+        />
       </md-card>
   </div>
 </template>
