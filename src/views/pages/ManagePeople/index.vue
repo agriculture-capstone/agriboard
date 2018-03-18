@@ -29,8 +29,8 @@
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
         
-        <md-card class="md-layout-item md-size-100 md-small-size-100">
-          <md-card-content class="card-content">
+        <div class="md-layout-item md-size-100 md-small-size-100">
+          <md-card-content>
             
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
@@ -57,7 +57,8 @@
             </div>
 
             <div class="md-layout md-gutter">
-              <div class="md-card-header">User Type:</div>
+              <!-- <div class="md-card-header"><b>User Type:</b></div> -->
+              <h3 class="md-subheading"><b>User Type:</b></h3>
               <div class="md-layout-item md-small-size-100">
                 <md-radio v-model="radio" value="farmer">Farmer</md-radio>
                 <md-radio v-model="radio" value="trader">Trader</md-radio>
@@ -65,7 +66,7 @@
               </div>
             </div>
           </md-card-content>
-        </md-card>
+        </div>
 
         <md-dialog-actions>
           <md-button class="md-info" @click="showAddDialog = false">Cancel</md-button>
