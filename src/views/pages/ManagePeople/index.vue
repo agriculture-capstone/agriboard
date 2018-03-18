@@ -54,12 +54,12 @@
                   <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
                 </md-field>
               </div>
-              <div class="md-layout-item md-small-size-100">
+              <!-- <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Email</label>
                   <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
                 </md-field>
-              </div>
+              </div> -->
             </div>
 
             <div class="md-layout md-gutter">
