@@ -314,6 +314,8 @@ export default Vue.extend({
 
 .md-dialog {
   // width: 768px;
+  padding-left: 3%;
+  padding-right: 3%;
   display: inline-block;
 }
 
