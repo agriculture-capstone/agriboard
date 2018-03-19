@@ -28,65 +28,64 @@
     <div class="create-dialog-wrapper">
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
-        
-        <div class="md-layout-item md-size-100 md-small-size-100">
-          <md-card-content>
-            
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>First Name</label>
-                  <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
-                </md-field>
+        <md-dialog-content>
+          <div class="md-layout-item md-size-100 md-small-size-100">
+              
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>First Name</label>
+                    <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                  </md-field>
+                </div>
               </div>
-            </div>
 
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Middle Name</label>
-                  <md-input v-model="form.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
-                </md-field>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Middle Name</label>
+                    <md-input v-model="form.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                  </md-field>
+                </div>
               </div>
-            </div>
 
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Last Name</label>
-                  <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
-                </md-field>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Last Name</label>
+                    <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                  </md-field>
+                </div>
               </div>
-            </div>
 
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Phone Number</label>
-                  <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                </md-field>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Phone Number</label>
+                    <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                  </md-field>
+                </div>
               </div>
-            </div>
 
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <h3 class="md-subheading"><b>Category</b></h3>
-                <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
-                <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
-                <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <h3 class="md-subheading"><b>Category</b></h3>
+                  <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
+                  <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
+                  <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
+                </div>
               </div>
-            </div>
 
-            <div class="md-layout md-gutter" v-if="form.peopleCategory == 'farmers'">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Notes</label>
-                  <md-input v-model="form.notes" name="notes" id="notes" autocomplete="notes" />
-                </md-field>
+              <div class="md-layout md-gutter" v-if="form.peopleCategory == 'farmers'">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Notes</label>
+                    <md-input v-model="form.notes" name="notes" id="notes" autocomplete="notes" />
+                  </md-field>
+                </div>
               </div>
-            </div>
-          </md-card-content>
-        </div>
+          </div>
+        </md-dialog-content>
 
         <md-dialog-actions>
           <md-button class="md-info" @click="showAddDialog = false">Cancel</md-button>
@@ -336,8 +335,12 @@ export default Vue.extend({
   // width: 768px;
   padding-left: 3%;
   padding-right: 3%;
-  display: inline-block;
+  // display: inline-block;
 }
+
+// .md-dialog-content {
+//   display: inline-block;
+// }
 
 .md-layout-item {
   &:after {
