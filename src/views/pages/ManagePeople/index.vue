@@ -171,6 +171,15 @@
               </div>
             </div>
 
+            <div class="md-layout md-gutter" v-if="selected.peopleCategory == 'farmers'">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Notes</label>
+                    <md-input v-model="selected.notes" name="notes" id="notes" autocomplete="notes" />
+                  </md-field>
+                </div>
+              </div>
+
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <div class="md-subhead">
