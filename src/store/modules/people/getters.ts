@@ -1,6 +1,6 @@
-import { MutationHandlers } from '@/store/types';
+import { GetterHandlers } from '@/store/types';
 import { PeopleState } from './types';
 
-const mutations: MutationHandlers<PeopleState> = {
+const mutations: GetterHandlers<PeopleState> = {
 
-}
+};

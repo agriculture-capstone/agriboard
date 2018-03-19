@@ -87,14 +87,28 @@ export type StoreRow<T> = T & DataStatus & LastModifiedData & UUIDData;
  *
  * @template T Data model for module
  */
-export type StoreLocalCreationRow<T> = T & LastModifiedData & UUIDData;
+export type CreationMutateRow<T> = StoreRow<T>;
 
 /**
  * Data model for local update
  *
  * @template T Data model for module
  */
-export type StoreLocalUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
+export type UpdateMutateRow<T> = Partial<StoreRow<T>>;
+
+/**
+ * Data model for thunk item creation
+ *
+ * @template T Data model for module
+ */
+export type CreationActionRow<T> = T & Partial<UUIDData>;
+
+/**
+ * Data model for thunk item update
+ *
+ * @template T Data model for module
+ */
+export type UpdateActionRow<T> = Partial<T> & UUIDData;
 
 /**
  * Data model for sync update
