@@ -71,13 +71,13 @@
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <h3 class="md-subheading"><b>Category</b></h3>
-                <md-radio v-model="form.personType" value="farmers">Farmer</md-radio>
-                <md-radio v-model="form.personType" value="traders">Trader</md-radio>
-                <md-radio v-model="form.personType" value="admins">Admin</md-radio>
+                <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
+                <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
+                <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
               </div>
             </div>
 
-            <div class="md-layout md-gutter" v-if="form.personType == 'farmer'">
+            <div class="md-layout md-gutter" v-if="form.peopleCategory == 'farmers'">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Notes</label>
@@ -304,7 +304,7 @@ export default Vue.extend({
       showViewDialog: false,
       showEditDialog: false,
       form: {
-        personType: '',
+        peopleCategory: '',
         firstName: '',
         middleName: '',
         lastName: '',
