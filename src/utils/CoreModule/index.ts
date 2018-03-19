@@ -4,10 +4,17 @@ import * as R from 'ramda';
 import { CoreModuleState, StoreRow, MutationHandlers, ActionHandlers, CreationMutateRow, UpdateMutateRow } from '@/store/types';
 import { updateElementByProp } from '@/utils/list/updateElement';
 import { hasUUID } from './utils';
-import api from '@/utils/api';
+import CoreAPI, { CorePath } from '@/utils/CoreAPI';
 
 type CreatePayload<T> = { row: CreationMutateRow<T> };
 type UpdatePayload<T> = { row: UpdateMutateRow<T> };
+
+/*--------------------------------- Types ---------------------------------*/
+
+/** Different types of modules */
+export type CoreModuleName = 'farmer' | 'milk' | 'export' | 'loan';
+
+/*--------------------------------- Functions ---------------------------------*/
 
 function createMutations<T>(): MutationHandlers<CoreModuleState<T>> {
   return {
@@ -21,22 +28,19 @@ function createMutations<T>(): MutationHandlers<CoreModuleState<T>> {
   };
 }
 
-function createActions<Row>(): ActionHandlers<CoreModuleState<Row>> {
+function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>> {
   return {
     async createRow ({ commit }, { row }: CreatePayload<Row>) {
-      let creationRow: CreationMutateRow<Row>;
 
-      if (hasUUID(row)) {
-        // Already been created locally
-        creationRow = row;
-      } else {
-        creationRow = StoreUtils.convertCreationRow(newRow);
+      const payload: CreationMutateRow<Row> = {
+        ...(row as any),
+        lastModified: new Date().toUTCString(),
+        uuid: uuid4(),
+        status: 'local',
+      };
+      commit('createRow', payload);
 
-        // Store the local copy
-        dispatch(createRowLocal(creationRow));
-      }
-
-      const { uuid } = creationRow;
+      const { uuid } = payload;
 
 
       // Send the new row to the core
