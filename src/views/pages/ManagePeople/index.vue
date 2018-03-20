@@ -180,15 +180,6 @@
                   </div>
                 </div>
 
-              <div class="md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <div class="md-subhead">
-                    <md-icon>access_time</md-icon>
-                    <span>Last Modified: {{ selected.lastModified }}</span>
-                  </div>
-                </div>
-              </div>
-
             </md-card-content>
           </div>
         </md-dialog-content>
