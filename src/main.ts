@@ -11,6 +11,7 @@ import {
   MdRipple,
   MdContent,
   MdSubheader,
+  MdTabs,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
@@ -31,6 +32,7 @@ Vue.use(MdField);
 Vue.use(MdRipple);
 Vue.use(MdContent);
 Vue.use(MdSubheader);
+Vue.use(MdTabs);
 
 /* eslint-disable no-new */
 new Vue({

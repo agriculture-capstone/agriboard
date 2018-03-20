@@ -8,4 +8,5 @@ declare module 'vue-material/dist/components' {
   export const MdRipple: any;
   export const MdContent: any;
   export const MdSubheader: any;
+  export const MdTabs: any;
 }
