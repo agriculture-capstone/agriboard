@@ -68,6 +68,24 @@
                 </div>
               </div>
 
+              <div class="md-gutter" v-if="form.peopleCategory == 'admins' || form.peopleCategory == 'monitors'">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Username</label>
+                    <md-input v-model="form.username" name="username" id="username" autocomplete="username" />
+                  </md-field>
+                </div>
+              </div>
+
+              <div class="md-gutter" v-if="form.peopleCategory == 'admins' || form.peopleCategory == 'monitors'">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Password</label>
+                    <md-input v-model="form.password" type="password"></md-input>
+                  </md-field>
+                </div>
+              </div>
+
               <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
@@ -136,7 +154,7 @@
                   <md-radio v-model="selected.peopleCategory" value="monitors">Monitor</md-radio>  
                 </div>
               </div>
-              
+
               <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
@@ -310,6 +328,8 @@ export default Vue.extend({
         firstName: '',
         middleName: '',
         lastName: '',
+        username: '',
+        password: '',
         phoneNumber: '',
         notes: '',
       },
