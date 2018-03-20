@@ -103,6 +103,9 @@ export default {
          .attr('class', 'main')
          .attr('clip-path', 'url(#clip)');
         
+      let legend =g.append('g')
+          .attr('class', 'legend');
+
       for( let i = 0; i < data.length; i++ ){
           main.append('path')
             .datum(data[i])
@@ -120,6 +123,19 @@ export default {
             .attr('stroke', d => colors(i))
             .attr('stroke-width', 1)
             .attr('class', 'circles');
+
+                  //legend
+          legend = g.append("text")
+            .data(data[i])
+            .attr("transform",
+                "translate(" + (width/ 1.5 + (100* i)) + " ," + 
+                              (height / 10 ) + ")")
+            .style("font-size", "2.2vh") 
+            .attr('stroke', d => colors(i))
+            .text(function(d) {return d.type;});
+            // .text('test');
+        let test = function(d) {return d.type;};
+        console.log(test);
       }
 
       //voronoi
@@ -227,6 +243,7 @@ export default {
         g.select(".axis--x").call(xAxis);
         g.select(".axis--y").call(yAxis);
       }
+
       //Graph Title from props
       g.append("text")
         .attr("transform",

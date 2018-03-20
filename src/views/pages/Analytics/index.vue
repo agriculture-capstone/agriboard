@@ -69,34 +69,51 @@ export default {
 
   created() {
   // generate data
-    this.productTranscations.push(fillData ());
-    this.productTranscations.push(fillData ());
-    this.moneyTranscations.push(fillData ());
-    this.moneyTranscations.push(fillData ());
+    this.productTranscations.push(this.fillCollections ());
+    this.productTranscations.push(this.fillExports ());
+    this.moneyTranscations.push(this.fillLoans ());
+    this.moneyTranscations.push(this.fillPayments ());
     //add more pushes for more lines
 
 
-    function fillData () {
+    // function fillData () {
+    //   let data = [];
+
+    //   let currentValue = 100;
+    //   let random = d3.randomNormal(200, 1000);
+
+    //   for(let i=0; i<40; i++) {
+    //     let currentDate = new Date("February 10, 2018 01:15:00");
+    //     currentDate.setDate(currentDate.getDate() + i);
+    //     currentValue = d3.randomUniform(10, 200)();
+
+    //     data.push({
+    //       productType: 'milk',
+    //       datetime: currentDate,
+    //       amountOfProduct: currentValue,
+    //       productUnits: 'L',
+    //       costPerUnit: '54',
+    //       currency: 'UGX',
+    //       lastModified: currentValue,
+    //     });
+
+    //     data.push([currentDate, currentValue]);
+    //   }
+    // return data;
+    // }
+
+  },
+  methods: {
+
+    fillCollections () {
       let data = [];
-
-      let currentValue = 100;
-      let random = d3.randomNormal(200, 1000);
-
       for(let i=0; i<40; i++) {
-
-      // productType: string;
-      // datetime: string;
-      // amountOfProduct: number;
-      // productUnits: string;
-      // costPerUnit: number;
-      // currency: string;
-      // lastModified: string;
-
         let currentDate = new Date("February 10, 2018 01:15:00");
         currentDate.setDate(currentDate.getDate() + i);
-        currentValue = d3.randomUniform(10, 200)();
+        let currentValue = d3.randomUniform(10, 200)();
 
         data.push({
+          type: 'collections',
           productType: 'milk',
           datetime: currentDate,
           amountOfProduct: currentValue,
@@ -106,11 +123,73 @@ export default {
           lastModified: currentValue,
         });
       }
-    return data;
-    }
+      return data;
+    },
+    
+    fillExports () {
+      let data = [];
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("February 10, 2018 01:15:00");
+        currentDate.setDate(currentDate.getDate() + i);
+        let currentValue = d3.randomUniform(10, 200)();
 
-  },
-  methods: {}
+        data.push({
+          type: 'deliveries',
+          productType: 'milk',
+          datetime: currentDate,
+          amountOfProduct: currentValue,
+          productUnits: 'L',
+          costPerUnit: '54',
+          currency: 'UGX',
+          lastModified: currentValue,
+        });
+      }
+      return data;
+    },
+    
+    fillLoans () {
+      let data = [];
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("February 10, 2018 01:15:00");
+        currentDate.setDate(currentDate.getDate() + i);
+        let currentValue = d3.randomUniform(10, 200)();
+
+        data.push({
+          type: 'loans',
+          productType: 'milk',
+          datetime: currentDate,
+          amountOfProduct: currentValue,
+          productUnits: 'L',
+          costPerUnit: '54',
+          currency: 'UGX',
+          lastModified: currentValue,
+        });
+      }
+      return data;
+    },
+
+    fillPayments () {
+      let data = [];
+
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("February 10, 2018 01:15:00");
+        currentDate.setDate(currentDate.getDate() + i);
+        let currentValue = d3.randomUniform(10, 200)();
+
+        data.push({
+          type: 'payments',
+          productType: 'milk',
+          datetime: currentDate,
+          amountOfProduct: currentValue,
+          productUnits: 'L',
+          costPerUnit: '54',
+          currency: 'UGX',
+          lastModified: currentValue,
+        });
+      }
+      return data;
+    }
+  }
 };
 </script>
 
