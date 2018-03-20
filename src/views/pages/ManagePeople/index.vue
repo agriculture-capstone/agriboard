@@ -182,6 +182,24 @@
                 </div>
               </div>
 
+              <div class="md-gutter" v-if="selected.peopleCategory == 'admins' || selected.peopleCategory == 'monitors'">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Username</label>
+                    <md-input v-model="selected.username" name="username" id="username" autocomplete="username" />
+                  </md-field>
+                </div>
+              </div>
+
+              <div class="md-gutter" v-if="selected.peopleCategory == 'admins' || selected.peopleCategory == 'monitors'">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Password</label>
+                    <md-input v-model="selected.password" type="password"></md-input>
+                  </md-field>
+                </div>
+              </div>
+
               <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
