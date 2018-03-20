@@ -1,13 +1,14 @@
 import * as uuid4 from 'uuid/v4';
 import * as R from 'ramda';
 
-import { CoreModuleState, StoreRow, MutationHandlers, ActionHandlers, CreationMutateRow, UpdateMutateRow } from '@/store/types';
+import { CoreModuleState, StoreRow, MutationHandlers, ActionHandlers, CreationMutateRow, UpdateMutateRow, CoreRow } from '@/store/types';
 import { updateElementByProp } from '@/utils/list/updateElement';
-import { hasUUID } from './utils';
+import { hasUUID, isResponse } from './utils';
 import CoreAPI, { CorePath } from '@/utils/CoreAPI';
 
 type CreatePayload<T> = { row: CreationMutateRow<T> };
 type UpdatePayload<T> = { row: UpdateMutateRow<T> };
+type SetPayload<T> = { row: CreationMutateRow<T> };
 
 /*--------------------------------- Types ---------------------------------*/
 
@@ -16,13 +17,17 @@ export type CoreModuleName = 'farmer' | 'milk' | 'export' | 'loan';
 
 /*--------------------------------- Functions ---------------------------------*/
 
-function createMutations<T>(): MutationHandlers<CoreModuleState<T>> {
+function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
   return {
-    createRow (state: CoreModuleState<T>, { row }: CreatePayload<T>) {
+    setRows (state: CoreModuleState<Row>, { row }: SetPayload<Row>) {
+
+    },
+
+    createRow (state: CoreModuleState<Row>, { row }: CreatePayload<Row>) {
       state.rows.push(row);
     },
 
-    updateRow (state: CoreModuleState<T>, { row }: UpdatePayload<T>) {
+    updateRow (state: CoreModuleState<Row>, { row }: UpdatePayload<Row>) {
       state.rows = updateElementByProp('uuid', row, state.rows);
     },
   };
@@ -51,7 +56,7 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
 
         // Attempt to create resource on core
         try {
-          ({ lastModified } = await api.create(creationRow));
+          ({ lastModified } = await api.create(payload));
         } catch (err) {
           // Failed to create resource on Core
           if (isResponse(err)) {
@@ -59,9 +64,6 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
             // tslint:disable-next-line:no-console
             console.log(response.status);
 
-            return uuid;
-          } else if (isNetworkError(err)) {
-            // Currently no network, let request fail and allow sync service to resolve
             return uuid;
           } else {
             // Not a response error, should be logged
@@ -72,13 +74,62 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
         }
 
         // Create updated model and update store
-        dispatch(createRowRemote(uuid, lastModified));
+        commit('updateRow', {
+          uuid,
+          lastModified,
+          status: 'clean',
+        });
         return uuid;
       }
     },
 
-    async updateRow ({ commit }, { row }: UpdatePayload<T>) {
+    async updateRow ({ commit, state }, { row }: UpdatePayload<Row>) {
+      if (!hasUUID(row)) {
+        throw new Error('Update must contain UUID');
+      }
+      const { uuid } = row;
+      const payload = {
+        ...(row as any),
+        lastModified: new Date().toUTCString(),
+        status: 'modified',
+      } as UpdateMutateRow<Row>;
 
+      // Update the row in store
+      commit('updateRow', payload);
+
+      // Send update to the core
+      const api = new CoreAPI(path);
+
+      { let coreRow: CoreRow<Row>;
+
+        try {
+          ({ row: coreRow } = await api.update<any>(payload));
+        } catch (err) {
+          // Failed to create resource on Core
+          if (isResponse(err)) {
+            // TODO: Deal with different core errors
+            const response = err;
+            // tslint:disable-next-line:no-console
+            console.log(response.status);
+            return uuid;
+          } else {
+            // Not a response error, should be logged
+            // TODO: Log me
+            // tslint:disable-next-line:no-console
+            console.log(err.message || err);
+            return uuid;
+          }
+        }
+
+        // TODO: Should be getting the response from core w/ the value of the updated row
+
+        // Create updated model and update store
+        commit('updateRow', {
+          ...(coreRow as any),
+          status: 'clean',
+        });
+        return uuid;
+      }
     },
   };
 }

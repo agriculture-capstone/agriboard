@@ -1,11 +1,21 @@
 import * as R from 'ramda';
 import { CoreModuleName } from '@/utils/CoreModule';
 import { CorePath } from '@/utils/CoreAPI';
+import { StoreRow } from '@/store/types';
 
 type ObjectWithUUID<T extends object> = T & { uuid: string };
 
 export function hasUUID<T extends object>(obj: T): obj is ObjectWithUUID<T> {
   return R.has('uuid', obj);
+}
+
+// TODO: Try using R
+export function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
+  return (row === undefined);
+}
+
+export function isResponse(response: any): response is Response {
+  return (response instanceof Response);
 }
 
 

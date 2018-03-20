@@ -94,7 +94,7 @@ export type CreationMutateRow<T> = StoreRow<T>;
  *
  * @template T Data model for module
  */
-export type UpdateMutateRow<T> = Partial<StoreRow<T>>;
+export type UpdateMutateRow<T> = Partial<T> & LastModifiedData & UUIDData & DataStatus;
 
 /**
  * Data model for thunk item creation
