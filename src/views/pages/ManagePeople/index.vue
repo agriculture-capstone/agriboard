@@ -115,24 +115,19 @@
     
     <div class="view-dialog-wrapper">
       <md-dialog :md-active.sync="showViewDialog">
-        <md-dialog-title>User Details</md-dialog-title>
-        <div class="md-layout md-size-100 md-small-size-100">
-          <md-card-header class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-            <span class="md-headline">{{ selected.name }}</span>
+        <md-dialog-title>{{ selected.name }}</md-dialog-title>
+          <md-dialog-content>
             <div class="md-subhead">
               <md-icon>access_time</md-icon>
               <span>Last Modified: {{ selected.lastModified }}</span>
             </div>
-          </md-card-header>
-          <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
             <h3 class="md-subheading"><b>Phone Number</b></h3>
             {{ selected.phoneNumber }}
             <h3 class="md-subheading"><b>Category</b></h3>
             {{ selected.peopleCategory }}
             <h3 class="md-subheading" v-if="selected.peopleCategory === 'farmers'"><b>Notes</b></h3>
             {{ selected.notes }}
-          </md-card-content>
-        </div>
+          </md-dialog-content>
         <md-dialog-actions>
           <md-button class="md-primary" @click="showViewDialog = false">Cancel</md-button>
           <md-button class="md-primary" @click="showViewDialog = false, showEditDialog = true">Edit</md-button>
@@ -376,14 +371,20 @@ export default Vue.extend({
 
 .md-dialog {
   // width: 768px;
-  padding-left: 3%;
-  padding-right: 3%;
+  // padding-left: 3%;
+  // padding-right: 3%;
   // display: inline-block;
 }
 
-// .md-dialog-content {
-//   display: inline-block;
-// }
+.md-dialog-title {
+  margin-bottom: 0;
+  padding: 24px;
+  line-height: 2em;
+}
+
+.md-dialog-content {
+  display: inline-block;
+}
 
 .md-layout-item {
   &:after {
