@@ -41,7 +41,7 @@ export default {
       let g = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
         .attr('overflow', 'hidden');
-      console.log(data);
+
       let minX = d3.min(data, function(d){ return d3.min(d, function(e){return e.datetime})});
       let maxX = d3.max(data, function(d){ return d3.max(d, function(e){return e.datetime})});
       let minY = d3.min(data, function(d){ return d3.min(d, function(e){return e.amountOfProduct})});
@@ -56,9 +56,6 @@ export default {
       let yScale = d3.scaleLinear()
                      .range([height, 0])
                      .domain([minY, maxY]);
-
-      let zScale = d3.scaleOrdinal(d3.schemeCategory10);
-
 
      let line = d3.line()
          .x(function(d) { return xScale(d.datetime); })
@@ -165,6 +162,7 @@ export default {
           .attr('class', 'circle focusCircle');
 
 
+
       svg.select('.overlay')
           .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
           .attr('width', width)
@@ -178,19 +176,18 @@ export default {
               // use the new diagram.find() function to find the Voronoi site
               // closest to the mouse, limited by max distance voronoiRadius
               let site = voronoiDiagram.find(mx, my, voronoiRadius);
-
-              let x = site.datetime;
-              let y = site.amountOfProduct;
+              let x = site[0];
+              let y = site[1];
 
               focus.select('#focusCircle')
                   .attr('cx', x)
                   .attr('cy', y);
               focus.select('#focusLineX')
-                  .attr('x1', x).attr('y1', yScale(yScale.domain().datetime))
-                  .attr('x2', x).attr('y2', yScale(yScale.domain().amountOfProduct));
+                  .attr('x1', x).attr('y1', yScale(yScale.domain()[0]))
+                  .attr('x2', x).attr('y2', yScale(yScale.domain()[1]));
               focus.select('#focusLineY')
-                  .attr('x1', xScale(xScale.domain().datetime)).attr('y1', y)
-                  .attr('x2', xScale(xScale.domain().amountOfProduct)).attr('y2', y);
+                  .attr('x1', xScale(xScale.domain()[0])).attr('y1', y)
+                  .attr('x2', xScale(xScale.domain()[1])).attr('y2', y);
           })
           .on('contextmenu', function() {
             this.dispatchEvent(new Event('drag'));
@@ -280,16 +277,40 @@ export default {
 };
 </script>
 <style>
-svg {
-  font-family: Sans-Serif, Arial;
-}
-.line {
-  stroke-width: 2;
-  fill: none;
+body {
+  font: 15px sans-serif;
 }
 
-.axis path {
-  stroke: black;
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
+
+.y.axis path {
+  display: none;
+}
+
+.overlay1 {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+}
+
+.focusLine {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 0.5px;
+}
+
+.focusCircle {
+    fill: steelblue;
+}
+
+.brush {
+  width: 500;
+}
+
 </style>
 
