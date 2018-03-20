@@ -82,13 +82,15 @@ export default {
         .call(brush);
 
       g.append('g')
-         .attr('class', 'axis--x')
-         .attr('transform', 'translate(0, ' + height + ')')
-         .call(xAxis);
+        .attr('class', 'axis--x')
+        .attr('transform', 'translate(0, ' + height + ')')
+        .style("font-weight", "bold")
+        .call(xAxis);
 
       g.append('g')
-         .attr('class', 'axis--y')
-         .call(yAxis)
+        .attr('class', 'axis--y')
+        .style("font-weight", "bold")
+        .call(yAxis)
 
       g.append('defs')
          .append('clipPath')
@@ -249,7 +251,8 @@ export default {
                            (height / 10 ) + ")")
         .attr("text-anchor", "middle")  
         .style("font-size", "2.2vh") 
-        .style("text-decoration", "underline")  
+        .style("text-decoration", "underline")
+        .style("font-weight", "bold")
         .text(title);
 
       // text label for the x axis taken from props
@@ -259,9 +262,10 @@ export default {
                            (height + (margin.top * 4)) + ")")
         .style("text-anchor", "middle")
         .style("font-size", "2vh") 
+        .style("font-weight", "bold")
         .text(xUnits);
 
-        // text label for the y axis taken from props
+      // text label for the y axis taken from props
       g.append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", 0 - (margin.left + 4))
@@ -269,6 +273,7 @@ export default {
           .attr("dy", "1em")
           .style("text-anchor", "middle")
           .style("font-size", "2vh") 
+          .style("font-weight", "bold")
           .text(yUnits); 
     }
   }
