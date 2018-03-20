@@ -114,7 +114,7 @@
           </md-card-content>
         </div>
         <md-dialog-actions>
-          <md-button class="md-info" @click="showViewDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showViewDialog = false">Cancel</md-button>
           <md-button class="md-primary" @click="showViewDialog = false, showEditDialog = true">Edit</md-button>
         </md-dialog-actions>
       </md-dialog>
@@ -186,7 +186,7 @@
           </div>
         </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-info" @click="showEditDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showEditDialog = false">Cancel</md-button>
           <md-button class="md-primary" @click="showEditDialog = false">Save</md-button>
         </md-dialog-actions>
       </md-dialog>
