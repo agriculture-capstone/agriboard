@@ -124,12 +124,13 @@ export default {
             .attr('stroke-width', 1)
             .attr('class', 'circles');
 
-                  //legend
+          //legend
           legend = g.append("text")
             .data(data[i])
             .attr("transform",
-                "translate(" + (width/ 1.5 + (100* i)) + " ," + 
+                "translate(" + (width/ 1.5 + 60 + (100 * i)) + " ," + 
                               (height / 10 ) + ")")
+            .style("text-anchor", "middle")
             .style("font-size", "2.2vh") 
             .attr('stroke', d => colors(i))
             .text(function(d) {return d.type;});
@@ -263,7 +264,7 @@ export default {
         // text label for the y axis taken from props
       g.append("text")
           .attr("transform", "rotate(-90)")
-          .attr("y", 0 - margin.left)
+          .attr("y", 0 - (margin.left + 4))
           .attr("x",0 - (height / 2))
           .attr("dy", "1em")
           .style("text-anchor", "middle")

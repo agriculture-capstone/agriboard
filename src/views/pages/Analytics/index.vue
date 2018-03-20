@@ -152,7 +152,7 @@ export default {
       for(let i=0; i<40; i++) {
         let currentDate = new Date("February 10, 2018 01:15:00");
         currentDate.setDate(currentDate.getDate() + i);
-        let currentValue = d3.randomUniform(10, 200)();
+        let currentValue = d3.randomUniform(300, 2000)();
 
         data.push({
           type: 'loans',
@@ -174,7 +174,7 @@ export default {
       for(let i=0; i<40; i++) {
         let currentDate = new Date("February 10, 2018 01:15:00");
         currentDate.setDate(currentDate.getDate() + i);
-        let currentValue = d3.randomUniform(10, 200)();
+        let currentValue = d3.randomUniform(100, 2000)();
 
         data.push({
           type: 'payments',
