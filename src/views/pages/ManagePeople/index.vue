@@ -33,6 +33,16 @@
               
               <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
+                  <h3 class="md-subheading"><b>Category</b></h3>
+                  <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
+                  <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
+                  <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
+                  <md-radio v-model="form.peopleCategory" value="monitors">Monitor</md-radio>                  
+                </div>
+              </div>
+
+              <div class="md-gutter">
+                <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>First Name</label>
                     <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
@@ -64,16 +74,6 @@
                     <label>Phone Number</label>
                     <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
                   </md-field>
-                </div>
-              </div>
-
-              <div class="md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <h3 class="md-subheading"><b>Category</b></h3>
-                  <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
-                  <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
-                  <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
-                  <md-radio v-model="form.peopleCategory" value="monitors">Monitor</md-radio>                  
                 </div>
               </div>
 
@@ -129,6 +129,16 @@
 
               <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
+                  <h3 class="md-subheading"><b>Category</b></h3>
+                  <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
+                  <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
+                  <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
+                  <md-radio v-model="selected.peopleCategory" value="monitors">Monitor</md-radio>  
+                </div>
+              </div>
+              
+              <div class="md-gutter">
+                <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>First Name</label>
                     <md-input v-model="selected.firstName" name="first-name" id="first-name" autocomplete="given-name" />
@@ -160,16 +170,6 @@
                     <label>Phone Number</label>
                     <md-input v-model="selected.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
                   </md-field>
-                </div>
-              </div>
-              
-              <div class="md-gutter">
-                <div class="md-layout-item md-small-size-100">
-                  <h3 class="md-subheading"><b>Category</b></h3>
-                  <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
-                  <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
-                  <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
-                  <md-radio v-model="selected.peopleCategory" value="monitors">Monitor</md-radio>  
                 </div>
               </div>
 
