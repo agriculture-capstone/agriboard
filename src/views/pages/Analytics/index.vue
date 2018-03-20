@@ -75,24 +75,38 @@ export default {
     this.moneyTranscations.push(fillData ());
     //add more pushes for more lines
 
-    function fillData () {
 
+    function fillData () {
       let data = [];
 
       let currentValue = 100;
       let random = d3.randomNormal(200, 1000);
 
       for(let i=0; i<40; i++) {
-        let currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + i);
 
-        data.push([currentDate, currentValue]);
+      // productType: string;
+      // datetime: string;
+      // amountOfProduct: number;
+      // productUnits: string;
+      // costPerUnit: number;
+      // currency: string;
+      // lastModified: string;
+
+        let currentDate = new Date("February 10, 2018 01:15:00");
+        currentDate.setDate(currentDate.getDate() + i);
         currentValue = d3.randomUniform(10, 200)();
 
+        data.push({
+          productType: 'milk',
+          datetime: currentDate,
+          amountOfProduct: currentValue,
+          productUnits: 'L',
+          costPerUnit: '54',
+          currency: 'UGX',
+          lastModified: currentValue,
+        });
       }
-
     return data;
-
     }
 
   },
@@ -120,7 +134,7 @@ export default {
 
 .stats {
   margin-top:1%;
-  height: 12vh;
+  height: 16vh;
   align-items: center;
 }
 

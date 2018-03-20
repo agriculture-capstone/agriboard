@@ -41,11 +41,11 @@ export default {
       let g = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
         .attr('overflow', 'hidden');
-
-      let minX = d3.min(data, function(d){ return d3.min(d, function(e){return e[0]})});
-      let maxX = d3.max(data, function(d){ return d3.max(d, function(e){return e[0]})});
-      let minY = d3.min(data, function(d){ return d3.min(d, function(e){return e[1]})});
-      let maxY = d3.max(data, function(d){ return d3.max(d, function(e){return e[1]})}) * 1.30;
+      console.log(data);
+      let minX = d3.min(data, function(d){ return d3.min(d, function(e){return e.datetime})});
+      let maxX = d3.max(data, function(d){ return d3.max(d, function(e){return e.datetime})});
+      let minY = d3.min(data, function(d){ return d3.min(d, function(e){return e.amountOfProduct})});
+      let maxY = d3.max(data, function(d){ return d3.max(d, function(e){return e.amountOfProduct})}) * 1.30;
 
       let ratio =  height / width;
 
@@ -61,8 +61,8 @@ export default {
 
 
      let line = d3.line()
-         .x(function(d) { return xScale(d[0]); })
-         .y(function(d) { return yScale(d[1]); });
+         .x(function(d) { return xScale(d.datetime); })
+         .y(function(d) { return yScale(d.amountOfProduct); });
 
      let colors = d3.scaleOrdinal()
           .domain([0, data.length])
@@ -102,7 +102,7 @@ export default {
       let main = g.append('g')
          .attr('class', 'main')
          .attr('clip-path', 'url(#clip)');
-
+        
       for( let i = 0; i < data.length; i++ ){
           main.append('path')
             .datum(data[i])
@@ -113,8 +113,8 @@ export default {
             .attr('class', 'line');
 
           main.selectAll('.circle').data(data[i]).enter().append('circle')
-            .attr('cx', function(d) { return xScale(d[0]); })
-            .attr('cy', function(d) { return yScale(d[1]); })
+            .attr('cx', function(d) { return xScale(d.datetime); })
+            .attr('cy', function(d) { return yScale(d.amountOfProduct); })
             .attr('r', 2)
             .attr('fill', 'white')
             .attr('stroke', d => colors(i))
@@ -127,8 +127,8 @@ export default {
       let vorData = d3.merge(data);
 
       let voronoiDiagram = d3.voronoi()
-          .x(function(d) {return xScale(d[0]); })
-          .y(function(d) {return yScale(d[1]); })
+          .x(function(d) {return xScale(d.datetime); })
+          .y(function(d) {return yScale(d.amountOfProduct); })
           .size([containerWidth, containerHeight])(vorData);
 
       let voronoiRadius = width;
@@ -145,7 +145,7 @@ export default {
           .attr('class', 'focusLine');
       focus.append('circle')
           .attr('id', 'focusCircle')
-          .attr('r', 4)
+          .attr('r', 4) 
           .attr('class', 'circle focusCircle');
 
 
@@ -163,18 +163,18 @@ export default {
               // closest to the mouse, limited by max distance voronoiRadius
               let site = voronoiDiagram.find(mx, my, voronoiRadius);
 
-              let x = site[0];
-              let y = site[1];
+              let x = site.datetime;
+              let y = site.amountOfProduct;
 
               focus.select('#focusCircle')
                   .attr('cx', x)
                   .attr('cy', y);
               focus.select('#focusLineX')
-                  .attr('x1', x).attr('y1', yScale(yScale.domain()[0]))
-                  .attr('x2', x).attr('y2', yScale(yScale.domain()[1]));
+                  .attr('x1', x).attr('y1', yScale(yScale.domain().datetime))
+                  .attr('x2', x).attr('y2', yScale(yScale.domain().amountOfProduct));
               focus.select('#focusLineY')
-                  .attr('x1', xScale(xScale.domain()[0])).attr('y1', y)
-                  .attr('x2', xScale(xScale.domain()[1])).attr('y2', y);
+                  .attr('x1', xScale(xScale.domain().datetime)).attr('y1', y)
+                  .attr('x2', xScale(xScale.domain().amountOfProduct)).attr('y2', y);
           })
           .on('contextmenu', function() {
             this.dispatchEvent(new Event('drag'));
@@ -190,8 +190,8 @@ export default {
             xScale.domain([minX, maxX]);
             yScale.domain([minY, maxY]);
           } else {
-            xScale.domain([s[0][0] * ratio, s[1][0]].map(xScale.invert, xScale));
-            yScale.domain([s[1][1], s[0][1] * ratio].map(yScale.invert, yScale));
+            xScale.domain([s.datetime.datetime * ratio, s.amountOfProduct.datetime].map(xScale.invert, xScale));
+            yScale.domain([s.amountOfProduct.amountOfProduct, s.datetime.amountOfProduct * ratio].map(yScale.invert, yScale));
             svg.select(".brush").call(brush.move, null);
           }
           zoom();
@@ -206,15 +206,15 @@ export default {
         svg.select(".axis--x").transition(t).call(xAxis);
         g.select(".axis--y").transition(t).call(yAxis);
         g.selectAll(".circles").transition(t)
-            .attr("cx", function(d) { return xScale(d[0]); })
-            .attr("cy", function(d) { return yScale(d[1]); });
+            .attr("cx", function(d) { return xScale(d.datetime); })
+            .attr("cy", function(d) { return yScale(d.amountOfProduct); });
         g.selectAll(".line").transition(t)
             .attr("d", function(d) { return line(d); });
 
 
        voronoiDiagram = d3.voronoi()
-          .x(function(d) {return xScale(d[0]); })
-          .y(function(d) {return yScale(d[1]); })
+          .x(function(d) {return xScale(d.datetime); })
+          .y(function(d) {return yScale(d.amountOfProduct); })
           .size([containerWidth, containerHeight])(vorData);
 
       }
