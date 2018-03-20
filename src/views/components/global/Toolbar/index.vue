@@ -6,7 +6,7 @@
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
     </md-button> -->
     <!-- Title -->
-    <h3 class="md-title">{{title}}</h3>
+    <h1 class="md-title title">{{title}}</h1>
     <!-- Right Buttons -->
     <div class="md-toolbar-section-end right-buttons" v-for="rightButton in rightButtons" :key="rightButton.name">
       <md-button v-if="rightButton.icon" :class="generateRightIconButtonClasses(rightButton.name)" @click="onRightButtonClicked(rightButton)">
@@ -156,6 +156,9 @@ export default Vue.component(name, {
   .centered {
     justify-content: center;
     align-content: center;
+  },
+  .title {
+    font-family: 'Righteous', cursive;
   }
 </style>
 
