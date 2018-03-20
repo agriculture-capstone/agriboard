@@ -3,7 +3,7 @@
     <h1 class="md-headline"> Services </h1>
     <div class="actions_section">
       
-      <router-link :to="{ path: '/manage/people' }">
+      <router-link :to="{ name: 'ManagePeople' }">
         <md-card md-with-hover class="action_card">
           <md-ripple>
             <div class="service">
@@ -29,7 +29,7 @@
         </md-ripple>
       </md-card>
 
-      <router-link :to="{ path: '/transactions/products' }">
+      <router-link :to="{ name: 'Transactions' }">
       <md-card md-with-hover class="action_card">
         <md-ripple>
           <div class="service">
