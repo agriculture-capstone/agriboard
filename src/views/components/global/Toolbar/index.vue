@@ -17,7 +17,7 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-tabs class="md-primary" md-alignment="centered">
+  <md-tabs class="md-accent" md-alignment="centered">
     <md-tab id="tab-home" md-label="Home" :to="{ name: 'Home' }"></md-tab>
 
     <md-tab id="tab-accounts" md-label="Accounts" :to="{ name: 'ManagePeople' }"></md-tab>
@@ -158,7 +158,7 @@ export default Vue.component(name, {
     align-content: center;
   },
   .title {
-    font-family: 'Righteous', cursive;
+    font-family: 'Fjalla One', sans-serif;
   }
 </style>
 
