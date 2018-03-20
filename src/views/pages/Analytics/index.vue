@@ -219,15 +219,19 @@ export default {
 
 .stat {
   font-size:1.8vh;
-  color: grey
+  color: grey;
+  font-weight: bold;
 }
 
 .stat-heading {
   font-size:2vh;
   color: blue;
+  font-weight: bold;
 }
 
 #stats-title {
   font-size:3vh;
+  font-weight: bold;
+
 }
 </style>
