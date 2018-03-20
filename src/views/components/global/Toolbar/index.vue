@@ -1,9 +1,10 @@
 <template>
-  <md-toolbar id="toolbar" class="md-primary">
-    <!-- Left Button -->
+  <span>
+  <md-toolbar id="toolbar" class="md-primary centered" md-elevation="0">
+    <!-- Left Button
     <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
-    </md-button>
+    </md-button> -->
     <!-- Title -->
     <h3 class="md-title">{{title}}</h3>
     <!-- Right Buttons -->
@@ -16,6 +17,16 @@
       </md-button>
     </div>
   </md-toolbar>
+  <md-tabs class="md-primary" md-alignment="centered">
+    <md-tab id="tab-home" md-label="Home"></md-tab>
+
+    <md-tab id="tab-accounts" md-label="Accounts"></md-tab>
+
+    <md-tab id="tab-analytics" md-label="Analytics"></md-tab>
+
+    <md-tab id="tab-transactions" md-label="Transactions"></md-tab>
+  </md-tabs>
+  </span>
 </template>
 
 <script lang="ts">
@@ -140,3 +151,11 @@ export default Vue.component(name, {
   },
 });
 </script>
+
+<style lang="scss" scoped>
+  .centered {
+    justify-content: center;
+    align-content: center;
+  }
+</style>
+
