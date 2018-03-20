@@ -129,6 +129,8 @@
             {{ selected.phoneNumber }}
             <h3 class="md-subheading"><b>Category</b></h3>
             {{ selected.peopleCategory }}
+            <h3 class="md-subheading" v-if="selected.peopleCategory === 'farmers'"><b>Notes</b></h3>
+            {{ selected.notes }}
           </md-card-content>
         </div>
         <md-dialog-actions>
