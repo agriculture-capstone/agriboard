@@ -126,7 +126,7 @@
           <div class="md-layout md-size-100 md-small-size-100">
             <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>First Name</label>
@@ -135,7 +135,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Middle Name</label>
@@ -144,7 +144,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Last Name</label>
@@ -153,7 +153,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Phone Number</label>
@@ -162,7 +162,7 @@
                 </div>
               </div>
               
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <h3 class="md-subheading"><b>Category</b></h3>
                   <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
@@ -171,7 +171,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter" v-if="selected.peopleCategory == 'farmers'">
+              <div class="md-gutter" v-if="selected.peopleCategory == 'farmers'">
                   <div class="md-layout-item md-small-size-100">
                     <md-field>
                       <label>Notes</label>
@@ -180,7 +180,7 @@
                   </div>
                 </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <div class="md-subhead">
                     <md-icon>access_time</md-icon>
