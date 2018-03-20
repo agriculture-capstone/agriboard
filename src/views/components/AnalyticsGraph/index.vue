@@ -133,9 +133,6 @@ export default {
             .style("font-size", "2.2vh") 
             .attr('stroke', d => colors(i))
             .text(function(d) {return d.type;});
-            // .text('test');
-        let test = function(d) {return d.type;};
-        console.log(test);
       }
 
       //voronoi
@@ -206,8 +203,8 @@ export default {
             xScale.domain([minX, maxX]);
             yScale.domain([minY, maxY]);
           } else {
-            xScale.domain([s.datetime.datetime * ratio, s.amountOfProduct.datetime].map(xScale.invert, xScale));
-            yScale.domain([s.amountOfProduct.amountOfProduct, s.datetime.amountOfProduct * ratio].map(yScale.invert, yScale));
+            xScale.domain([s[0][0] * ratio, s[1][0]].map(xScale.invert, xScale));
+            yScale.domain([s[1][1], s[0][1] * ratio].map(yScale.invert, yScale));
             svg.select(".brush").call(brush.move, null);
           }
           zoom();
