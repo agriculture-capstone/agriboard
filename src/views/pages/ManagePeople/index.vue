@@ -73,6 +73,7 @@
                   <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
                   <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
                   <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
+                  <md-radio v-model="form.peopleCategory" value="monitors">Monitor</md-radio>                  
                 </div>
               </div>
 
@@ -168,6 +169,7 @@
                   <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
                   <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
                   <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
+                  <md-radio v-model="selected.peopleCategory" value="monitors">Monitor</md-radio>  
                 </div>
               </div>
 
