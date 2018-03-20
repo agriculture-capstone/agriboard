@@ -31,7 +31,7 @@
         <md-dialog-content>
           <div class="md-layout-item md-size-100 md-small-size-100">
               
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>First Name</label>
@@ -40,7 +40,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Middle Name</label>
@@ -49,7 +49,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Last Name</label>
@@ -58,7 +58,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Phone Number</label>
@@ -67,7 +67,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter">
+              <div class="md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <h3 class="md-subheading"><b>Category</b></h3>
                   <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
@@ -76,7 +76,7 @@
                 </div>
               </div>
 
-              <div class="md-layout md-gutter" v-if="form.peopleCategory == 'farmers'">
+              <div class="md-gutter" v-if="form.peopleCategory == 'farmers'">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
                     <label>Notes</label>
@@ -88,7 +88,7 @@
         </md-dialog-content>
 
         <md-dialog-actions>
-          <md-button class="md-info" @click="showAddDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
           <md-button class="md-primary" @click="showAddDialog = false">Create</md-button>
         </md-dialog-actions>
       </md-dialog>
@@ -122,75 +122,76 @@
     <div class="edit-dialog-wrapper">
       <md-dialog :md-active.sync="showEditDialog">
         <md-dialog-title>Edit User</md-dialog-title>
+        <md-dialog-content>
+          <div class="md-layout md-size-100 md-small-size-100">
+            <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
 
-        <div class="md-layout md-size-100 md-small-size-100">
-          <md-card-content class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>First Name</label>
-                  <md-input v-model="selected.firstName" name="first-name" id="first-name" autocomplete="given-name" />
-                </md-field>
-              </div>
-            </div>
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Middle Name</label>
-                  <md-input v-model="selected.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
-                </md-field>
-              </div>
-            </div>
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Last Name</label>
-                  <md-input v-model="selected.lastName" name="last-name" id="last-name" autocomplete="last-name" />
-                </md-field>
-              </div>
-            </div>
-
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Phone Number</label>
-                  <md-input v-model="selected.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                </md-field>
-              </div>
-            </div>
-            
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <h3 class="md-subheading"><b>Category</b></h3>
-                <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
-                <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
-                <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
-              </div>
-            </div>
-
-            <div class="md-layout md-gutter" v-if="selected.peopleCategory == 'farmers'">
+              <div class="md-layout md-gutter">
                 <div class="md-layout-item md-small-size-100">
                   <md-field>
-                    <label>Notes</label>
-                    <md-input v-model="selected.notes" name="notes" id="notes" autocomplete="notes" />
+                    <label>First Name</label>
+                    <md-input v-model="selected.firstName" name="first-name" id="first-name" autocomplete="given-name" />
                   </md-field>
                 </div>
               </div>
 
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <div class="md-subhead">
-                  <md-icon>access_time</md-icon>
-                  <span>Last Modified: {{ selected.lastModified }}</span>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Middle Name</label>
+                    <md-input v-model="selected.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                  </md-field>
                 </div>
               </div>
-            </div>
 
-          </md-card-content>
-        </div>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Last Name</label>
+                    <md-input v-model="selected.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                  </md-field>
+                </div>
+              </div>
+
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label>Phone Number</label>
+                    <md-input v-model="selected.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                  </md-field>
+                </div>
+              </div>
+              
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <h3 class="md-subheading"><b>Category</b></h3>
+                  <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
+                  <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
+                  <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
+                </div>
+              </div>
+
+              <div class="md-layout md-gutter" v-if="selected.peopleCategory == 'farmers'">
+                  <div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label>Notes</label>
+                      <md-input v-model="selected.notes" name="notes" id="notes" autocomplete="notes" />
+                    </md-field>
+                  </div>
+                </div>
+
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <div class="md-subhead">
+                    <md-icon>access_time</md-icon>
+                    <span>Last Modified: {{ selected.lastModified }}</span>
+                  </div>
+                </div>
+              </div>
+
+            </md-card-content>
+          </div>
+        </md-dialog-content>
         <md-dialog-actions>
           <md-button class="md-info" @click="showEditDialog = false">Cancel</md-button>
           <md-button class="md-primary" @click="showEditDialog = false">Save</md-button>
