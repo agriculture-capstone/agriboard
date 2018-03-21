@@ -3,6 +3,7 @@
     <md-table class="table" v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
+          <md-icon class="md-size-2x icon">supervisor_account</md-icon>
           <h1 class="md-title">Accounts</h1>
         </div>
         <md-field md-clearable class="md-toolbar-section-end">
@@ -126,6 +127,7 @@ export default Vue.extend({
 </script>
 
 <style lang='scss' scoped>
+@import 'src/styles.scss';
 .md-field {
   max-width: 300px;
 }
@@ -135,6 +137,7 @@ export default Vue.extend({
   font-size: 2em;
   padding: 1rem 0rem;
   line-height: 3em;
+  margin: 0px 10px !important;
 }
 
 .error {
@@ -145,5 +148,9 @@ export default Vue.extend({
 
 .table {
   padding: 0vh  2vw;
+}
+
+.icon {
+  color: $icon-color !important;
 }
 </style>
