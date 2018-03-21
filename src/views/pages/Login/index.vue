@@ -12,7 +12,7 @@
       </md-field>
       <div class="login_form_feedback">
         <p class="error">{{ error }}</p>
-        <md-button v-on:click="login" class="md-raised md-primary login_button">Login</md-button>
+        <md-button v-on:click="login" class="md-raised md-accent login_button">Login</md-button>
       </div>
     </div>
   </div>
@@ -32,8 +32,9 @@ export default Vue.extend({
         password: this.credentials.password,
       })
       .then(function (this: any, response: any) {
+        // TODO needs to be fixed
         localStorage.setItem('token', response.data.token);
-        this.$router.push('/');
+        this.$router.push({ path: 'home' });
       })
       .catch(function (this: any, error: any) {
         this.error = 'Invalid username or password';

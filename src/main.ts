@@ -10,6 +10,8 @@ import {
   MdTable,
   MdRipple,
   MdContent,
+  MdTabs,
+  MdProgress,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
@@ -29,6 +31,8 @@ Vue.use(MdTable);
 Vue.use(MdField);
 Vue.use(MdRipple);
 Vue.use(MdContent);
+Vue.use(MdTabs);
+Vue.use(MdProgress);
 
 /* eslint-disable no-new */
 new Vue({
