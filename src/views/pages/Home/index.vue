@@ -2,7 +2,6 @@
   <div class="home">
     <h1 class="md-headline"> Services </h1>
     <div class="actions_section">
-      
       <router-link :to="{ name: 'ManagePeople' }">
         <md-card md-with-hover class="action_card">
           <md-ripple>
@@ -62,7 +61,6 @@ export default Vue.extend({
 .actions_section {
   margin: auto;
   padding: 1em;
-  // width: 90%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
