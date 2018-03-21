@@ -1,7 +1,7 @@
 <template>
   <div class='center'>
       <md-card class='md-elevation-10 stats'>
-            <div class="md-title"> Weekly Statistics </div>
+            <div class="md-title"> Monthly Statistics </div>
           <div class="md-layout">
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
@@ -87,8 +87,8 @@ export default {
   methods: {
     fillCollections () {
       let data = [];
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("February 10, 2018 01:15:00");
+      for(let i=0; i<110; i++) {
+        let currentDate = new Date("2018-01-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(10, 200)();
 
@@ -108,8 +108,8 @@ export default {
     
     fillExports () {
       let data = [];
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("February 10, 2018 01:15:00");
+      for(let i=0; i<110; i++) {
+        let currentDate = new Date("2018-01-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(10, 200)();
 
@@ -129,18 +129,15 @@ export default {
     
     fillLoans () {
       let data = [];
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("February 10, 2018 01:15:00");
+      for(let i=0; i<110; i++) {
+        let currentDate = new Date("2018-01-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(300, 2000)();
 
         data.push({
           type: 'loans',
-          productType: 'milk',
           datetime: currentDate,
           amountOfProduct: currentValue,
-          productUnits: 'L',
-          costPerUnit: '54',
           currency: 'UGX',
           lastModified: currentValue,
         });
@@ -151,51 +148,47 @@ export default {
     fillPayments () {
       let data = [];
 
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("February 10, 2018 01:15:00");
+      for(let i=0; i<110; i++) {
+        let currentDate = new Date("2018-01-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(100, 2000)();
 
         data.push({
           type: 'payments',
-          productType: 'milk',
           datetime: currentDate,
           amountOfProduct: currentValue,
-          productUnits: 'L',
-          costPerUnit: '54',
           currency: 'UGX',
           lastModified: currentValue,
         });
       }
       return data;
     },
-      // productTranscations: [],
-      // moneyTranscations: [],
+
     calculateCollected () {
       let collections = this.productTranscations[0];
       let collected = collections.reduce((sum, transaction) => 
-        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+        this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
       return collected;
     },
 
     calculateDelivered () {
       let deliveries = this.productTranscations[1];
       let delivered = deliveries.reduce((sum, transaction) => 
-        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+        this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
       return delivered;    
     },
 
     calculateLoans () {
       let loans = this.moneyTranscations[0];
       let dispensed = loans.reduce((sum, transaction) => 
-        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+        this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
       return dispensed;    
     },
 
     calculatePayments () {
       let payments = this.moneyTranscations[1];
       let payed = payments.reduce((sum, transaction) => 
-        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+        this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
       return payed;    
     },
 
