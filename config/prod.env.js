@@ -1,4 +1,5 @@
 module.exports = {
   NODE_ENV: '"production"',
-  // TODO: add core host/port
+  CORE_HOST: '"https://boresha.live"',
+  CORE_PORT: 19443
 }
