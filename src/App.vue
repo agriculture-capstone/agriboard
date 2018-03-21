@@ -33,12 +33,22 @@ body {
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    position: relative;
   }
 
   margin: 0;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
 
   main {
     text-align: center;
+    flex: 1;
   }
 }
 </style>

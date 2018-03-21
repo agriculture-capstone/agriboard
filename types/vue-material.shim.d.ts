@@ -9,4 +9,5 @@ declare module 'vue-material/dist/components' {
   export const MdContent: any;
   export const MdSubheader: any;
   export const MdTabs: any;
+  export const MdProgress: any;
 }
