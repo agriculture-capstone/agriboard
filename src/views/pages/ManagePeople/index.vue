@@ -5,6 +5,7 @@
         <md-icon>add</md-icon>
       </md-button>
     </div>
+    <!-- <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect" :md-selected-value.sync="selected"> -->
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
@@ -112,7 +113,7 @@
     </div>
     
     <div class="view-dialog-wrapper">
-      <md-dialog :md-active.sync="showViewDialog">
+      <md-dialog :md-active.sync="showViewDialog" @md-closed="onViewClose">
         <md-dialog-title>{{ selected.name }}</md-dialog-title>
           <md-dialog-content>
             <div class="md-subhead">
@@ -127,7 +128,7 @@
             {{ selected.notes }}
           </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-primary" @click="showViewDialog = false">Cancel</md-button>
+          <md-button class="md-primary" @click="onDialogCancel">Cancel</md-button>
           <md-button class="md-primary" @click="showViewDialog = false, showEditDialog = true">Edit</md-button>
         </md-dialog-actions>
       </md-dialog>
@@ -255,8 +256,14 @@ export default Vue.extend({
     onSelect: function (item: any) {
       this.selected = item;
       this.showViewDialog = true;
-    }
-    
+    },
+    onDialogCancel: function() {
+      this.selected = {};
+      this.showViewDialog = false;
+    },
+    onViewClose: function () {
+      this.selected = {};
+    },
   },
   created: async function created() {
     // get people types
