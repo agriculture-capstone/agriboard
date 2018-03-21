@@ -16,9 +16,9 @@
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
         <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
-        <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
+  
   </div>
 </template>
 
@@ -133,17 +133,17 @@ export default Vue.extend({
 .md-title {
   text-align: left;
   font-size: 2em;
-  padding: 1rem;
+  padding: 1rem 0rem;
   line-height: 3em;
-}
-
-.md-content {
-  height: 1vh;
 }
 
 .error {
   text-align: center;
   margin: auto;
   color: red;
+}
+
+.table {
+  padding: 0vh  2vw;
 }
 </style>
