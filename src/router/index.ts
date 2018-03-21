@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import GateKeeper from '@/views/pages/GateKeeper/index.vue';
 import Home from '@/views/pages/Home/index.vue';
 import Login from '@/views/pages/Login/index.vue';
 import ManagePeople from '@/views/pages/ManagePeople/index.vue';
@@ -12,6 +13,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'GateKeeper',
+      component: GateKeeper,
+    },
+    {
+      path: '/home',
       name: 'Home',
       component: Home,
     },
