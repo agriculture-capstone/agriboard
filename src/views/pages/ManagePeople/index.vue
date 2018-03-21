@@ -1,9 +1,9 @@
 <template>
   <div class='ManagePeople'>
-    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card>
+    <md-table class="table" v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title">People</h1>
+          <h1 class="md-title">Accounts</h1>
         </div>
         <md-field md-clearable class="md-toolbar-section-end">
           <md-input placeholder="Search" v-model="search" @input="searchOnTable" />

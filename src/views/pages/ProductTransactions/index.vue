@@ -1,9 +1,9 @@
 <template>
   <div class='ProductTransactions'>
-    <md-table v-model="productTransactions" md-sort="name" md-sort-order="asc" md-card>
+    <md-table v-model="productTransactions" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title">Product Transactions</h1>
+          <h1 class="md-title">Transactions</h1>
         </div>
         <md-button v-on:click="downloadCsv" class="md-raised md-accent download_csv_button">Download CSV</md-button>
       </md-table-toolbar>
