@@ -9,9 +9,7 @@
           <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
         </md-field>
       </md-table-toolbar>
-
       <h2 class="error md-subheader">{{error}}</h2>
-
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>

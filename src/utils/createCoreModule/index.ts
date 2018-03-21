@@ -1,7 +1,17 @@
 import * as uuid4 from 'uuid/v4';
 import * as R from 'ramda';
 
-import { CoreModuleState, StoreRow, MutationHandlers, ActionHandlers, CreationMutateRow, UpdateMutateRow, CoreRow, GetterHandlers, RootState } from '@/store/types';
+import {
+  CoreModuleState,
+  StoreRow,
+  MutationHandlers,
+  ActionHandlers,
+  CreationMutateRow,
+  UpdateMutateRow,
+  CoreRow,
+  GetterHandlers,
+  RootState,
+} from '@/store/types';
 import { updateElementByProp } from '@/utils/list/updateElement';
 import { hasUUID, isResponse, getModulePath } from './utils';
 import CoreAPI, { CorePath } from '@/utils/CoreAPI';
@@ -14,7 +24,12 @@ type SetPayload<T> = { rows: CreationMutateRow<T>[] };
 /*--------------------------------- Types ---------------------------------*/
 
 /** Different types of modules */
-export type CoreModuleName = 'farmer' | 'milk' | 'export' | 'loan';
+export type CoreModuleName
+  = 'farmer'
+  | 'milk'
+  | 'delivery'
+  | 'loan'
+  ;
 
 /*--------------------------------- Functions ---------------------------------*/
 
@@ -44,7 +59,7 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
         uuid: uuid4(),
         status: 'local',
       };
-      commit('createRow', payload);
+      commit('createRow', { row: payload });
 
       const { uuid } = payload;
 
@@ -76,9 +91,11 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
 
         // Create updated model and update store
         commit('updateRow', {
-          uuid,
-          lastModified,
-          status: 'clean',
+          row: {
+            uuid,
+            lastModified,
+            status: 'clean',
+          },
         });
         return uuid;
       }
@@ -96,7 +113,7 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
       } as UpdateMutateRow<Row>;
 
       // Update the row in store
-      commit('updateRow', payload);
+      commit('updateRow', { row: payload });
 
       // Send update to the core
       const api = new CoreAPI(path);
@@ -126,8 +143,10 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
 
         // Create updated model and update store
         commit('updateRow', {
-          ...(coreRow as any),
-          status: 'clean',
+          row: {
+            ...(coreRow as any),
+            status: 'clean',
+          },
         });
         return uuid;
       }

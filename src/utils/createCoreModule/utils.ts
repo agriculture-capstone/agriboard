@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { CoreModuleName } from '@/utils/CoreModule';
+import { CoreModuleName } from '@/utils/createCoreModule';
 import { CorePath } from '@/utils/CoreAPI';
 import { StoreRow } from '@/store/types';
 
@@ -22,11 +22,10 @@ export function isResponse(response: any): response is Response {
 /** Map for modules */
 // tslint:disable-next-line:variable-name
 export const CoreModuleNames: CoreModuleName[] = [
-  // FARMER MUST COME FIRST IN THE LIST, THIS ORDER SPECIFIES THE ORDER OF THE SYNC
   'farmer',
   'milk',
-  'export',
-  'loan',
+  'delivery',
+  // 'loan', TODO: Enable when implemented
 ];
 
 /**
@@ -40,7 +39,7 @@ export function getModulePath(module: CoreModuleName): CorePath {
 
     case 'milk': return '/transactions/products/milk';
 
-    case 'export': return '/transactions/products/export';
+    case 'delivery': return '/transactions/products/export';
 
     case 'loan': return '/transactions/money/loan';
 

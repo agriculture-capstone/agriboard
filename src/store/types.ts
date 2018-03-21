@@ -2,11 +2,19 @@ import * as AppTypes from './modules/app/types';
 import * as ToolbarTypes from './modules/toolbar/types';
 import * as DrawerTypes from './modules/drawer/types';
 import { Getter, Mutation, Action, MutationTree, ActionTree, GetterTree } from 'vuex';
+import { Farmer, FarmersState } from '@/store/modules/farmer/types';
+import { MilkState } from '@/store/modules/milk/types';
+import { DeliveryState } from '@/store/modules/delivery/types';
+import { LoanState } from '@/store/modules/loan/types';
 
 export interface RootState {
   app: AppTypes.AppState;
   toolbar: ToolbarTypes.ToolbarState;
   drawer: DrawerTypes.DrawerState;
+  farmer: FarmersState;
+  milk: MilkState;
+  delivery: DeliveryState;
+  loan: LoanState;
 }
 
 /** Composed mutation types */

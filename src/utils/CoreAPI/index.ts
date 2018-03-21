@@ -137,7 +137,8 @@ export default class CoreAPI {
     return {
       method,
       headers,
-      body: JSON.stringify(body),
+      mode: 'cors',
+      ...body && { body: JSON.stringify(body) },
     };
   }
 
