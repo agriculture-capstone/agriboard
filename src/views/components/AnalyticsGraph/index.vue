@@ -127,7 +127,7 @@ export default {
           legend = g.append("text")
             .data(data[i])
             .attr("transform",
-                "translate(" + (width/ 1.5 + 60 + (100 * i)) + " ," + 
+                "translate(" + (width/ 1.5 + 80 + (90 * i)) + " ," + 
                               (height / 10 ) + ")")
             .style("text-anchor", "middle")
             .style("font-size", "2.2vh") 

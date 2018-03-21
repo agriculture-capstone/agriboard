@@ -7,7 +7,7 @@
                 <md-card-header>
                   <md-card-header-text>
                     <div class="stat-heading">Milk Collected</div>
-                    <div class="stat">341 L</div>
+                    <div class="stat">{{collected}} L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
@@ -15,15 +15,15 @@
                 <md-card-header>
                   <md-card-header-text>
                     <div class="stat-heading">Milk Delivered</div>
-                    <div class="stat">333 L</div>
+                    <div class="stat">{{delivered}} L</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
               <md-card class="md-layout-item md-elevation-0">
                 <md-card-header>
                   <md-card-header-text>
-                    <div class="stat-heading">Loans Dispersed</div>
-                    <div class="stat">3454 L</div>
+                    <div class="stat-heading">Loans Dispensed</div>
+                    <div class="stat">{{disperesed}} UGX</div>
                   </md-card-header-text>
                 </md-card-header>
               </md-card>
@@ -51,7 +51,7 @@
 
 <script>
 import graph from "../../components/AnalyticsGraph";
-
+import moment from "moment";
 import * as d3 from "d3";
 
 export default {
@@ -60,7 +60,10 @@ export default {
     return {
       productTranscations: [],
       moneyTranscations: [],
-      error: '',
+      collected: 0,
+      delivered: 0,
+      dispensed: 0,
+      payed: 0,
     };
   },
   components: {
@@ -68,43 +71,20 @@ export default {
   },
 
   created() {
-  // generate data
+  // generate data 
     this.productTranscations.push(this.fillCollections ());
     this.productTranscations.push(this.fillExports ());
     this.moneyTranscations.push(this.fillLoans ());
     this.moneyTranscations.push(this.fillPayments ());
-    //add more pushes for more lines
 
-
-    // function fillData () {
-    //   let data = [];
-
-    //   let currentValue = 100;
-    //   let random = d3.randomNormal(200, 1000);
-
-    //   for(let i=0; i<40; i++) {
-    //     let currentDate = new Date("February 10, 2018 01:15:00");
-    //     currentDate.setDate(currentDate.getDate() + i);
-    //     currentValue = d3.randomUniform(10, 200)();
-
-    //     data.push({
-    //       productType: 'milk',
-    //       datetime: currentDate,
-    //       amountOfProduct: currentValue,
-    //       productUnits: 'L',
-    //       costPerUnit: '54',
-    //       currency: 'UGX',
-    //       lastModified: currentValue,
-    //     });
-
-    //     data.push([currentDate, currentValue]);
-    //   }
-    // return data;
-    // }
+  // calculate the stats
+    this.collected = this.calculateCollected ();
+    this.delivered = this.calculateDelivered ();
+    this.disperesed = this.calculateLoans ();
+    this.payed = this.calculatePayments ();
 
   },
   methods: {
-
     fillCollections () {
       let data = [];
       for(let i=0; i<40; i++) {
@@ -188,7 +168,48 @@ export default {
         });
       }
       return data;
-    }
+    },
+      // productTranscations: [],
+      // moneyTranscations: [],
+    calculateCollected () {
+      let collections = this.productTranscations[0];
+      let collected = collections.reduce((sum, transaction) => 
+        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+      return collected;
+    },
+
+    calculateDelivered () {
+      let deliveries = this.productTranscations[1];
+      let delivered = deliveries.reduce((sum, transaction) => 
+        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+      return delivered;    
+    },
+
+    calculateLoans () {
+      let loans = this.moneyTranscations[0];
+      let dispensed = loans.reduce((sum, transaction) => 
+        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+      return dispensed;    
+    },
+
+    calculatePayments () {
+      let payments = this.moneyTranscations[1];
+      let payed = payments.reduce((sum, transaction) => 
+        this.inSameDay(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
+      return payed;    
+    },
+
+    inSameDay(date) {
+      return moment(date).utc().isSame(moment().local(), 'day') ? true : false;
+      },
+
+    inLastWeek(date) {
+      return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
+    },
+
+    inSameMonth(date) {
+      return moment(date).utc().isSame(moment().local(), 'month') ? true : false;
+    },
   }
 };
 </script>
@@ -225,13 +246,13 @@ export default {
 
 .stat-heading {
   font-size:2vh;
-  color: blue;
+  color: steelblue;
   font-weight: bold;
 }
 
 #stats-title {
   font-size:3vh;
-  font-weight: bold;
+  font-weight: '900';
 
 }
 </style>
