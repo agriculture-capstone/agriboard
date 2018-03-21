@@ -9,7 +9,6 @@ export function hasUUID<T extends object>(obj: T): obj is ObjectWithUUID<T> {
   return R.has('uuid', obj);
 }
 
-// TODO: Try using R
 export function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
   return (row === undefined);
 }
