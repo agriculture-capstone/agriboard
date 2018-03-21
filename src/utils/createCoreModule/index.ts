@@ -1,14 +1,15 @@
 import * as uuid4 from 'uuid/v4';
 import * as R from 'ramda';
 
-import { CoreModuleState, StoreRow, MutationHandlers, ActionHandlers, CreationMutateRow, UpdateMutateRow, CoreRow } from '@/store/types';
+import { CoreModuleState, StoreRow, MutationHandlers, ActionHandlers, CreationMutateRow, UpdateMutateRow, CoreRow, GetterHandlers, RootState } from '@/store/types';
 import { updateElementByProp } from '@/utils/list/updateElement';
-import { hasUUID, isResponse } from './utils';
+import { hasUUID, isResponse, getModulePath } from './utils';
 import CoreAPI, { CorePath } from '@/utils/CoreAPI';
+import { Module } from 'vuex';
 
 type CreatePayload<T> = { row: CreationMutateRow<T> };
 type UpdatePayload<T> = { row: UpdateMutateRow<T> };
-type SetPayload<T> = { row: CreationMutateRow<T> };
+type SetPayload<T> = { rows: CreationMutateRow<T>[] };
 
 /*--------------------------------- Types ---------------------------------*/
 
@@ -17,10 +18,10 @@ export type CoreModuleName = 'farmer' | 'milk' | 'export' | 'loan';
 
 /*--------------------------------- Functions ---------------------------------*/
 
-function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
+export function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
   return {
-    setRows (state: CoreModuleState<Row>, { row }: SetPayload<Row>) {
-
+    setRows (state: CoreModuleState<Row>, { rows }: SetPayload<Row>) {
+      state.rows = rows;
     },
 
     createRow (state: CoreModuleState<Row>, { row }: CreatePayload<Row>) {
@@ -134,10 +135,22 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
   };
 }
 
-function createInitialState<T>(): CoreModuleState<T> {
+function createState<Row>(): CoreModuleState<Row> {
   return {
-    rows: [] as StoreRow<T>[],
+    rows: [] as StoreRow<Row>[],
     isDirty: false,
-    lastSynced: new Date(0).toUTCString(),
+    lastSynced: new Date(0).toUTCString(), // Not being used
   };
 }
+
+function createCoreModule<Row>(name: CoreModuleName, getters: GetterHandlers<CoreModuleState<Row>>): Module<CoreModuleState<Row>, RootState> {
+  return {
+    getters,
+    namespaced: true,
+    actions: createActions<Row>(getModulePath(name)),
+    mutations: createMutations<Row>(),
+    state: createState<Row>(),
+  };
+}
+
+export default createCoreModule;

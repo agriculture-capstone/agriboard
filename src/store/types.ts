@@ -44,6 +44,8 @@ export type ActionHandlers<S> = ActionTree<S, RootState>;
 /** Structure of vuex getter handlers */
 export type GetterHandlers<S> = GetterTree<S, RootState>;
 
+export type CoreGetterHandlers<Row> = GetterTree<CoreModuleState<Row>, RootState>;
+
 /** Status of a row in store */
 export type Status
   = 'local'
