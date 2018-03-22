@@ -35,7 +35,7 @@ export default Vue.extend({
       })
       .then((response: any) => {
         this.$token = response.data.token;
-        this.$router.push({ path: 'home' });
+        this.$router.push({ name: 'Home' });
       })
       .catch(function (this: any, error: any) {
         this.error = 'Invalid username or password';

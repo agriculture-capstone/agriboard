@@ -18,11 +18,10 @@ export default Vue.extend({
     };
   },
   created(){
-    // TODO update this when we use cookies
     if (TokenService.token) {
-      this.$router.push({ path: 'home'});
+      this.$router.push({ name: 'Home'});
     } else {
-      this.$router.push({ path: 'login'});
+      this.$router.push({ name: 'Login'});
     }
 
   },
