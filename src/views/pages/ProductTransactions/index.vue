@@ -1,9 +1,9 @@
 <template>
   <div class='ProductTransactions'>
-    <md-table class="table" v-model="productTransactions" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table class="table" v-model="productTransactions" md-sort="name" md-sort-order="asc" md-fixed-header>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title"><md-icon class="md-size-2x icon">receipt</md-icon> Transactions</h1>
+          <h1 class="md-title"><md-icon class="md-size-2x icon">receipt</md-icon> Product Transactions</h1>
         </div>
         <md-button v-on:click="downloadCsv" class="md-raised md-accent download_csv_button">Download CSV</md-button>
       </md-table-toolbar>
@@ -12,11 +12,10 @@
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Date" md-sort-by="datetime">{{item.datetime}}</md-table-cell>
-        <!-- TODO add from, to, combine units -->
-        <md-table-cell md-label="Amount" md-sort-by="amountOfProduct">{{item.amountOfProduct}}</md-table-cell>
-        <md-table-cell md-label="Units" md-sort-by="productUnits">{{item.productUnits}}</md-table-cell>
-        <md-table-cell md-label="Cost per Unit" md-sort-by="costPerUnit">{{item.costPerUnit}}</md-table-cell>
-        <md-table-cell md-label="Currency" md-sort-by="currency">{{item.currency}}</md-table-cell>
+        <md-table-cell md-label="From" md-sort-by="from">Bea Esguerra</md-table-cell>
+        <md-table-cell md-label="To" md-sort-by="to">{{item.to}}</md-table-cell>
+        <md-table-cell :md-label="`Amount (${item.productUnits})`" md-sort-by="amountOfProduct">{{item.amountOfProduct}}</md-table-cell>
+        <md-table-cell :md-label="`Cost per ${item.productUnits} (${item.currency})`" md-sort-by="costPerUnit">{{item.costPerUnit}}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -45,7 +44,7 @@ export default Vue.extend({
       const auth = `Bearer ${localStorage.getItem('token')}`;
       const response = await fetch(
         new Request(
-          'https://boresha.live:19443/transactions/products/milk/download',
+          'https://boresha.live:19433/transactions/products/milk/download',
           {
             method: 'get',
             headers: new Headers({
@@ -64,7 +63,7 @@ export default Vue.extend({
     // get productTransactions types
     const productTypes: any[] = [];
     await axios
-      .get('https://boresha.live:19443/products')
+      .get('https://boresha.live:19433/products')
       .then((response: any) => {
         response.data.map((productType: any) => {
           productTypes.push(productType.name);
@@ -81,7 +80,7 @@ export default Vue.extend({
     >[] = productTypes.map((productType: string) => {
       // get all productTransactions of particular productType
       return axios
-        .get('https://boresha.live:19443/transactions/products/' + productType)
+        .get('https://boresha.live:19433/transactions/products/' + productType)
         .then((response: any) => {
           // construct each product transaction
           return response.data.map((transaction: any) => {
@@ -94,6 +93,8 @@ export default Vue.extend({
               costPerUnit: transaction.costPerUnit,
               currency: transaction.currency,
               lastModified: new Date(transaction.lastModified).toUTCString(),
+              to: transaction.to,
+              from: transaction.from,
             };
           });
         })
@@ -123,10 +124,6 @@ export default Vue.extend({
 
 <style lang='scss' scoped>
 @import 'src/styles.scss';
-.md-field {
-  max-width: 300px;
-}
-
 .md-title {
   text-align: left;
   font-size: 2em;
@@ -135,9 +132,6 @@ export default Vue.extend({
   vertical-align: center;
 }
 
-.md-content {
-  height: 1vh;
-}
 
 .error {
   text-align: center;
