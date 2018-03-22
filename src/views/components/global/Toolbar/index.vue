@@ -1,11 +1,12 @@
 <template>
-  <md-toolbar id="toolbar">
-    <!-- Left Button -->
+  <span>
+  <md-toolbar id="toolbar" class="md-primary" md-elevation="0">
+    <!-- Left Button
     <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
-    </md-button>
+    </md-button> -->
     <!-- Title -->
-    <h3 class="md-title">{{title}}</h3>
+    <h1 class="md-title title">{{title}}</h1>
     <!-- Right Buttons -->
     <div class="md-toolbar-section-end right-buttons" v-for="rightButton in rightButtons" :key="rightButton.name">
       <md-button v-if="rightButton.icon" :class="generateRightIconButtonClasses(rightButton.name)" @click="onRightButtonClicked(rightButton)">
@@ -16,6 +17,13 @@
       </md-button>
     </div>
   </md-toolbar>
+  <md-tabs class="md-accent" md-alignment="centered">
+    <md-tab id="tab-home" md-label="Home" :to="{ name: 'Home' }"></md-tab>
+    <md-tab id="tab-analytics" md-label="Analytics" :to="{ name: 'Analytics' }"></md-tab>
+    <md-tab id="tab-transactions" md-label="Transactions" :to="{ name: 'Transactions' }"></md-tab>
+    <md-tab id="tab-accounts" md-label="Accounts" :to="{ name: 'ManagePeople' }"></md-tab>
+  </md-tabs>
+  </span>
 </template>
 
 <script lang="ts">
@@ -140,3 +148,15 @@ export default Vue.component(name, {
   },
 });
 </script>
+
+<style lang="scss" scoped>
+  .centered {
+    justify-content: center;
+    align-content: center;
+  },
+  .title {
+    font-family: 'Fjalla One', sans-serif;
+    letter-spacing: 1.3px;
+  }
+</style>
+

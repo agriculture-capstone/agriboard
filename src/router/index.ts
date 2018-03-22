@@ -32,8 +32,8 @@ export default new Router({
       component: ManagePeople,
     },
     {
-      path: '/transactions/products',
-      name: 'ProductTransactions',
+      path: '/transactions',
+      name: 'Transactions',
       component: ProductTransactions,
     },
   ],
