@@ -83,7 +83,8 @@ const TokenService: TokenService = {
       created () {
         const listener = (value: string) => {
           if (!value) {
-            this.onEmptyToken && this.onEmptyToken();
+            const onEmptyToken = (this as any).$options.onEmptyToken;
+            onEmptyToken && onEmptyToken.call(this);
           }
         };
         TokenService.addListener(listener);

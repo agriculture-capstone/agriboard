@@ -20,6 +20,8 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import TokenService from '@/services/Token';
+
 const name = 'toolbar';
 
 export default Vue.component(name, {
@@ -37,7 +39,7 @@ export default Vue.component(name, {
 
   methods: {
     logOut() {
-      // TODO implement logging out
+      TokenService.token = '';
     }
   },
 });

@@ -22,7 +22,6 @@
 import Vue from 'vue';
 
 import TokenService from '@/services/Token';
-import { MutationType as AppMutationType } from '@/store/modules/app/types';
 import CoreAPI from '@/utils/CoreAPI';
 import SyncService from '@/services/Sync';
 
@@ -33,7 +32,6 @@ export default Vue.extend({
     async login() {
       try {
         await CoreAPI.login(this.credentials);
-        SyncService().start()
         this.$router.push({ name: 'Home' });
       } catch (err) {
         this.error = 'Invalid username or password';
@@ -48,9 +46,6 @@ export default Vue.extend({
       },
       error: '',
     };
-  },
-  created () {
-    this.$store.commit(AppMutationType.SET_TOOLBAR_SHOWN, { shown: false });
   },
 });
 </script>

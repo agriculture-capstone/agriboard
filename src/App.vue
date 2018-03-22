@@ -14,12 +14,45 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 
 import { RootState } from '@/store/types';
+import { MutationType as AppMutation } from '@/store/modules/app/types';
+import SyncService from '@/services/Sync';
+import TokenService from '@/services/Token';
 
 export default Vue.extend({
   name: 'app',
   computed: mapState<RootState>({
     toolbarShown: state => state.app.toolbarShown,
-  })
+  }),
+  mixins: [
+    TokenService.clearedTokenListenerMixin(),
+  ],
+  created () {
+    if (TokenService.token) {
+      SyncService().start();
+    }
+    if (!TokenService.token) {
+      this.$router.push({ name: 'Login' });
+    }
+    this.$router.afterEach((to) => {
+      if (to.name === 'Login') {
+        this.$store.state.app.toolbarShown && this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: false });
+      } else {
+        !this.$store.state.app.toolbarShown && this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: true });
+      }
+    });
+    TokenService.addListener((value) => {
+      // Deal with sync service
+      if (value && !SyncService.running) {
+        SyncService().start();
+      }
+      else if (!value && SyncService.running) {
+        SyncService.stop();
+      }
+    });
+  },
+  onEmptyToken () {
+    this.$router.push({ name: 'Login' });
+  },
 });
 </script>
 

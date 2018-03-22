@@ -18,8 +18,6 @@ import App from '@/App.vue';
 import router from './router';
 import '@/views/components';
 import store from '@/store';
-import SyncService from '@/services/Sync';
-import TokenService from '@/services/Token';
 
 Vue.config.productionTip = false;
 
@@ -43,16 +41,4 @@ new Vue({
   el: '#app',
   template: '<App/>',
   components: { App },
-  mixins: [
-    SyncService().mixin(),
-    TokenService.clearedTokenListenerMixin(),
-  ],
-  onEmptyToken() {
-    router.push({ name: 'Login' });
-  },
-  created () {
-    if (!TokenService.token) {
-      router.push({ name: 'Login' });
-    }
-  },
 });

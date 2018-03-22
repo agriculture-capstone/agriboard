@@ -45,9 +45,6 @@ export interface SyncServiceInstance {
    * @returns A promise that resolves when module has successfully synced
    */
   syncModule(module: CoreModuleName): Job;
-
-  /** Mixin for Vue instance */
-  mixin (): SyncMixin;
 }
 
 export type SyncMixin = (VueConstructor | ComponentOptions<Vue>) & {};
@@ -56,6 +53,9 @@ export type SyncMixin = (VueConstructor | ComponentOptions<Vue>) & {};
 export interface SyncService {
   /** Get instance of sync service */
   (): SyncServiceInstance;
+
+  /** Determine whether the sync service is currently running */
+  running: boolean;
 
   /** Stop the sync service from running */
   stop(): Promise<void>;
@@ -247,19 +247,6 @@ function createSyncService(): SyncServiceInstance {
 
       return job;
     },
-
-    /**
-     * Mixin for vue instance
-     */
-    mixin () {
-      return {
-        created () {
-          if (!isRunning(intervalId) && TokenService.token) {
-            SyncService().start();
-          }
-        },
-      };
-    },
   };
 
   // Return a frozen instance
@@ -286,5 +273,11 @@ SyncService.stop = async function stop() {
   intervalId = -1;
   return Promise.all(Object.values(activeModuleJobs).filter(isJob)).then(v => void NaN);
 };
+
+Object.defineProperty(SyncService, 'running', {
+  get () {
+    return isRunning(intervalId);
+  },
+});
 
 export default SyncService;
