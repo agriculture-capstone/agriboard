@@ -44,7 +44,6 @@ body {
   width: 100vw;
 
   main {
-    text-align: center;
     flex: 1;
   }
 }
