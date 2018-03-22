@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <toolbar />
+      <toolbar v-if="toolbarShown" />
     </header>
     <main>
       <router-view></router-view>
@@ -11,9 +11,15 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState } from 'vuex';
+
+import { RootState } from '@/store/types';
 
 export default Vue.extend({
   name: 'app',
+  computed: mapState<RootState>({
+    toolbarShown: state => state.app.toolbarShown,
+  })
 });
 </script>
 

@@ -1,14 +1,14 @@
 <template>
-  <div class="Login">
-    <h1>Login</h1>
+  <div id="login-page">
     <div class="login_form">
+      <h1 class="heading">Login</h1>
       <md-field>
         <label>Username</label>
-        <md-input v-model="credentials.username"></md-input>
+        <md-input v-model="credentials.username" @keyup.enter="login"></md-input>
       </md-field>
       <md-field :md-toggle-password="false">
         <label>Password</label>
-        <md-input v-model="credentials.password" type="password"></md-input>
+        <md-input v-model="credentials.password" type="password" @keyup.enter="login"></md-input>
       </md-field>
       <div class="login_form_feedback">
         <p class="error">{{ error }}</p>
@@ -20,26 +20,24 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+
 import TokenService from '@/services/Token';
+import { MutationType as AppMutationType } from '@/store/modules/app/types';
+import CoreAPI from '@/utils/CoreAPI';
+import SyncService from '@/services/Sync';
 
 export default Vue.extend({
   name: 'Login',
-  mixins: [TokenService.mixin()],
+  mixins: [TokenService.tokenMixin()],
   methods: {
     async login() {
-      console.log('attempting login');
-      await axios.post(`${process.env.CORE_HOST}:${process.env.CORE_PORT}/actions/authenticate`, {
-        username: this.credentials.username,
-        password: this.credentials.password,
-      })
-      .then((response: any) => {
-        this.$token = response.data.token;
+      try {
+        await CoreAPI.login(this.credentials);
+        SyncService().start()
         this.$router.push({ name: 'Home' });
-      })
-      .catch(function (this: any, error: any) {
+      } catch (err) {
         this.error = 'Invalid username or password';
-      });
+      }
     },
   },
   data () {
@@ -51,35 +49,51 @@ export default Vue.extend({
       error: '',
     };
   },
+  created () {
+    this.$store.commit(AppMutationType.SET_TOOLBAR_SHOWN, { shown: false });
+  },
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-.login_form {
-  width: 22em;
-  margin: auto;
-  margin-top: 4em;
+<style lang="scss">
+
+#login-page {
+  display: flex;
   flex-direction: column;
-  display: flex;
-  align-items: flex-end;
-}
-
-.login_form_feedback {
-  display: flex;
-  width: 22em;
-  justify-content: space-between;
-}
-
-.login_button {
-  width: 4em;
-}
-
-.error {
-  display: flex;
-  margin: 0;
-  color: red;
-  text-align: left;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  .heading {
+    align-self: flex-start;
+  }
+
+  .login_form {
+    width: 22em;
+    flex-direction: column;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15vh;
+  }
+
+  .login_form_feedback {
+    display: flex;
+    width: 22em;
+    justify-content: space-between;
+  }
+
+  .login_button {
+    width: 4em;
+  }
+
+  .error {
+    display: flex;
+    margin: 0;
+    color: red;
+    text-align: left;
+    align-items: center;
+  }
 }
 </style>

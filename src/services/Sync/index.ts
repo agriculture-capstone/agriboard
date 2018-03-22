@@ -1,5 +1,7 @@
 import * as R from 'ramda';
+import Vue, { VueConstructor, ComponentOptions } from 'vue';
 
+import TokenService from '@/services/Token';
 import { CoreModuleName } from '../../utils/createCoreModule';
 import store from '@/store';
 import { CoreModuleState, CoreRow, StoreRow } from '../../store/types';
@@ -43,7 +45,12 @@ export interface SyncServiceInstance {
    * @returns A promise that resolves when module has successfully synced
    */
   syncModule(module: CoreModuleName): Job;
+
+  /** Mixin for Vue instance */
+  mixin (): SyncMixin;
 }
+
+export type SyncMixin = (VueConstructor | ComponentOptions<Vue>) & {};
 
 /** Sync service module */
 export interface SyncService {
@@ -239,6 +246,19 @@ function createSyncService(): SyncServiceInstance {
       });
 
       return job;
+    },
+
+    /**
+     * Mixin for vue instance
+     */
+    mixin () {
+      return {
+        created () {
+          if (!isRunning(intervalId) && TokenService.token) {
+            SyncService().start();
+          }
+        },
+      };
     },
   };
 
