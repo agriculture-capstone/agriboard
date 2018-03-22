@@ -15,7 +15,7 @@
         <md-table-cell md-label="From" md-sort-by="from">Bea Esguerra</md-table-cell>
         <md-table-cell md-label="To" md-sort-by="to">{{item.to}}</md-table-cell>
         <md-table-cell :md-label="`Amount (${item.productUnits})`" md-sort-by="amountOfProduct">{{item.amountOfProduct}}</md-table-cell>
-        <md-table-cell :md-label="`Cost per ${item.productUnits} (${item.currency})`" md-sort-by="costPerUnit">{{item.costPerUnit}}</md-table-cell>
+        <md-table-cell :md-label="`Rate (${item.productUnits}/${item.currency})`" md-sort-by="costPerUnit">{{item.costPerUnit}}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
