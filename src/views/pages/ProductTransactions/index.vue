@@ -28,6 +28,8 @@ import axios from 'axios';
 import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 
+import TokenService from '@/services/Token';
+
 interface ProductTransaction {
   productType: string;
   datetime: string;
@@ -42,7 +44,7 @@ export default Vue.extend({
   name: 'ProductTransactions',
   methods: {
     downloadCsv: async function downloadCsv() {
-      const auth = `Bearer ${localStorage.getItem('token')}`;
+      const auth = `Bearer ${TokenService.token}`;
       const response = await fetch(
         new Request(
           'https://boresha.live:19443/transactions/products/milk/download',
@@ -55,7 +57,7 @@ export default Vue.extend({
         ),
       );
       const blob = await response.blob();
-      const date = moment().format('YYYY-MM-DD'); 
+      const date = moment().format('YYYY-MM-DD');
       const filename = `${date}-collections.csv`;
       saveAs(blob, filename);
     },

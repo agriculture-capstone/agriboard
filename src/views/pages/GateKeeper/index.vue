@@ -9,6 +9,8 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import TokenService from '@/services/Token';
+
 export default Vue.extend({
   name: 'GateKeeper',
   data () {
@@ -16,13 +18,12 @@ export default Vue.extend({
     };
   },
   created(){
-    // TODO update this when we use cookies
-    if (localStorage.getItem("token")) {
-      this.$router.push({ path: 'home'});
+    if (TokenService.token) {
+      this.$router.push({ name: 'Home'});
     } else {
-      this.$router.push({ path: 'login'});
+      this.$router.push({ name: 'Login'});
     }
-    
+
   },
 });
 </script>
