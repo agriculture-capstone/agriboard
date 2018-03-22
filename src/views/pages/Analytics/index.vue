@@ -1,51 +1,49 @@
 <template>
-  <div class='center'>
-      <md-card class='md-elevation-10 stats'>
-            <div class="md-title"> Monthly Statistics </div>
-          <div class="md-layout">
-              <md-card class="md-layout-item md-elevation-0">
-                <md-card-header>
-                  <md-card-header-text>
-                    <div class="stat-heading">Milk Collected</div>
-                    <div class="stat">{{collected}} L</div>
-                  </md-card-header-text>
-                </md-card-header>
-              </md-card>
-              <md-card class="md-layout-item md-elevation-0">
-                <md-card-header>
-                  <md-card-header-text>
-                    <div class="stat-heading">Milk Delivered</div>
-                    <div class="stat">{{delivered}} L</div>
-                  </md-card-header-text>
-                </md-card-header>
-              </md-card>
-              <md-card class="md-layout-item md-elevation-0">
-                <md-card-header>
-                  <md-card-header-text>
-                    <div class="stat-heading">Loans Dispensed</div>
-                    <div class="stat">{{disperesed}} UGX</div>
-                  </md-card-header-text>
-                </md-card-header>
-              </md-card>
-          </div>
-      </md-card>
-
-      <md-card class='md-elevation-10 graph'>
-        <graph 
-          v-bind:values="productTranscations" 
-          title="Milk-Collections-and-Deliveries" 
-          xUnits="Date" 
-          yUnits="Litres"
-        />
-      </md-card>
-      <md-card class='md-elevation-10 graph'>
-        <graph 
-          v-bind:values="moneyTranscations" 
-          title="Loan-Dispersals-and-Payments" 
-          xUnits="Date" 
-          yUnits="UGX"
-        />
-      </md-card>
+  <div>
+    <!-- Stats Section -->
+    <div class="md-layout stats md-gutter">
+        <md-card class="md-layout-item md-elevation-6">
+          <md-card-header>
+            <md-card-header-text>
+              <div class="stat-heading">Milk Collected (Month)</div>
+              <div class="stat">{{collected}} L</div>
+            </md-card-header-text>
+          </md-card-header>
+        </md-card>
+        <md-card class="md-layout-item md-elevation-6">
+          <md-card-header>
+            <md-card-header-text>
+              <div class="stat-heading">Milk Delivered (Month)</div>
+              <div class="stat">{{delivered}} L</div>
+            </md-card-header-text>
+          </md-card-header>
+        </md-card>
+        <md-card class="md-layout-item md-elevation-6">
+          <md-card-header>
+            <md-card-header-text>
+              <div class="stat-heading">Loans Dispensed (Month)</div>
+              <div class="stat">{{disperesed}} UGX</div>
+            </md-card-header-text>
+          </md-card-header>
+        </md-card>
+    </div>
+    <!-- Graphs -->
+    <md-card class='md-elevation-10 graph'>
+      <graph 
+        v-bind:values="productTranscations" 
+        title="Milk-Collections-and-Deliveries" 
+        xUnits="Date" 
+        yUnits="Litres"
+      />
+    </md-card>
+    <md-card class='md-elevation-10 graph'>
+      <graph 
+        v-bind:values="moneyTranscations" 
+        title="Loan-Dispersals-and-Payments" 
+        xUnits="Date" 
+        yUnits="UGX"
+      />
+    </md-card>
   </div>
 </template>
 
@@ -63,7 +61,6 @@ export default {
       collected: 0,
       delivered: 0,
       dispensed: 0,
-      payed: 0,
     };
   },
   components: {
@@ -81,14 +78,12 @@ export default {
     this.collected = this.calculateCollected ();
     this.delivered = this.calculateDelivered ();
     this.disperesed = this.calculateLoans ();
-    this.payed = this.calculatePayments ();
-
   },
   methods: {
     fillCollections () {
       let data = [];
-      for(let i=0; i<110; i++) {
-        let currentDate = new Date("2018-01-20T18:58:51-06:00");
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("2018-02-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(10, 200)();
 
@@ -108,8 +103,8 @@ export default {
     
     fillExports () {
       let data = [];
-      for(let i=0; i<110; i++) {
-        let currentDate = new Date("2018-01-20T18:58:51-06:00");
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("2018-02-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(10, 200)();
 
@@ -129,8 +124,8 @@ export default {
     
     fillLoans () {
       let data = [];
-      for(let i=0; i<110; i++) {
-        let currentDate = new Date("2018-01-20T18:58:51-06:00");
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("2018-02-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(300, 2000)();
 
@@ -148,8 +143,8 @@ export default {
     fillPayments () {
       let data = [];
 
-      for(let i=0; i<110; i++) {
-        let currentDate = new Date("2018-01-20T18:58:51-06:00");
+      for(let i=0; i<40; i++) {
+        let currentDate = new Date("2018-02-20T18:58:51-06:00");
         currentDate.setDate(currentDate.getDate() + i);
         let currentValue = d3.randomUniform(100, 2000)();
 
@@ -228,6 +223,9 @@ export default {
 .stats {
   margin-top:1%;
   height: 16vh;
+  width: 90vw;
+  margin: auto;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -241,11 +239,5 @@ export default {
   font-size:2vh;
   color: steelblue;
   font-weight: bold;
-}
-
-#stats-title {
-  font-size:3vh;
-  font-weight: '900';
-
 }
 </style>

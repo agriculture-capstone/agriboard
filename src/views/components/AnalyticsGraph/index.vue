@@ -12,11 +12,13 @@ export default {
     };
   },
   props : ['values' , 'title', 'xUnits', 'yUnits'],
+
   mounted() {
+    /**@description Create an event listener for window resizing that rerenders the graph */
     this.$nextTick(function() {
       window.addEventListener('resize', this.redrawGraph);
     })
-
+    //initialize the graph
       this.drawLinesGraph(document.getElementById(this.title).offsetHeight * 0.90, document.getElementById(this.title).offsetWidth * 0.85, 
       this.values, this.title, this.xUnits, this.yUnits);
   },
@@ -24,12 +26,13 @@ export default {
     window.removeEventListener('resize', this.redrawGraph);
   },
   methods : {
+    /** @description remove the specified SVG and rerender it with the new window dimensions */
     redrawGraph() {
       d3.select('#' + this.title).selectAll('g').remove();
       this.drawLinesGraph(document.getElementById(this.title).offsetHeight * 0.90, document.getElementById(this.title).offsetWidth * 0.85, 
       this.values, this.title, this.xUnits, this.yUnits);
     },
-
+    /**@description Renders the template SVG as a D3 graph */
     drawLinesGraph(containerHeight, containerWidth, data, title, xUnits, yUnits){
       
       let svg = d3.select('#' + title).select('svg');
@@ -77,13 +80,13 @@ export default {
     svg.append("g")
         .attr("class", "brush")
         .call(brush);
-
+      // X Axis
       g.append('g')
         .attr('class', 'axis--x')
         .attr('transform', 'translate(0, ' + height + ')')
         .style("font-weight", "bold")
         .call(xAxis);
-
+      // Y Axis
       g.append('g')
         .attr('class', 'axis--y')
         .style("font-weight", "bold")
@@ -104,7 +107,7 @@ export default {
         
       let legend =g.append('g')
           .attr('class', 'legend');
-
+      // iterate over data and generte lines
       for( let i = 0; i < data.length; i++ ){
           main.append('path')
             .datum(data[i])
@@ -123,7 +126,7 @@ export default {
             .attr('stroke-width', 1)
             .attr('class', 'circles');
 
-          //legend
+          // legend
           legend = g.append("text")
             .data(data[i])
             .attr("transform",
@@ -147,7 +150,6 @@ export default {
       let voronoiRadius = width;
 
       //focus
-
       let focus = g.append('g').style('display', 'none');
 
       focus.append('line')
@@ -160,8 +162,6 @@ export default {
           .attr('id', 'focusCircle')
           .attr('r', 4) 
           .attr('class', 'circle focusCircle');
-
-
 
       svg.select('.overlay')
           .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
@@ -193,8 +193,6 @@ export default {
             this.dispatchEvent(new Event('drag'));
             d3.event.preventDefault();
           });
-          // .on('drag', drag);
-
 
       function brushended() {
           let s = d3.event.selection;
@@ -224,12 +222,10 @@ export default {
         g.selectAll(".line").transition(t)
             .attr("d", function(d) { return line(d); });
 
-
        voronoiDiagram = d3.voronoi()
           .x(function(d) {return xScale(d.datetime); })
           .y(function(d) {return yScale(d.amountOfProduct); })
           .size([containerWidth, containerHeight])(vorData);
-
       }
 
       function dragged() {
