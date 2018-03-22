@@ -29,7 +29,7 @@ export default Vue.extend({
   methods: {
     async login() {
       console.log('attempting login');
-      await axios.post('https://boresha.live:19443/actions/authenticate', {
+      await axios.post(`${process.env.CORE_HOST}:${process.env.CORE_PORT}/actions/authenticate`, {
         username: this.credentials.username,
         password: this.credentials.password,
       })
