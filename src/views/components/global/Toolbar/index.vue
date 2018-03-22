@@ -1,38 +1,24 @@
 <template>
   <span>
-  <md-toolbar id="toolbar" class="md-primary" md-elevation="0">
-    <!-- Left Button
-    <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
-      <md-icon class="left-icon">{{leftIcon}}</md-icon>
-    </md-button> -->
-    <!-- Title -->
-    <h1 class="md-title title">{{title}}</h1>
-    <!-- Right Buttons -->
-    <div class="md-toolbar-section-end right-buttons" v-for="rightButton in rightButtons" :key="rightButton.name">
-      <md-button v-if="rightButton.icon" :class="generateRightIconButtonClasses(rightButton.name)" @click="onRightButtonClicked(rightButton)">
-        <md-icon>{{rightButton.icon}}</md-icon>
-      </md-button>
-      <md-button :class="generateRightTextButtonClasses(rightButton.name)" @click="onRightButtonClicked(rightButton)" v-else>
-        {{rightButton.name}}
-      </md-button>
-    </div>
-  </md-toolbar>
-  <md-tabs class="md-accent" md-alignment="centered">
-    <md-tab id="tab-home" md-label="Home" :to="{ name: 'Home' }"></md-tab>
-    <md-tab id="tab-analytics" md-label="Analytics" :to="{ name: 'Analytics' }"></md-tab>
-    <md-tab id="tab-transactions" md-label="Transactions" :to="{ name: 'Transactions' }"></md-tab>
-    <md-tab id="tab-accounts" md-label="Accounts" :to="{ name: 'ManagePeople' }"></md-tab>
-  </md-tabs>
+    <md-toolbar id="toolbar" class="md-primary" md-elevation="0">
+      <h1 class="md-title title">{{title}}</h1>
+      <div class="md-toolbar-section-end">
+        <md-button v-if="loggedIn" @click="logOut">
+          Sign Out
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-tabs class="md-accent" md-alignment="fixed" v-if="loggedIn">
+      <md-tab id="tab-home" md-label="Home" :to="{ name: 'Home' }"></md-tab>
+      <md-tab id="tab-analytics" md-label="Analytics" :to="{ name: 'Analytics' }"></md-tab>
+      <md-tab id="tab-transactions" md-label="Transactions" :to="{ name: 'Transactions' }"></md-tab>
+      <md-tab id="tab-accounts" md-label="Accounts" :to="{ name: 'ManagePeople' }"></md-tab>
+    </md-tabs>
   </span>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-
-import { RootState } from '@/store/types';
-import { MutationType as AppMutation, SetDrawerShownPayload } from '@/store/modules/drawer/types';
-import Icon from '@/models/icons';
-import { RightButton, RightButtonType } from '@/models/toolbar/rightButton';
 
 const name = 'toolbar';
 
@@ -40,111 +26,19 @@ export default Vue.component(name, {
   name,
 
   computed: {
-
-    leftIcon(): Icon {
-      return (this.$store.state.drawer.drawerLocked) ? Icon.ARROW_BACK : Icon.MENU;
-    },
-
     title(): string {
       return this.$store.state.app.title;
     },
-
-    rightButtons(): RightButton[] {
-      return this.$store.state.toolbar.rightButtons;
-    },
-
+    loggedIn(): boolean {
+      // TODO properly extract whether a user is logged in or not
+      return true;
+    }
   },
 
   methods: {
-
-    /*------------------- Mutations -------------------*/
-
-    setDrawerShown(payload: SetDrawerShownPayload) {
-      this.$store.commit(AppMutation.SET_DRAWER_SHOWN, payload);
-    },
-
-    /*-------------------- Actions --------------------*/
-
-    /*-------------------- Methods --------------------*/
-
-    /**
-     * Handle one of the right buttons being clicked
-     *
-     * @param rightButton - Definition for right button
-     */
-    onRightButtonClicked(rightButton: RightButton) {
-      if (rightButton.type === RightButtonType.MUTATION) {
-        this.$store.commit(rightButton.mutation);
-      } else if (rightButton.type === RightButtonType.ACTION) {
-        this.$store.dispatch(rightButton.action);
-      } else {
-        throw new Error('Invalid right button state');
-      }
-    },
-
-    /**
-     * Handle clicks to the left button (menu|back) based on icon type
-    */
-    handleLeftButtonClicked() {
-      switch (this.leftIcon) {
-        case Icon.ARROW_BACK:
-          this.handleBackButtonClicked();
-          break;
-
-        case Icon.MENU:
-          this.handleMenuButtonClicked();
-          break;
-
-        default:
-          throw new Error(`No such button: ${this.leftIcon}`);
-      }
-    },
-
-    /**
-     * Generate classes for a right icon button
-     *
-     * @param name - Name of button
-     */
-    generateRightIconButtonClasses(name: string) {
-      return this.generateRightButtonClasses(name, 'md-icon-button', 'icon-button');
-    },
-
-    /**
-     * Generate classes for a right text button
-     *
-     * @param name - Name of button
-     */
-    generateRightTextButtonClasses(name: string) {
-      return this.generateRightButtonClasses(name, 'text-button');
-    },
-
-    /**
-     * Handle menu button being clicked
-     *
-     * Opens the drawer
-     */
-    handleMenuButtonClicked() {
-      this.setDrawerShown({ open: true });
-    },
-
-    /**
-     * Handle back button being clicked
-     *
-     * Use the router history API to go back to previous route
-     */
-    handleBackButtonClicked() {
-      this.$router.back();
-    },
-
-    generateRightButtonClasses(name: string, ...extraClasses: string[]) {
-      const classNames = [
-        ...extraClasses,
-        'right-button',
-        `${name}-button`,
-      ];
-
-      return classNames.join(' ');
-    },
+    logOut() {
+      // TODO implement logging out
+    }
   },
 });
 </script>
@@ -153,7 +47,7 @@ export default Vue.component(name, {
   .centered {
     justify-content: center;
     align-content: center;
-  },
+  };
   .title {
     font-family: 'Fjalla One', sans-serif;
     letter-spacing: 1.3px;

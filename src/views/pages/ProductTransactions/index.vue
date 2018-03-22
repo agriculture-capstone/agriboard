@@ -1,9 +1,9 @@
 <template>
   <div class='ProductTransactions'>
-    <md-table v-model="productTransactions" md-sort="name" md-sort-order="asc" md-card>
+    <md-table class="table" v-model="productTransactions" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title">Product Transactions</h1>
+          <h1 class="md-title"><md-icon class="md-size-2x icon">receipt</md-icon> Transactions</h1>
         </div>
         <md-button v-on:click="downloadCsv" class="md-raised md-accent download_csv_button">Download CSV</md-button>
       </md-table-toolbar>
@@ -11,13 +11,12 @@
       <h2 class="error md-subheader">{{error}}</h2>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Type" md-sort-by="productType">{{item.productType}}</md-table-cell>
-        <md-table-cell md-label="Date Time" md-sort-by="datetime">{{item.datetime}}</md-table-cell>
+        <md-table-cell md-label="Date" md-sort-by="datetime">{{item.datetime}}</md-table-cell>
+        <!-- TODO add from, to, combine units -->
         <md-table-cell md-label="Amount" md-sort-by="amountOfProduct">{{item.amountOfProduct}}</md-table-cell>
         <md-table-cell md-label="Units" md-sort-by="productUnits">{{item.productUnits}}</md-table-cell>
         <md-table-cell md-label="Cost per Unit" md-sort-by="costPerUnit">{{item.costPerUnit}}</md-table-cell>
         <md-table-cell md-label="Currency" md-sort-by="currency">{{item.currency}}</md-table-cell>
-        <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{item.lastModified}}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -125,6 +124,7 @@ export default Vue.extend({
 </script>
 
 <style lang='scss' scoped>
+@import 'src/styles.scss';
 .md-field {
   max-width: 300px;
 }
@@ -132,8 +132,9 @@ export default Vue.extend({
 .md-title {
   text-align: left;
   font-size: 2em;
-  padding: 1rem;
+  padding: 1rem 0rem;
   line-height: 3em;
+  vertical-align: center;
 }
 
 .md-content {
@@ -144,5 +145,13 @@ export default Vue.extend({
   text-align: center;
   margin: auto;
   color: red;
+}
+
+.table {
+  padding: 0vh  2vw;
+}
+
+.icon {
+  color: $icon-color !important;
 }
 </style>
