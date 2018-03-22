@@ -21,7 +21,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
-import TokenService, { TokenMixin } from '@/services/Token';
+import TokenService from '@/services/Token';
 
 export default Vue.extend({
   name: 'Login',
@@ -34,8 +34,7 @@ export default Vue.extend({
         password: this.credentials.password,
       })
       .then((response: any) => {
-        // TODO needs to be fixed
-        (this as any).$token = response.data.token;
+        this.$token = response.data.token;
         this.$router.push({ path: 'home' });
       })
       .catch(function (this: any, error: any) {
