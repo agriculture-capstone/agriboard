@@ -50,6 +50,7 @@ export default Vue.component(name, {
   },
   .title {
     font-family: 'Fjalla One', sans-serif;
+    letter-spacing: 1.3px;
   }
 </style>
 
