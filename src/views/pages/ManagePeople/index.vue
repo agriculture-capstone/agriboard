@@ -4,7 +4,7 @@
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
-          <h1 class="md-title">Accounts</h1>
+          <h1 class="md-title">People</h1>
         </div>
         <md-field md-clearable class="md-toolbar-section-end">
           <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
