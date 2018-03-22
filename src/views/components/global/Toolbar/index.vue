@@ -1,6 +1,6 @@
 <template>
   <span>
-  <md-toolbar id="toolbar" class="md-primary centered" md-elevation="0">
+  <md-toolbar id="toolbar" class="md-primary" md-elevation="0">
     <!-- Left Button
     <md-button class="md-icon-button left-button" @click="handleLeftButtonClicked">
       <md-icon class="left-icon">{{leftIcon}}</md-icon>
@@ -156,6 +156,7 @@ export default Vue.component(name, {
   },
   .title {
     font-family: 'Fjalla One', sans-serif;
+    letter-spacing: 1.3px;
   }
 </style>
 
