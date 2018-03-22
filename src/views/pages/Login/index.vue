@@ -21,9 +21,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
+import TokenService from '@/services/Token';
 
 export default Vue.extend({
   name: 'Login',
+  mixins: [TokenService.mixin()],
   methods: {
     async login() {
       console.log('attempting login');
@@ -31,10 +33,9 @@ export default Vue.extend({
         username: this.credentials.username,
         password: this.credentials.password,
       })
-      .then(function (this: any, response: any) {
-        // TODO needs to be fixed
-        localStorage.setItem('token', response.data.token);
-        this.$router.push({ path: 'home' });
+      .then((response: any) => {
+        this.$token = response.data.token;
+        this.$router.push({ name: 'Home' });
       })
       .catch(function (this: any, error: any) {
         this.error = 'Invalid username or password';
