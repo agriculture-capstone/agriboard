@@ -5,7 +5,7 @@
         <div class="md-toolbar-section-start">
           <h1 class="md-title">Product Transactions</h1>
         </div>
-        <md-button v-on:click="downloadCsv" class="md-raised md-primary download_csv_button">Download CSV</md-button>
+        <md-button v-on:click="downloadCsv" class="md-raised md-accent download_csv_button">Download CSV</md-button>
       </md-table-toolbar>
 
       <h2 class="error md-subheader">{{error}}</h2>

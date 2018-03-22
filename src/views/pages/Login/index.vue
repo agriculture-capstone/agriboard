@@ -12,7 +12,7 @@
       </md-field>
       <div class="login_form_feedback">
         <p class="error">{{ error }}</p>
-        <md-button v-on:click="login" class="md-raised md-primary login_button">Login</md-button>
+        <md-button v-on:click="login" class="md-raised md-accent login_button">Login</md-button>
       </div>
     </div>
   </div>
