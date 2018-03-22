@@ -2,8 +2,6 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 
 import app from './modules/app';
-import toolbar from './modules/toolbar';
-import drawer from './modules/drawer';
 import farmer from './modules/farmer';
 import milk from './modules/milk';
 import loan from './modules/loan';
@@ -18,8 +16,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store<RootState>({
   modules: {
     app,
-    toolbar,
-    drawer,
     farmer,
     milk,
     loan,
@@ -33,8 +29,6 @@ if (module.hot) {
     // require the updated modules
     // have to add .default here due to babel 6 module output
     const appModule = require('./modules/app').default;
-    const toolbarModule = require('./modules/toolbar').default;
-    const drawerModule = require('./modules/drawer').default;
     const farmerModule = require('./modules/farmer').default;
     const milkModule = require('./modules/milk').default;
     const loanModule = require('./modules/loan').default;
@@ -43,8 +37,6 @@ if (module.hot) {
     store.hotUpdate({
       modules: {
         app: appModule,
-        toolbar: toolbarModule,
-        drawer: drawerModule,
         farmer: farmerModule,
         milk: milkModule,
         loan: loanModule,
