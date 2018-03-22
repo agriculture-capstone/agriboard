@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1 class="md-headline"> Services </h1>
     <div class="actions_section">
       <router-link :to="{ name: 'ManagePeople' }">
         <md-card md-with-hover class="action_card">

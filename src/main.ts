@@ -18,6 +18,7 @@ import App from '@/App.vue';
 import router from './router';
 import '@/views/components';
 import store from '@/store';
+import SyncService from '@/services/Sync';
 
 Vue.config.productionTip = false;
 
@@ -41,4 +42,7 @@ new Vue({
   el: '#app',
   template: '<App/>',
   components: { App },
+  created () {
+    SyncService().start();
+  },
 });
