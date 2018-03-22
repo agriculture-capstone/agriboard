@@ -47,7 +47,7 @@ export default Vue.component(name, {
   .centered {
     justify-content: center;
     align-content: center;
-  },
+  };
   .title {
     font-family: 'Fjalla One', sans-serif;
     letter-spacing: 1.3px;
