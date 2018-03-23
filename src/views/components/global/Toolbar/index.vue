@@ -1,7 +1,7 @@
 <template>
   <span>
     <md-toolbar id="toolbar" class="md-primary" md-elevation="0">
-      <h1 class="md-title title">{{title}}</h1>
+      <logo :title="title" />
       <div class="md-toolbar-section-end">
         <md-button v-if="loggedIn" @click="logOut">
           Sign Out
@@ -49,10 +49,6 @@ export default Vue.component(name, {
   .centered {
     justify-content: center;
     align-content: center;
-  };
-  .title {
-    font-family: 'Fjalla One', sans-serif;
-    letter-spacing: 1.3px;
   }
 </style>
 

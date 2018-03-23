@@ -1,7 +1,7 @@
 <template>
   <div id="login-page">
     <div class="login_form">
-      <h1 class="heading">Login</h1>
+      <logo class="logo" />
       <md-field>
         <label>Username</label>
         <md-input v-model="credentials.username" @keyup.enter="login"></md-input>
@@ -60,9 +60,12 @@ export default Vue.extend({
   justify-content: center;
   height: 100%;
   width: 100%;
+  background: #1BA3E1;
 
-  .heading {
-    align-self: flex-start;
+  .logo {
+    align-self: center;
+    font-size: 24px;
+    margin-bottom: 50px;
   }
 
   .login_form {
