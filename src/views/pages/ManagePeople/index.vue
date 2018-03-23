@@ -4,15 +4,13 @@
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
-          <h1 class="md-title">Accounts</h1>
+          <h1 class="md-title">People</h1>
         </div>
         <md-field md-clearable class="md-toolbar-section-end">
           <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
         </md-field>
       </md-table-toolbar>
-
       <h2 class="error md-subheader">{{error}}</h2>
-
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
