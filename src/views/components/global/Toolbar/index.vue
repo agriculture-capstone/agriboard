@@ -12,7 +12,7 @@
       <md-tab id="tab-home" md-label="Home" :to="{ name: 'Home' }"></md-tab>
       <md-tab id="tab-analytics" md-label="Analytics" :to="{ name: 'Analytics' }"></md-tab>
       <md-tab id="tab-transactions" md-label="Transactions" :to="{ name: 'Transactions' }"></md-tab>
-      <md-tab id="tab-accounts" md-label="Accounts" :to="{ name: 'ManagePeople' }"></md-tab>
+      <md-tab id="tab-people" md-label="People" :to="{ name: 'ManagePeople' }"></md-tab>
     </md-tabs>
   </span>
 </template>
