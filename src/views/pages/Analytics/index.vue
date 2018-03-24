@@ -95,7 +95,7 @@ export default {
           productUnits: 'L',
           costPerUnit: '54',
           currency: 'UGX',
-          lastModified: currentValue,
+          lastModified: currentDate,
         });
       }
       return data;
@@ -116,7 +116,7 @@ export default {
           productUnits: 'L',
           costPerUnit: '54',
           currency: 'UGX',
-          lastModified: currentValue,
+          lastModified: currentDate,
         });
       }
       return data;
@@ -134,7 +134,7 @@ export default {
           datetime: currentDate,
           amountOfProduct: currentValue,
           currency: 'UGX',
-          lastModified: currentValue,
+          lastModified: currentDate,
         });
       }
       return data;
@@ -153,7 +153,7 @@ export default {
           datetime: currentDate,
           amountOfProduct: currentValue,
           currency: 'UGX',
-          lastModified: currentValue,
+          lastModified: currentDate,
         });
       }
       return data;

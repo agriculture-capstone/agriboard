@@ -16,7 +16,7 @@
         </md-card>
       </router-link>
 
-    <router-link :to="{ path: '/analytics' }">
+    <router-link :to="{ name: 'analytics' }">
       <md-card md-with-hover class="action_card">
         <md-ripple>
           <div class="service">
