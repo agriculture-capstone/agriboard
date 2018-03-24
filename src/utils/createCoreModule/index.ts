@@ -17,8 +17,11 @@ import { hasUUID, isResponse, getModulePath } from './utils';
 import CoreAPI, { CorePath } from '@/utils/CoreAPI';
 import { Module } from 'vuex';
 
+/** payload for create */
 type CreatePayload<T> = { row: CreationMutateRow<T> };
+/** payload for update */
 type UpdatePayload<T> = { row: UpdateMutateRow<T> };
+/** payload for set */
 type SetPayload<T> = { rows: CreationMutateRow<T>[] };
 
 /*--------------------------------- Types ---------------------------------*/
@@ -33,16 +36,19 @@ export type CoreModuleName
 
 /*--------------------------------- Functions ---------------------------------*/
 
-export function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
+function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
   return {
+    /** set rows mutation */
     setRows (state: CoreModuleState<Row>, { rows }: SetPayload<Row>) {
       state.rows = rows;
     },
 
+    /** create row mutations */
     createRow (state: CoreModuleState<Row>, { row }: CreatePayload<Row>) {
       state.rows.push(row);
     },
 
+    /** update row mutations */
     updateRow (state: CoreModuleState<Row>, { row }: UpdatePayload<Row>) {
       state.rows = updateElementByProp('uuid', row, state.rows);
     },
@@ -51,6 +57,7 @@ export function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
 
 function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>> {
   return {
+    /** create row action */
     async createRow ({ commit }, { row }: CreatePayload<Row>) {
 
       const payload: CreationMutateRow<Row> = {
@@ -101,6 +108,7 @@ function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>
       }
     },
 
+    /** update row action */
     async updateRow ({ commit, state }, { row }: UpdatePayload<Row>) {
       if (!hasUUID(row)) {
         throw new Error('Update must contain UUID');
@@ -162,6 +170,7 @@ function createState<Row>(): CoreModuleState<Row> {
   };
 }
 
+/** Create a core store module */
 function createCoreModule<Row>(name: CoreModuleName, getters: GetterHandlers<CoreModuleState<Row>>): Module<CoreModuleState<Row>, RootState> {
   return {
     getters,

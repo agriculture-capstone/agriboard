@@ -1,5 +1,7 @@
 import * as R from 'ramda';
+import Vue, { VueConstructor, ComponentOptions } from 'vue';
 
+import TokenService from '@/services/Token';
 import { CoreModuleName } from '../../utils/createCoreModule';
 import store from '@/store';
 import { CoreModuleState, CoreRow, StoreRow } from '../../store/types';
@@ -11,6 +13,7 @@ import { getModulePath, CoreModuleNames } from '@/utils/createCoreModule/utils';
  */
 type Job = Promise<boolean>;
 
+/** Array of Job */
 type Jobs = Promise<boolean[]>;
 
 interface CurrentModuleJobs {
@@ -45,10 +48,16 @@ export interface SyncServiceInstance {
   syncModule(module: CoreModuleName): Job;
 }
 
+/** Mixin for sync service */
+export type SyncMixin = (VueConstructor | ComponentOptions<Vue>) & {};
+
 /** Sync service module */
 export interface SyncService {
   /** Get instance of sync service */
   (): SyncServiceInstance;
+
+  /** Determine whether the sync service is currently running */
+  running: boolean;
 
   /** Stop the sync service from running */
   stop(): Promise<void>;
@@ -266,5 +275,12 @@ SyncService.stop = async function stop() {
   intervalId = -1;
   return Promise.all(Object.values(activeModuleJobs).filter(isJob)).then(v => void NaN);
 };
+
+Object.defineProperty(SyncService, 'running', {
+  /** Getter for running value */
+  get () {
+    return isRunning(intervalId);
+  },
+});
 
 export default SyncService;

@@ -1,6 +1,7 @@
 import HTTPCode from '@/utils/HTTPCode';
 import { CoreUpdateRequest, CoreCreationRequest, CoreRow } from '@/store/types';
 import { AuthenticationError } from '@/errors/AuthenticationError';
+import TokenService from '@/services/Token';
 
 /** Paths on Core for specific data tables */
 export type CorePath = '/people/farmers' | '/transactions/products/milk' | '/transactions/products/export' | '/transactions/money/loan';
@@ -33,8 +34,9 @@ export default class CoreAPI {
    *
    * @return {boolean} Success status (true if successful)
    */
-  public static async LOGIN(username: string, password: string): Promise<{ uuid: string, jwt: string }> {
-    const url = `${process.env.CORE_HOST}:${process.env.CORE_PORT}${process.env.LOGIN_PATH}`;
+  // tslint:disable-next-line:function-name
+  public static async login({ username, password }: {username: string, password: string}): Promise<{ uuid: string, jwt: string }> {
+    const url = `${process.env.CORE_HOST}:${process.env.CORE_PORT}${LOGIN_PATH}`;
     const method: CoreRequestMethod = 'POST';
     const headers = new Headers({
       'content-type': 'application/json',
@@ -57,7 +59,7 @@ export default class CoreAPI {
     if (!response.ok) throw new AuthenticationError();
 
     const { token: jwt, uuid } = await response.json();
-    localStorage.setItem('token', jwt);
+    TokenService.token = jwt;
 
     return { uuid, jwt };
   }
@@ -125,7 +127,7 @@ export default class CoreAPI {
 
   private getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
 
-    const jwt = localStorage.getItem('token');
+    const jwt = TokenService.token;
     if (!jwt) {
       throw new Error('Not authenticated');
     }
@@ -157,7 +159,12 @@ export default class CoreAPI {
       } while (response.status === HTTPCode.INTERNAL_SERVER_ERROR && attempts++ < maxAttempts);
     }
 
-    if (!response.ok) throw response;
+    if (!response.ok) {
+      if (response.status === HTTPCode.UNAUTHORIZED) {
+        TokenService.token = '';
+      }
+      throw response;
+    }
 
     else return await response.json();
   }

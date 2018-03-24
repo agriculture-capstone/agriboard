@@ -49,7 +49,7 @@ module.exports = function baseConfig(env) {
             tsConfigFile: utils.resolve('tsconfig.json'),
             // We do not want linting to break the build during development
             // but we do want it to break in testing/production environments
-            emitErrors: (env !== 'development'),
+            emitErrors: true,
             failOnHint: (env !== 'development')
           }
         },
