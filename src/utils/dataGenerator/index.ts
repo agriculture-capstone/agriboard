@@ -1,6 +1,10 @@
 export default {
-
-  fillCollections() {
+  /**
+   * generates a random set of collection data
+   * 
+   * @returns {object[]} array populated with collection transaction objects
+   */
+  fillCollections(): object[] {
     const data = [];
     const dataItems = 40;
     const min = 10;
@@ -9,7 +13,6 @@ export default {
       const currentDate = new Date('2018-02-20T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
-
       data.push({
         type: 'collections',
         productType: 'milk',
@@ -23,8 +26,12 @@ export default {
     }
     return data;
   },
-
-  fillExports() {
+  /**
+   * generates a random set of export data
+   * 
+   * @returns {object[]} array populated with export transaction objects
+   */
+  fillExports(): object[] {
     const data = [];
     const dataItems = 40;
     const min = 10;
@@ -33,7 +40,6 @@ export default {
       const currentDate = new Date('2018-02-20T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
-
       data.push({
         type: 'deliveries',
         productType: 'milk',
@@ -46,8 +52,12 @@ export default {
     }
     return data;
   },
-
-  fillLoans() {
+  /**
+   * generates a random set of loans data
+   * 
+   * @returns {object[]} array populated with loans transaction objects
+   */
+  fillLoans(): object[] {
     const data = [];
     const dataItems = 40;
     const min = 300;
@@ -66,8 +76,12 @@ export default {
     }
     return data;
   },
-
-  fillPayments() {
+  /**
+   * generates a random set of payment data
+   * 
+   * @returns {object[]} array populated with payment transaction objects
+   */
+  fillPayments(): object[] {
     const data = [];
     const dataItems = 40;
     const min = 100;
@@ -76,7 +90,6 @@ export default {
       const currentDate = new Date('2018-02-20T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
-
       data.push({
         type: 'payments',
         datetime: currentDate,
