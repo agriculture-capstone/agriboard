@@ -15,6 +15,7 @@
         </md-card>
       </router-link>
 
+    <router-link :to="{ name: 'analytics' }">
       <md-card md-with-hover class="action_card">
         <md-ripple>
           <div class="service">
@@ -26,6 +27,8 @@
             </div>
         </md-ripple>
       </md-card>
+    </router-link>
+
 
       <router-link :to="{ name: 'Transactions' }">
       <md-card md-with-hover class="action_card">
