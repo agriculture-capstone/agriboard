@@ -1,7 +1,7 @@
 <template>
   <span>
     <md-toolbar id="toolbar" class="md-primary" md-elevation="0">
-      <logo :title="title" size="20" />
+      <logo :title="title" :size="20" />
       <div class="md-toolbar-section-end">
         <md-button v-if="loggedIn" @click="logOut">
           Sign Out

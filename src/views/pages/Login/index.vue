@@ -1,7 +1,7 @@
 <template>
   <div id="login-page">
     <div class="login_form">
-      <logo class="login-logo" color="rgba(0, 0, 0, 0.6)" size="28" />
+      <logo class="login-logo" color="rgba(0, 0, 0, 0.6)" :size="28" />
       <md-field>
         <label>Username</label>
         <md-input v-model="credentials.username" @keyup.enter="login"></md-input>
@@ -52,7 +52,7 @@ export default Vue.extend({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-
+@import "~vue-material/dist/theme/engine";
 #login-page {
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@ export default Vue.extend({
   justify-content: center;
   height: 100%;
   width: 100%;
-  background: #81d4fa;
+  background-color: md-get-palette-color(cyan, 200);
 
   .login-logo {
     align-self: center;
