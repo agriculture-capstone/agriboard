@@ -1,6 +1,6 @@
 <template>
   <div :id="this.title">
-    <svg width="80vw" height='33vh'></svg>
+    <svg width="88vw" height='33vh'></svg>
   </div>
 </template>
 <script>
@@ -206,13 +206,13 @@ export default {
           .attr(
             "transform",
             "translate(" +
-              (width / 1.5 + 80 + 90 * i) +
+              (width/ 1.5 + 100 * i) +
               " ," +
               height / 10 +
               ")"
           )
-          .style("text-anchor", "middle")
-          .style("font-size", "2.2vh")
+          // .style("text-anchor", "middle")
+          .style("font-size", "1.8vh")
           .attr("stroke", d => colors(i))
           .text(function(d) {
             return d.type;

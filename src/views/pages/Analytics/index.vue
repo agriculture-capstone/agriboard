@@ -49,6 +49,7 @@
 
 <script>
 import graph from "../../components/AnalyticsGraph";
+import dataGenerator from "../../../utils/dataGenerator"
 import moment from "moment";
 import * as d3 from "d3";
 
@@ -69,10 +70,10 @@ export default {
 
   created() {
   // generate data 
-    this.productTranscations.push(this.fillCollections ());
-    this.productTranscations.push(this.fillExports ());
-    this.moneyTranscations.push(this.fillLoans ());
-    this.moneyTranscations.push(this.fillPayments ());
+    this.productTranscations.push(dataGenerator.fillCollections());
+    this.productTranscations.push(dataGenerator.fillExports ());
+    this.moneyTranscations.push(dataGenerator.fillLoans ());
+    this.moneyTranscations.push(dataGenerator.fillPayments ());
 
   // calculate the stats
     this.collected = this.calculateCollected ();
@@ -80,83 +81,6 @@ export default {
     this.disperesed = this.calculateLoans ();
   },
   methods: {
-    fillCollections () {
-      let data = [];
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("2018-02-20T18:58:51-06:00");
-        currentDate.setDate(currentDate.getDate() + i);
-        let currentValue = d3.randomUniform(10, 200)();
-
-        data.push({
-          type: 'collections',
-          productType: 'milk',
-          datetime: currentDate,
-          amountOfProduct: currentValue,
-          productUnits: 'L',
-          costPerUnit: '54',
-          currency: 'UGX',
-          lastModified: currentDate,
-        });
-      }
-      return data;
-    },
-    
-    fillExports () {
-      let data = [];
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("2018-02-20T18:58:51-06:00");
-        currentDate.setDate(currentDate.getDate() + i);
-        let currentValue = d3.randomUniform(10, 200)();
-
-        data.push({
-          type: 'deliveries',
-          productType: 'milk',
-          transportID: '',
-          datetime: currentDate,
-          amountOfProduct: currentValue,
-          productUnits: 'L',
-          lastModified: currentDate,
-        });
-      }
-      return data;
-    },
-    
-    fillLoans () {
-      let data = [];
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("2018-02-20T18:58:51-06:00");
-        currentDate.setDate(currentDate.getDate() + i);
-        let currentValue = d3.randomUniform(300, 2000)();
-
-        data.push({
-          type: 'loans',
-          datetime: currentDate,
-          amountOfProduct: currentValue,
-          currency: 'UGX',
-          lastModified: currentDate,
-        });
-      }
-      return data;
-    },
-
-    fillPayments () {
-      let data = [];
-
-      for(let i=0; i<40; i++) {
-        let currentDate = new Date("2018-02-20T18:58:51-06:00");
-        currentDate.setDate(currentDate.getDate() + i);
-        let currentValue = d3.randomUniform(100, 2000)();
-
-        data.push({
-          type: 'payments',
-          datetime: currentDate,
-          amountOfProduct: currentValue,
-          currency: 'UGX',
-          lastModified: currentDate,
-        });
-      }
-      return data;
-    },
 
     calculateCollected () {
       let collections = this.productTranscations[0];
@@ -232,6 +156,8 @@ export default {
   font-size:1.8vh;
   color: grey;
   font-weight: bold;
+  text-align: center;
+
 }
 
 .stat-heading {
