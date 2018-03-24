@@ -2,7 +2,10 @@ import * as R from 'ramda';
 import Vue, { ComponentOptions, VueConstructor } from 'vue';
 import { removeListener } from 'cluster';
 
+/** Function listening to token changes */
 type Listener = (token: string) => void;
+
+/** Array of listeners */
 type Listeners = Listener[];
 
 const LISTENERS = Symbol('token listeners');
@@ -27,22 +30,26 @@ export type ClearedTokenListenerMixin = (VueConstructor | ComponentOptions<Vue>)
 interface TokenService {
   /** The jwt */
   token: string;
+  /** Mixin for adding token to instance */
   tokenMixin(): TokenMixin;
+  /** Mixin for adding listener to token being cleared */
   clearedTokenListenerMixin(): ClearedTokenListenerMixin;
+  /** Add listener for token changes */
   addListener(fn: Listener): void;
+  /** Remove listener for token changes */
   removeListener(fn: Listener): void;
 }
 
 // tslint:disable-next-line:variable-name
 const TokenService: TokenService = {
-  // Getter for token
+  /** Getter for token */
   get token () {
     // -- OVERRIDE -- //
     // Override to change method of storage
     return window.localStorage.getItem(TOKEN_KEY);
     // -- END OVERRIDE --//
   },
-  // Setter for token
+  /** Setter for token */
   set token (value: string) {
     // -- OVERRRIDE -- //
     // Override to change method of storage
@@ -53,9 +60,11 @@ const TokenService: TokenService = {
       (fn: Listener) => fn(value),
     )((TokenService as any)[LISTENERS]);
   },
+  /** Add listener */
   addListener (fn) {
     (TokenService as any)[LISTENERS].push(fn);
   },
+  /** Remove listener */
   removeListener (fn) {
     (TokenService as any)[LISTENERS] = R.without([fn], (TokenService as any)[LISTENERS]);
   },
@@ -78,8 +87,10 @@ const TokenService: TokenService = {
       // reactivity system handle this property
     } as any as TokenMixin;
   },
+  /** cleared token mixin */
   clearedTokenListenerMixin () {
     return {
+      /** Created hook */
       created () {
         const listener = (value: string) => {
           if (!value) {
@@ -92,6 +103,7 @@ const TokenService: TokenService = {
         // Hide listener on vue instance w/ symbol
         (this as any)[LISTENER] = listener;
       },
+      /** beforeDestroy hook */
       beforeDestroy () {
         const listener = (this as any)[LISTENER];
         TokenService.removeListener(listener);

@@ -13,6 +13,7 @@ export interface SetTitlePayload {
   title: string;
 }
 
+/** Payload for setting toolbar visibility */
 export interface SetToolbarShownPayload {
   shown: boolean;
 }

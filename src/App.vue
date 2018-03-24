@@ -34,6 +34,7 @@ export default Vue.extend({
     switch (this.$router.currentRoute.name) {
       case 'Login': {
         // Hide toolbar (do nothing, initial state is hidden)
+        this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: false });
         break;
       }
       case 'Gatekeeper': {
@@ -42,7 +43,7 @@ export default Vue.extend({
       }
       default: {
         // Show toolbar
-        this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: true })
+        this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: true });
         break;
       }
     }
@@ -62,8 +63,7 @@ export default Vue.extend({
       // Deal with sync service
       if (value && !SyncService.running) {
         SyncService().start();
-      }
-      else if (!value && SyncService.running) {
+      } else if (!value && SyncService.running) {
         SyncService.stop();
       }
     });

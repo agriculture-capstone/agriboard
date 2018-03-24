@@ -13,6 +13,7 @@ import { getModulePath, CoreModuleNames } from '@/utils/createCoreModule/utils';
  */
 type Job = Promise<boolean>;
 
+/** Array of Job */
 type Jobs = Promise<boolean[]>;
 
 interface CurrentModuleJobs {
@@ -47,6 +48,7 @@ export interface SyncServiceInstance {
   syncModule(module: CoreModuleName): Job;
 }
 
+/** Mixin for sync service */
 export type SyncMixin = (VueConstructor | ComponentOptions<Vue>) & {};
 
 /** Sync service module */
@@ -275,6 +277,7 @@ SyncService.stop = async function stop() {
 };
 
 Object.defineProperty(SyncService, 'running', {
+  /** Getter for running value */
   get () {
     return isRunning(intervalId);
   },

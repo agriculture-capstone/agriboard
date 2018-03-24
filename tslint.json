@@ -48,6 +48,17 @@
         "function-regex": "^('?[a-z][\\w\\d]+'?|\\[.*\\])$"
       }
     ],
-    "strict-boolean-expressions": false
+    "strict-boolean-expressions": false,
+    "trailing-comma": {
+      "severity": "error",
+      "options": {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    },
+    "semicolon": {
+      "severity": "error",
+      "options": "always"
+    }
   }
 }

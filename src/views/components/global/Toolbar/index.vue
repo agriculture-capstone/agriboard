@@ -34,13 +34,13 @@ export default Vue.component(name, {
     loggedIn(): boolean {
       // TODO properly extract whether a user is logged in or not
       return true;
-    }
+    },
   },
 
   methods: {
     logOut() {
       TokenService.token = '';
-    }
+    },
   },
 });
 </script>

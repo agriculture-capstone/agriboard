@@ -17,7 +17,7 @@
         <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
       </md-table-row>
     </md-table>
-  
+
   </div>
 </template>
 
@@ -63,7 +63,6 @@ export default Vue.extend({
         });
       })
       .catch((error: any) => {
-        console.log(error.message);
         this.error = error.message;
       });
 
@@ -87,7 +86,8 @@ export default Vue.extend({
               fullPhone += ` (${person.phoneArea})`;
             }
             if (person.phoneNumber) {
-              fullPhone += ` ${person.phoneNumber.slice(0, 3)}-${person.phoneNumber.slice(3)}`;
+              const AREA_SIZE = 3;
+              fullPhone += ` ${person.phoneNumber.slice(0, AREA_SIZE)}-${person.phoneNumber.slice(AREA_SIZE)}`;
             }
 
             // construct person
@@ -100,12 +100,11 @@ export default Vue.extend({
           });
         })
         .catch((error: any) => {
-          console.log(error.message);
           this.error = error.message;
         });
     });
 
-    const allPeopleFlat = (await Promise.all(allPeople)).reduce(function(prev: Person[], curr: Person[]) {
+    const allPeopleFlat = (await Promise.all(allPeople)).reduce(function (prev: Person[], curr: Person[]) {
       return prev.concat(curr);
     });
 
