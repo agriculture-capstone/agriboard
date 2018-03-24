@@ -72,7 +72,6 @@ export default Vue.extend({
         });
       })
       .catch((error: any) => {
-        console.log(error.message);
         this.error = error.message;
       });
 
@@ -101,7 +100,6 @@ export default Vue.extend({
           });
         })
         .catch((error: any) => {
-          console.log(error.message);
           this.error = error.message;
         });
     });

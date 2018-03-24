@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <toolbar />
+      <toolbar v-if="toolbarShown" />
     </header>
     <main>
       <router-view></router-view>
@@ -11,9 +11,68 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState } from 'vuex';
+
+import { RootState } from '@/store/types';
+import { MutationType as AppMutation } from '@/store/modules/app/types';
+import SyncService from '@/services/Sync';
+import TokenService from '@/services/Token';
 
 export default Vue.extend({
   name: 'app',
+
+  computed: mapState<RootState>({
+    toolbarShown: state => state.app.toolbarShown,
+  }),
+
+  mixins: [
+    TokenService.clearedTokenListenerMixin(),
+  ],
+
+  created () {
+    // Handle initial toolbar render
+    switch (this.$router.currentRoute.name) {
+      case 'Login': {
+        // Hide toolbar (do nothing, initial state is hidden)
+        this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: false });
+        break;
+      }
+      case 'Gatekeeper': {
+        // Do nothing (allow gatekeeper to decide)
+        break;
+      }
+      default: {
+        // Show toolbar
+        this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: true });
+        break;
+      }
+    }
+
+    // Handle future toolbar renders
+    this.$router.afterEach((to) => {
+      if (to.name === 'Login') {
+        this.$store.state.app.toolbarShown && this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: false });
+      } else {
+        !this.$store.state.app.toolbarShown && this.$store.commit(AppMutation.SET_TOOLBAR_SHOWN, { shown: true });
+      }
+    });
+    if (TokenService.token) {
+      SyncService().start();
+    }
+    TokenService.addListener((value) => {
+      // Deal with sync service
+      if (value && !SyncService.running) {
+        SyncService().start();
+      } else if (!value && SyncService.running) {
+        SyncService.stop();
+      }
+    });
+  },
+
+  /** Handle the token being cleared */
+  onEmptyToken () {
+    this.$router.push({ name: 'Login' });
+  },
 });
 </script>
 

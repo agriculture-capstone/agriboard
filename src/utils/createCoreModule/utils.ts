@@ -3,16 +3,20 @@ import { CoreModuleName } from '@/utils/createCoreModule';
 import { CorePath } from '@/utils/CoreAPI';
 import { StoreRow } from '@/store/types';
 
+/** Type for object with UUID */
 type ObjectWithUUID<T extends object> = T & { uuid: string };
 
+/** check if object has uuid */
 export function hasUUID<T extends object>(obj: T): obj is ObjectWithUUID<T> {
   return R.has('uuid', obj);
 }
 
+/** check if object is undefined */
 export function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
   return (row === undefined);
 }
 
+/** check if object is instance of response */
 export function isResponse(response: any): response is Response {
   return (response instanceof Response);
 }

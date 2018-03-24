@@ -17,11 +17,11 @@ export default Vue.extend({
     return {
     };
   },
-  created(){
+  created () {
     if (TokenService.token) {
-      this.$router.push({ name: 'Home'});
+      this.$router.push({ name: 'Home' });
     } else {
-      this.$router.push({ name: 'Login'});
+      this.$router.push({ name: 'Login' });
     }
 
   },
