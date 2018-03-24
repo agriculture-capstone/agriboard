@@ -1,6 +1,6 @@
 <template>
   <div :id="this.title">
-    <svg width="88vw" height='33vh'></svg>
+    <svg width="88vw" height='30vh'></svg>
   </div>
 </template>
 <script>

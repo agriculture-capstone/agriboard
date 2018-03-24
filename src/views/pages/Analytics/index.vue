@@ -139,7 +139,7 @@ export default {
   justify-content: space-around;
 }
 .graph {
-  height: 35vh;
+  height: 33vh;
   margin-top:.5%;
 }
 
@@ -157,7 +157,6 @@ export default {
   color: grey;
   font-weight: bold;
   text-align: center;
-
 }
 
 .stat-heading {
