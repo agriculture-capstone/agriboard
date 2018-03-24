@@ -10,7 +10,7 @@ export default {
   data() {
     return {
     heightScaling: 0.9,
-    widthScaling: 0.85,
+    widthScaling: 1,
     };
   },
   props: ["values", "title", "xUnits", "yUnits"],
@@ -70,7 +70,7 @@ export default {
       yUnits
     ) {
       let svg = d3.select("#" + title).select("svg");
-      let margin = { top: 10, left: 50, bottom: 30, right: 10 };
+      let margin = { top: 10, left: 100, bottom: 30, right: 10 };
 
       let height = containerHeight - margin.top - margin.bottom;
       let width = containerWidth - margin.right - margin.left;
@@ -386,7 +386,7 @@ export default {
       g
         .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - (margin.left + 4))
+        .attr("y", 40 - (margin.left))
         .attr("x", 0 - height / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
@@ -398,10 +398,6 @@ export default {
 };
 </script>
 <style>
-body {
-  font: 15px sans-serif;
-}
-
 .axis path,
 .axis line {
   fill: none;

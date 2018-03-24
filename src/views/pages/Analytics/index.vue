@@ -39,7 +39,7 @@
     <md-card class='md-elevation-10 graph'>
       <graph 
         v-bind:values="moneyTranscations" 
-        title="Loan-Dispersals-and-Payments" 
+        title="Loans-and-Payments" 
         xUnits="Date" 
         yUnits="UGX"
       />
@@ -111,11 +111,10 @@ export default {
         data.push({
           type: 'deliveries',
           productType: 'milk',
+          transportID: '',
           datetime: currentDate,
           amountOfProduct: currentValue,
           productUnits: 'L',
-          costPerUnit: '54',
-          currency: 'UGX',
           lastModified: currentDate,
         });
       }
