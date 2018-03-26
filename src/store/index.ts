@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 
-import getters from './getters';
 import app from './modules/app';
+import getters from './getters';
 import farmer from './modules/farmer';
 import milk from './modules/milk';
 import loan from './modules/loan';
