@@ -1,6 +1,6 @@
 <template>
   <div class='ManagePeople'>
-    <md-table class="table" v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table class="table" v-model="searched" md-sort="name" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
@@ -53,72 +53,42 @@ export default Vue.extend({
       this.searched = searchByName(this.people, this.search);
     },
   },
-  created: async function created() {
-    // get people types
-    const personCategories: any[] = [];
-    await axios.get('https://boresha.live:19443/people/categories')
-      .then((response: any) => {
-        response.data.map((category: any) => {
-          personCategories.push(category.name);
-        });
-      })
-      .catch((error: any) => {
-        this.error = error.message;
-      });
-
-    // get all people
-    const allPeople: Promise<Person[]>[] = personCategories.map((category: string) => {
-      // get all people of particular category
-      return axios.get('https://boresha.live:19443/people/' + category)
-        .then((response: any) => {
-          // construct each person
-          return response.data.map((person: any) => {
-            // construct full name
-            const fullName: string =
-              `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
-
-            // construct phone number
-            let fullPhone: string = '';
-            if (person.phoneCountry) {
-              fullPhone += `+${person.phoneCountry}`;
-            }
-            if (person.phoneArea) {
-              fullPhone += ` (${person.phoneArea})`;
-            }
-            if (person.phoneNumber) {
-              const AREA_SIZE = 3;
-              fullPhone += ` ${person.phoneNumber.slice(0, AREA_SIZE)}-${person.phoneNumber.slice(AREA_SIZE)}`;
-            }
-
-            // construct person
-            return {
-              name: fullName,
-              phoneNumber: fullPhone,
-              peopleCategory: person.peopleCategory,
-              lastModified: new Date(person.lastModified).toUTCString(),
-            };
-          });
-        })
-        .catch((error: any) => {
-          this.error = error.message;
-        });
-    });
-
-    const allPeopleFlat = (await Promise.all(allPeople)).reduce(function (prev: Person[], curr: Person[]) {
-      return prev.concat(curr);
-    });
-
-    // update list
-    this.people = allPeopleFlat;
-    this.searched = this.people;
-  },
   data () {
     return {
       search: null,
       searched: [],
-      people: [],
       error: '',
     };
+  },
+  computed: {
+    people(): any {
+      const people = this.$store.state.farmer.rows.map((row: any) => {
+        // construct full name
+        const fullName: string =
+          `${row.firstName || ''} ${row.middleName || ''} ${row.lastName || ''}`;
+
+        // construct phone number
+        let fullPhone: string = '';
+        if (row.phoneCountry) {
+          fullPhone += `+${row.phoneCountry}`;
+        }
+        if (row.phoneArea) {
+          fullPhone += ` (${row.phoneArea})`;
+        }
+        if (row.phoneNumber) {
+          const AREA_SIZE = 3;
+          fullPhone += ` ${row.phoneNumber.slice(0, AREA_SIZE)}-${row.phoneNumber.slice(AREA_SIZE)}`;
+        }
+
+        return {
+          ...row, 
+          name: fullName,
+          phoneNumber: fullPhone,
+        };
+      });
+      this.searched = people;
+      return people;
+    },
   },
 });
 </script>
