@@ -7,7 +7,7 @@ import TokenService from '@/services/Token';
 export type CorePath 
   = '/people/farmers' 
   | '/transactions/products/milk' 
-  | '/transactions/productExports' 
+  | '/productExports' 
   | '/transactions/money/loans';
 
 const LOGIN_PATH = '/actions/authenticate';
