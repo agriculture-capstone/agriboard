@@ -258,11 +258,11 @@ export default Vue.extend({
       this.showViewDialog = true;
     },
     onDialogCancel: function() {
-      this.selected = {};
-      this.showViewDialog = false;
+      // this.selected = {};
+      // this.showViewDialog = false;
     },
     onViewClose: function () {
-      this.selected = {};
+      // this.selected = {};
     },
   },
   created: async function created() {
