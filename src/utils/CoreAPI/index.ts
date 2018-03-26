@@ -4,7 +4,11 @@ import { AuthenticationError } from '@/errors/AuthenticationError';
 import TokenService from '@/services/Token';
 
 /** Paths on Core for specific data tables */
-export type CorePath = '/people/farmers' | '/transactions/products/milk' | '/transactions/products/export' | '/transactions/money/loan';
+export type CorePath 
+  = '/people/farmers' 
+  | '/transactions/products/milk' 
+  | '/transactions/productExports' 
+  | '/transactions/money/loans';
 
 const LOGIN_PATH = '/actions/authenticate';
 
