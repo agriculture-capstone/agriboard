@@ -1,6 +1,6 @@
 <template>
   <div class='ManagePeople'>
-    <md-table class="table" v-model="searched" md-sort="name" md-sort-order="asc" md-card>
+    <md-table class="table" v-model="people" md-sort="name" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
@@ -49,19 +49,15 @@ const searchByName = function (items: Person[], term: string) {
 export default Vue.extend({
   name: 'ManagePeople',
   methods: {
-    searchOnTable: function searchOnTable() {
-      this.searched = searchByName(this.people, this.search);
-    },
   },
   data () {
     return {
       search: null,
-      searched: [],
       error: '',
     };
   },
   computed: {
-    people(): any {
+    people (): any {
       const people = this.$store.state.farmer.rows.map((row: any) => {
         // construct full name
         const fullName: string =
@@ -86,7 +82,6 @@ export default Vue.extend({
           phoneNumber: fullPhone,
         };
       });
-      this.searched = people;
       return people;
     },
   },
