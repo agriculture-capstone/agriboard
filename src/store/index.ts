@@ -1,6 +1,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 
+import getters from './getters';
 import app from './modules/app';
 import farmer from './modules/farmer';
 import milk from './modules/milk';
@@ -14,6 +15,7 @@ Vue.use(Vuex);
  * The Vuex store
  */
 const store = new Vuex.Store<RootState>({
+  getters,
   modules: {
     app,
     farmer,
