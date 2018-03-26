@@ -32,6 +32,7 @@ export type CoreModuleName
   | 'milk'
   | 'delivery'
   | 'loan'
+  | 'trader'
   ;
 
 /*--------------------------------- Functions ---------------------------------*/

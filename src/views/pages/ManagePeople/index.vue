@@ -14,7 +14,7 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
-        <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
+        <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.category }}</md-table-cell>
       </md-table-row>
     </md-table>
 
@@ -50,14 +50,14 @@ export default Vue.extend({
     fuse (): Fuse {
       return new Fuse(this.people, {
         shouldSort: true,
-        threshold: 0.7,
+        threshold: 0.5,
         location: 0,
         distance: 100,
         maxPatternLength: 32,
         minMatchCharLength: 1,
         keys: [
           'name',
-          'peopleCategory',
+          'category',
           'phoneNumber',
         ],
       });

@@ -28,6 +28,7 @@ export const CoreModuleNames: CoreModuleName[] = [
   'farmer',
   'milk',
   'delivery',
+  'trader',
   // 'loan', TODO: Enable when implemented
 ];
 
@@ -45,6 +46,8 @@ export function getModulePath(module: CoreModuleName): CorePath {
     case 'delivery': return '/transactions/products/export';
 
     case 'loan': return '/transactions/money/loan';
+
+    case 'trader': return '/people/traders';
 
     default: throw new Error(`No such module/path mapping for module ${module}`);
   }
