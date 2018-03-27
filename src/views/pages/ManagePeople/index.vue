@@ -32,10 +32,10 @@
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
               <h3 class="md-subheading"><b>Category</b></h3>
-              <md-radio v-model="form.peopleCategory" value="farmers">Farmer</md-radio>
-              <md-radio v-model="form.peopleCategory" value="traders">Trader</md-radio>
-              <md-radio v-model="form.peopleCategory" value="admins">Admin</md-radio>
-              <md-radio v-model="form.peopleCategory" value="monitors">Monitor</md-radio>                 
+              <md-radio v-model="form.peopleCategory" value="farmer">Farmer</md-radio>
+              <md-radio v-model="form.peopleCategory" value="trader">Trader</md-radio>
+              <md-radio v-model="form.peopleCategory" value="admin">Admin</md-radio>
+              <md-radio v-model="form.peopleCategory" value="monitor">Monitor</md-radio>                 
             </div>
           </div>
 
@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.peopleCategory == 'admins' || form.peopleCategory == 'monitors'">
+          <div class="md-gutter" v-if="form.peopleCategory == 'admin' || form.peopleCategory == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
@@ -75,7 +75,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.peopleCategory == 'admins' || form.peopleCategory == 'monitors'">
+          <div class="md-gutter" v-if="form.peopleCategory == 'admin' || form.peopleCategory == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
@@ -93,7 +93,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.peopleCategory == 'farmers'">
+          <div class="md-gutter" v-if="form.peopleCategory == 'farmer'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Notes</label>
@@ -122,7 +122,7 @@
             {{ selectedRow.phoneNumber }}
             <h3><b>Category</b></h3>
             {{ selectedRow.peopleCategory }}
-            <!-- <h3 v-if="selectedRow.peopleCategory === 'farmers' && selectedRow.notes"><b>Notes</b></h3> -->
+            <!-- <h3 v-if="selectedRow.peopleCategory === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
             <h3><b>Notes</b></h3>            
             {{ selectedRow.notes }}
           </md-dialog-content>
@@ -140,10 +140,10 @@
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
               <h3 class="md-subheading"><b>Category</b></h3>
-              <md-radio v-model="editableRow.peopleCategory" value="farmers">Farmer</md-radio>
-              <md-radio v-model="editableRow.peopleCategory" value="traders">Trader</md-radio>
-              <md-radio v-model="editableRow.peopleCategory" value="admins">Admin</md-radio>
-              <md-radio v-model="editableRow.peopleCategory" value="monitors">Monitor</md-radio>  
+              <md-radio v-model="editableRow.peopleCategory" value="farmer">Farmer</md-radio>
+              <md-radio v-model="editableRow.peopleCategory" value="trader">Trader</md-radio>
+              <md-radio v-model="editableRow.peopleCategory" value="admin">Admin</md-radio>
+              <md-radio v-model="editableRow.peopleCategory" value="monitor">Monitor</md-radio>  
             </div>
           </div>
 
@@ -174,7 +174,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admins' || editableRow.peopleCategory == 'monitors'">
+          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admin' || editableRow.peopleCategory == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
@@ -183,7 +183,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admins' || editableRow.peopleCategory == 'monitors'">
+          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admin' || editableRow.peopleCategory == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
@@ -201,7 +201,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.peopleCategory == 'farmers'">
+          <div class="md-gutter" v-if="editableRow.peopleCategory == 'farmer'">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Notes</label>
@@ -279,9 +279,29 @@ export default Vue.extend({
     },
     onCancelCreate() {
       this.showAddDialog = false;
+      this.form = {
+        peopleCategory: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        notes: '',
+      };
     },
     onSaveCreate() {
       this.showAddDialog = false;
+      this.form = {
+        peopleCategory: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        notes: '',
+      };
     },
     onCancelView() {
       this.showViewDialog = false;
