@@ -5,7 +5,7 @@
         <md-icon>add</md-icon>
       </md-button>
     </div>
-    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onSelect">
+    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>

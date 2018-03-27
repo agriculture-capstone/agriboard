@@ -26,6 +26,7 @@ const globalGetters: GetterHandlers<RootState> = {
 
         // construct person
         return {
+          ...person,
           name: fullName,
           phoneNumber: fullPhone,
           peopleCategory: 'farmer',
