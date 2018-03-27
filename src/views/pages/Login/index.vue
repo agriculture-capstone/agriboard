@@ -1,18 +1,18 @@
 <template>
-  <div class="Login">
-    <h1>Login</h1>
+  <div id="login-page">
     <div class="login_form">
+      <logo class="login-logo" color="rgba(0, 0, 0, 0.6)" :size="28" />
       <md-field>
         <label>Username</label>
-        <md-input v-model="credentials.username"></md-input>
+        <md-input v-model="credentials.username" @keyup.enter="login"></md-input>
       </md-field>
       <md-field :md-toggle-password="false">
         <label>Password</label>
-        <md-input v-model="credentials.password" type="password"></md-input>
+        <md-input v-model="credentials.password" type="password" @keyup.enter="login"></md-input>
       </md-field>
       <div class="login_form_feedback">
         <p class="error">{{ error }}</p>
-        <md-button v-on:click="login" class="md-raised md-primary login_button">Login</md-button>
+        <md-button v-on:click="login" class="md-raised md-accent login_button">Login</md-button>
       </div>
     </div>
   </div>
@@ -20,24 +20,22 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+
+import TokenService from '@/services/Token';
+import CoreAPI from '@/utils/CoreAPI';
+import SyncService from '@/services/Sync';
 
 export default Vue.extend({
   name: 'Login',
+  mixins: [TokenService.tokenMixin()],
   methods: {
     async login() {
-      console.log('attempting login');
-      await axios.post('https://boresha.live:19443/actions/authenticate', {
-        username: this.credentials.username,
-        password: this.credentials.password,
-      })
-      .then(function (this: any, response: any) {
-        localStorage.setItem('token', response.data.token);
-        this.$router.push('/');
-      })
-      .catch(function (this: any, error: any) {
+      try {
+        await CoreAPI.login(this.credentials);
+        this.$router.push({ name: 'Home' });
+      } catch (err) {
         this.error = 'Invalid username or password';
-      });
+      }
     },
   },
   data () {
@@ -53,31 +51,46 @@ export default Vue.extend({
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-.login_form {
-  width: 22em;
-  margin: auto;
-  margin-top: 4em;
+<style lang="scss">
+@import "~vue-material/dist/theme/engine";
+#login-page {
+  display: flex;
   flex-direction: column;
-  display: flex;
-  align-items: flex-end;
-}
-
-.login_form_feedback {
-  display: flex;
-  width: 22em;
-  justify-content: space-between;
-}
-
-.login_button {
-  width: 4em;
-}
-
-.error {
-  display: flex;
-  margin: 0;
-  color: red;
-  text-align: left;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: md-get-palette-color(cyan, 200);
+
+  .login-logo {
+    align-self: center;
+    margin-bottom: 50px;
+  }
+
+  .login_form {
+    width: 22em;
+    flex-direction: column;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15vh;
+  }
+
+  .login_form_feedback {
+    display: flex;
+    width: 22em;
+    justify-content: space-between;
+  }
+
+  .login_button {
+    width: 4em;
+  }
+
+  .error {
+    display: flex;
+    margin: 0;
+    color: red;
+    text-align: left;
+    align-items: center;
+  }
 }
 </style>

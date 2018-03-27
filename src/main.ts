@@ -12,6 +12,8 @@ import {
   MdContent,
   MdDialog,
   MdRadio,
+  MdTabs,
+  MdProgress,
 } from 'vue-material/dist/components';
 
 import App from '@/App.vue';
@@ -33,6 +35,8 @@ Vue.use(MdRipple);
 Vue.use(MdContent);
 Vue.use(MdDialog);
 Vue.use(MdRadio);
+Vue.use(MdTabs);
+Vue.use(MdProgress);
 
 /* eslint-disable no-new */
 new Vue({

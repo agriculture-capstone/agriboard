@@ -5,24 +5,22 @@
         <md-icon>add</md-icon>
       </md-button>
     </div>
-    <!-- <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect" :md-selected-value.sync="selected"> -->
-    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
+    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
+          <md-icon class="md-size-2x icon">supervisor_account</md-icon>
           <h1 class="md-title">People</h1>
         </div>
         <md-field md-clearable class="md-toolbar-section-end">
-          <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
+          <md-input placeholder="Search" v-model="search" />
         </md-field>
       </md-table-toolbar>
-
       <h2 class="error md-subheader">{{error}}</h2>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" md-auto-select>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
         <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
-        <md-table-cell md-label="Last Modified" md-sort-by="lastModified">{{ item.lastModified }}</md-table-cell>
       </md-table-row>
     </md-table>
 
@@ -224,115 +222,15 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import axios from 'axios';
-
-interface Person {
-  name: string;
-  phoneNumber: string;
-  peopleCategory: string;
-  lastModified: string;
-}
-
-const toLower = function (text: string) {
-  return text.toString().toLowerCase();
-};
-
-const searchByName = function (items: Person[], term: string) {
-  if (term) {
-    return items.filter(function (item) {
-      return toLower(item.name).includes(toLower(term));
-    });
-  }
-
-  return items;
-};
-
+import { mapState, mapGetters } from 'vuex';
+import * as R from 'ramda';
+import * as Fuse from 'fuse.js';
+import { RootState, Person } from '@/store/types';
 export default Vue.extend({
   name: 'ManagePeople',
-  methods: {
-    searchOnTable: function searchOnTable() {
-      this.searched = searchByName(this.people, this.search);
-    },
-    onSelect: function (item: any) {
-      this.selected = item;
-      this.showViewDialog = true;
-    },
-    onDialogCancel: function() {
-      // this.selected = {};
-      // this.showViewDialog = false;
-    },
-    onViewClose: function () {
-      // this.selected = {};
-    },
-  },
-  created: async function created() {
-    // get people types
-    const personCategories: any[] = [];
-    await axios.get('https://boresha.live:19443/people/categories')
-      .then((response: any) => {
-        response.data.map((category: any) => {
-          personCategories.push(category.name);
-        });
-      })
-      .catch((error: any) => {
-        console.log(error.message);
-        this.error = error.message;
-      });
-
-    // get all people
-    const allPeople: Promise<Person[]>[] = personCategories.map((category: string) => {
-      // get all people of particular category
-      return axios.get('https://boresha.live:19443/people/' + category)
-        .then((response: any) => {
-          // construct each person
-          return response.data.map((person: any) => {
-            // construct full name
-            const fullName: string =
-              `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
-
-            // construct phone number
-            let fullPhone: string = '';
-            if (person.phoneCountry) {
-              fullPhone += `+${person.phoneCountry}`;
-            }
-            if (person.phoneArea) {
-              fullPhone += ` (${person.phoneArea})`;
-            }
-            if (person.phoneNumber) {
-              fullPhone += ` ${person.phoneNumber.slice(0, 3)}-${person.phoneNumber.slice(3)}`;
-            }
-
-            // construct person
-            return {
-              name: fullName,
-              firstName: person.firstName,
-              middleName: person.middleName,
-              lastName: person.lastName,
-              phoneNumber: fullPhone,
-              peopleCategory: person.peopleCategory,
-              lastModified: new Date(person.lastModified).toUTCString(),
-            };
-          });
-        })
-        .catch((error: any) => {
-          console.log(error.message);
-          this.error = error.message;
-        });
-    });
-
-    const allPeopleFlat = (await Promise.all(allPeople)).reduce(function(prev: Person[], curr: Person[]) {
-      return prev.concat(curr);
-    });
-
-    // update list
-    this.people = allPeopleFlat;
-    this.searched = this.people;
-  },
   data () {
     return {
-      search: null,
-      searched: [],
-      people: [],
+      search: '',
       error: '',
       selected: {},
       showAddDialog: false,
@@ -350,10 +248,50 @@ export default Vue.extend({
       },
     };
   },
+  computed: {
+    people (): Person[] {
+      return this.$store.getters['people'];
+    },
+    filteredPeople (): Person[] {
+      return this.search === ''
+        ? this.people
+        : this.fuse.search(this.search)
+        ;
+    },
+    fuse (): Fuse {
+      return new Fuse(this.people, {
+        shouldSort: true,
+        threshold: 0.7,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+          'name',
+          'peopleCategory',
+          'phoneNumber',
+        ],
+      });
+    },
+  },
+  methods: {
+  onSelect: function (item: any) {
+    this.selected = item;
+    this.showViewDialog = true;
+  },
+  onDialogCancel: function() {
+    // this.selected = {};
+    // this.showViewDialog = false;
+  },
+  onViewClose: function () {
+    // this.selected = {};
+  },
+},
 });
 </script>
 
 <style lang='scss' scoped>
+@import 'src/styles.scss';
 .md-field {
   max-width: 300px;
 }
@@ -361,12 +299,9 @@ export default Vue.extend({
 .md-title {
   text-align: left;
   font-size: 2em;
-  padding: 1rem;
+  padding: 1rem 0rem;
   line-height: 3em;
-}
-
-.md-content {
-  height: 1vh;
+  margin: 0px 10px !important;
 }
 
 .md-dialog-title {
@@ -391,5 +326,13 @@ export default Vue.extend({
   text-align: center;
   margin: auto;
   color: red;
+}
+
+.table {
+  padding: 0vh  2vw;
+}
+
+.icon {
+  color: $icon-color !important;
 }
 </style>
