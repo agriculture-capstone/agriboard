@@ -130,3 +130,10 @@ export type CoreCreationRequest<T> = T & LastModifiedData & UUIDData;
  * @template T Data model for module
  */
 export type CoreUpdateRequest<T> = Partial<T> & LastModifiedData & UUIDData;
+
+export interface Person {
+  name: string;
+  phoneNumber: string;
+  peopleCategory: string;
+  lastModified: string;
+}

@@ -54,7 +54,7 @@ export default Vue.extend({
       return this.$store.state.milk.rows.map((row: any) => {
         return {
           ...row, 
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss'),
+          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
         };
       });
     },

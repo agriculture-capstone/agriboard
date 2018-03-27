@@ -1,13 +1,13 @@
 <template>
   <div class='ManagePeople'>
-    <md-table class="table" v-model="people" md-sort="name" md-sort-order="asc" md-card>
+    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
           <h1 class="md-title">People</h1>
         </div>
         <md-field md-clearable class="md-toolbar-section-end">
-          <md-input placeholder="Search" v-model="search" @input="searchOnTable" />
+          <md-input placeholder="Search" v-model="search" />
         </md-field>
       </md-table-toolbar>
       <h2 class="error md-subheader">{{error}}</h2>
@@ -23,66 +23,44 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import axios from 'axios';
+import { mapState, mapGetters } from 'vuex';
+import * as R from 'ramda';
+import * as Fuse from 'fuse.js';
 
-interface Person {
-  name: string;
-  phoneNumber: string;
-  peopleCategory: string;
-  lastModified: string;
-}
-
-const toLower = function (text: string) {
-  return text.toString().toLowerCase();
-};
-
-const searchByName = function (items: Person[], term: string) {
-  if (term) {
-    return items.filter(function (item) {
-      return toLower(item.name).includes(toLower(term));
-    });
-  }
-
-  return items;
-};
+import { RootState, Person } from '@/store/types';
 
 export default Vue.extend({
   name: 'ManagePeople',
-  methods: {
-  },
   data () {
     return {
-      search: null,
+      search: '',
       error: '',
     };
   },
   computed: {
-    people (): any {
-      const people = this.$store.state.farmer.rows.map((row: any) => {
-        // construct full name
-        const fullName: string =
-          `${row.firstName || ''} ${row.middleName || ''} ${row.lastName || ''}`;
-
-        // construct phone number
-        let fullPhone: string = '';
-        if (row.phoneCountry) {
-          fullPhone += `+${row.phoneCountry}`;
-        }
-        if (row.phoneArea) {
-          fullPhone += ` (${row.phoneArea})`;
-        }
-        if (row.phoneNumber) {
-          const AREA_SIZE = 3;
-          fullPhone += ` ${row.phoneNumber.slice(0, AREA_SIZE)}-${row.phoneNumber.slice(AREA_SIZE)}`;
-        }
-
-        return {
-          ...row, 
-          name: fullName,
-          phoneNumber: fullPhone,
-        };
+    people (): Person[] {
+      return this.$store.getters['people'];
+    },
+    filteredPeople (): Person[] {
+      return this.search === ''
+        ? this.people
+        : this.fuse.search(this.search)
+        ;
+    },
+    fuse (): Fuse {
+      return new Fuse(this.people, {
+        shouldSort: true,
+        threshold: 0.7,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+          'name',
+          'peopleCategory',
+          'phoneNumber',
+        ],
       });
-      return people;
     },
   },
 });
