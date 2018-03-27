@@ -22,7 +22,7 @@
           <md-card-header>
             <md-card-header-text>
               <div class="stat-heading">Loans Dispensed (Month)</div>
-              <div class="stat">{{disperesed}} UGX</div>
+              <div class="stat">{{this.grouped}} UGX</div>
             </md-card-header-text>
           </md-card-header>
         </md-card>
@@ -52,6 +52,8 @@ import graph from "../../components/AnalyticsGraph";
 import dataGenerator from "../../../utils/dataGenerator"
 import moment from "moment";
 import * as d3 from "d3";
+import { mapGetters } from 'vuex'
+
 
 export default {
   name: "analytics",
@@ -62,6 +64,8 @@ export default {
       collected: 0,
       delivered: 0,
       dispensed: 0,
+      milkTransactions:this.milk,
+      grouped:this.grouped,
     };
   },
   components: {
@@ -78,7 +82,14 @@ export default {
   // calculate the stats
     this.collected = this.calculateCollected ();
     this.delivered = this.calculateDelivered ();
-    this.disperesed = this.calculateLoans ();
+    this.dispensed = this.calculateLoans ();
+  },
+  computed: {
+    ...mapGetters({
+      // Mounts the "getAllMilkTransactions" getter to the scope of your component.
+      milk:'milk/getAllMilkTransactions',
+      grouped:'milk/getSummedValues'
+    })
   },
   methods: {
 
