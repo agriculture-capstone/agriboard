@@ -23,7 +23,6 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import axios from 'axios';
 import * as moment from 'moment';
 
 import CoreAPI from '@/utils/CoreAPI';
