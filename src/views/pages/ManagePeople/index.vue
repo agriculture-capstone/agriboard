@@ -369,13 +369,6 @@ export default Vue.extend({
   height: 1vh;
 }
 
-.md-dialog {
-  // width: 768px;
-  // padding-left: 3%;
-  // padding-right: 3%;
-  // display: inline-block;
-}
-
 .md-dialog-title {
   margin-bottom: 0;
   padding: 24px;
@@ -393,11 +386,6 @@ export default Vue.extend({
     display: block;
   }
 }
-
-// .add-button {
-//   position:relative;
-//   z-index:1000;
-// }
 
 .error {
   text-align: center;
