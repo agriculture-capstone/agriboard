@@ -8,6 +8,8 @@ const globalGetters: GetterHandlers<RootState> = {
     const people = [
       ...R.map(r => ({ ...r, category: 'farmer' }), state.farmer.rows),
       ...R.map(r => ({ ...r, category: 'trader' }), state.trader.rows),
+      ...R.map(r => ({ ...r, category: 'monitor' }), state.monitor.rows),
+      ...R.map(r => ({ ...r, category: 'admin' }), state.admin.rows),
     ];
     return R.map(
       (person) => {

@@ -33,6 +33,8 @@ export type CoreModuleName
   | 'delivery'
   | 'loan'
   | 'trader'
+  | 'admin'
+  | 'monitor'
   ;
 
 /*--------------------------------- Functions ---------------------------------*/

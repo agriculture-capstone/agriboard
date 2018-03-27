@@ -5,6 +5,8 @@ import { TraderState } from '@/store/modules/trader/types';
 import { MilkState } from '@/store/modules/milk/types';
 import { DeliveryState } from '@/store/modules/delivery/types';
 import { LoanState } from '@/store/modules/loan/types';
+import { AdminState } from '@/store/modules/admin/types';
+import { MonitorState } from '@/store/modules/monitor/types';
 
 export interface RootState {
   app: AppTypes.AppState;
@@ -13,6 +15,8 @@ export interface RootState {
   delivery: DeliveryState;
   loan: LoanState;
   trader: TraderState;
+  admin: AdminState;
+  monitor: MonitorState;
 }
 
 /** Composed mutation types */

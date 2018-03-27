@@ -7,6 +7,8 @@ import TokenService from '@/services/Token';
 export type CorePath
   = '/people/farmers'
   | '/people/traders'
+  | '/people/admins'
+  | '/people/monitors'
   | '/transactions/products/milk'
   | '/transactions/products/export'
   | '/transactions/money/loan'
