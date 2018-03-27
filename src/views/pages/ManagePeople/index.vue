@@ -1,7 +1,7 @@
 <template>
   <div class='ManagePeople'>
     <div class="add-button">
-      <md-button @click="showAddDialog = true" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
+      <md-button @click="onAddClick" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
         <md-icon>add</md-icon>
       </md-button>
     </div>
@@ -104,8 +104,8 @@
         </md-dialog-content>
 
         <md-dialog-actions>
-          <md-button class="md-primary" @click="showAddDialog = false">Cancel</md-button>
-          <md-button class="md-primary" @click="showAddDialog = false">Create</md-button>
+          <md-button class="md-primary" @click="onCancelCreate">Cancel</md-button>
+          <md-button class="md-primary" @click="onSaveCreate">Create</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
@@ -126,8 +126,8 @@
             {{ selected.notes }}
           </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-primary" @click="onDialogCancel">Cancel</md-button>
-          <md-button class="md-primary" @click="showViewDialog = false, showEditDialog = true">Edit</md-button>
+          <md-button class="md-primary" @click="onCancelView">Cancel</md-button>
+          <md-button class="md-primary" @click="onEditClick">Edit</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
@@ -211,8 +211,8 @@
         </md-dialog-content>
 
         <md-dialog-actions>
-          <md-button class="md-primary" @click="showEditDialog = false">Cancel</md-button>
-          <md-button class="md-primary" @click="showEditDialog = false">Save</md-button>
+          <md-button class="md-primary" @click="onCancelEdit">Cancel</md-button>
+          <md-button class="md-primary" @click="onSaveEdit">Save</md-button>
         </md-dialog-actions>
       </md-dialog>
 
@@ -272,12 +272,27 @@ export default Vue.extend({
       this.selected = item;
       this.showViewDialog = true;
     },
-    onDialogCancel() {
-      // this.selected = {};
-      // this.showViewDialog = false;
+    onAddClick() {
+      this.showAddDialog = true;
     },
-    onViewClose() {
-      // this.selected = {};
+    onCancelCreate() {
+      this.showAddDialog = false;
+    },
+    onSaveCreate() {
+      this.showAddDialog = false;
+    },
+    onCancelView() {
+      this.showViewDialog = false;
+    },
+    onEditClick() {
+      this.showViewDialog = false;
+      this.showEditDialog = true;
+    },
+    onCancelEdit() {
+      this.showEditDialog = false;
+    },
+    onSaveEdit() {
+      this.showEditDialog = false;
     },
   },
 });
