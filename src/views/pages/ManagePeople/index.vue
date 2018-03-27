@@ -228,7 +228,7 @@ import * as Fuse from 'fuse.js';
 import { RootState, Person } from '@/store/types';
 export default Vue.extend({
   name: 'ManagePeople',
-  data () {
+  data() {
     return {
       search: '',
       error: '',
@@ -249,16 +249,13 @@ export default Vue.extend({
     };
   },
   computed: {
-    people (): Person[] {
+    people(): Person[] {
       return this.$store.getters['people'];
     },
-    filteredPeople (): Person[] {
-      return this.search === ''
-        ? this.people
-        : this.fuse.search(this.search)
-        ;
+    filteredPeople(): Person[] {
+      return this.search === '' ? this.people : this.fuse.search(this.search);
     },
-    fuse (): Fuse {
+    fuse(): Fuse {
       return new Fuse(this.people, {
         shouldSort: true,
         threshold: 0.7,
@@ -266,32 +263,28 @@ export default Vue.extend({
         distance: 100,
         maxPatternLength: 32,
         minMatchCharLength: 1,
-        keys: [
-          'name',
-          'peopleCategory',
-          'phoneNumber',
-        ],
+        keys: ['name', 'peopleCategory', 'phoneNumber'],
       });
     },
   },
   methods: {
-  onSelect: function (item: any) {
-    this.selected = item;
-    this.showViewDialog = true;
+    onSelect(item: any) {
+      this.selected = item;
+      this.showViewDialog = true;
+    },
+    onDialogCancel() {
+      // this.selected = {};
+      // this.showViewDialog = false;
+    },
+    onViewClose() {
+      // this.selected = {};
+    },
   },
-  onDialogCancel: function() {
-    // this.selected = {};
-    // this.showViewDialog = false;
-  },
-  onViewClose: function () {
-    // this.selected = {};
-  },
-},
 });
 </script>
 
 <style lang='scss' scoped>
-@import 'src/styles.scss';
+@import "src/styles.scss";
 .md-field {
   max-width: 300px;
 }
@@ -329,7 +322,7 @@ export default Vue.extend({
 }
 
 .table {
-  padding: 0vh  2vw;
+  padding: 0vh 2vw;
 }
 
 .icon {
