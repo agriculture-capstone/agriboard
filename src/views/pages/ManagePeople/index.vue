@@ -111,19 +111,20 @@
     </div>
     
     <div class="view-dialog-wrapper">
-      <md-dialog :md-active.sync="showViewDialog">
-        <md-dialog-title>{{ selected.name }}</md-dialog-title>
+      <md-dialog v-if="selectedRow" :md-active.sync="showViewDialog">
+        <md-dialog-title>{{ selectedRow.name }}</md-dialog-title>
           <md-dialog-content>
             <div class="md-subhead">
               <md-icon>access_time</md-icon>
-              <span>Last Modified: {{ selected.lastModified }}</span>
+              <span>Last Modified: {{ selectedRow.lastModified }}</span>
             </div>
             <h3><b>Phone Number</b></h3>
-            {{ selected.phoneNumber }}
+            {{ selectedRow.phoneNumber }}
             <h3><b>Category</b></h3>
-            {{ selected.peopleCategory }}
-            <h3 v-if="selected.peopleCategory === 'farmers' && selected.notes"><b>Notes</b></h3>
-            {{ selected.notes }}
+            {{ selectedRow.peopleCategory }}
+            <!-- <h3 v-if="selectedRow.peopleCategory === 'farmers' && selectedRow.notes"><b>Notes</b></h3> -->
+            <h3><b>Notes</b></h3>            
+            {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
           <md-button class="md-primary" @click="onCancelView">Cancel</md-button>
@@ -139,10 +140,10 @@
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
               <h3 class="md-subheading"><b>Category</b></h3>
-              <md-radio v-model="selected.peopleCategory" value="farmers">Farmer</md-radio>
-              <md-radio v-model="selected.peopleCategory" value="traders">Trader</md-radio>
-              <md-radio v-model="selected.peopleCategory" value="admins">Admin</md-radio>
-              <md-radio v-model="selected.peopleCategory" value="monitors">Monitor</md-radio>  
+              <md-radio v-model="editableRow.peopleCategory" value="farmers">Farmer</md-radio>
+              <md-radio v-model="editableRow.peopleCategory" value="traders">Trader</md-radio>
+              <md-radio v-model="editableRow.peopleCategory" value="admins">Admin</md-radio>
+              <md-radio v-model="editableRow.peopleCategory" value="monitors">Monitor</md-radio>  
             </div>
           </div>
 
@@ -150,7 +151,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>First Name</label>
-                <md-input v-model="selected.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                <md-input v-model="editableRow.firstName" name="first-name" id="first-name" autocomplete="given-name" />
               </md-field>
             </div>
           </div>
@@ -159,7 +160,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Middle Name</label>
-                <md-input v-model="selected.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                <md-input v-model="editableRow.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
               </md-field>
             </div>
           </div>
@@ -168,25 +169,25 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Last Name</label>
-                <md-input v-model="selected.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                <md-input v-model="editableRow.lastName" name="last-name" id="last-name" autocomplete="last-name" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="selected.peopleCategory == 'admins' || selected.peopleCategory == 'monitors'">
+          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admins' || editableRow.peopleCategory == 'monitors'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
-                <md-input v-model="selected.username" name="username" id="username" autocomplete="username" />
+                <md-input v-model="editableRow.username" name="username" id="username" autocomplete="username" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="selected.peopleCategory == 'admins' || selected.peopleCategory == 'monitors'">
+          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admins' || editableRow.peopleCategory == 'monitors'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
-                <md-input v-model="selected.password" type="password"></md-input>
+                <md-input v-model="editableRow.password" type="password"></md-input>
               </md-field>
             </div>
           </div>
@@ -195,16 +196,16 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Phone Number</label>
-                <md-input v-model="selected.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <md-input v-model="editableRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="selected.peopleCategory == 'farmers'">
+          <div class="md-gutter" v-if="editableRow.peopleCategory == 'farmers'">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Notes</label>
-                  <md-input v-model="selected.notes" name="notes" id="notes" autocomplete="notes" />
+                  <md-input v-model="editableRow.notes" name="notes" id="notes" autocomplete="notes" />
                 </md-field>
               </div>
             </div>
@@ -232,7 +233,8 @@ export default Vue.extend({
     return {
       search: '',
       error: '',
-      selected: {},
+      selectedRow: {},
+      editableRow: {},
       showAddDialog: false,
       showViewDialog: false,
       showEditDialog: false,
@@ -269,7 +271,7 @@ export default Vue.extend({
   },
   methods: {
     onSelect(item: any) {
-      this.selected = item;
+      this.selectedRow = item;
       this.showViewDialog = true;
     },
     onAddClick() {
@@ -285,6 +287,8 @@ export default Vue.extend({
       this.showViewDialog = false;
     },
     onEditClick() {
+      this.editableRow = this.selectedRow;
+      this.selectedRow = {};
       this.showViewDialog = false;
       this.showEditDialog = true;
     },
