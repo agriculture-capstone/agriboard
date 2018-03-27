@@ -111,7 +111,7 @@
     </div>
     
     <div class="view-dialog-wrapper">
-      <md-dialog :md-active.sync="showViewDialog" @md-closed="onViewClose">
+      <md-dialog :md-active.sync="showViewDialog">
         <md-dialog-title>{{ selected.name }}</md-dialog-title>
           <md-dialog-content>
             <div class="md-subhead">
