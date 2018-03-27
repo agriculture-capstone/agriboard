@@ -1,6 +1,6 @@
 <template>
   <div class='ManagePeople'>
-    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>

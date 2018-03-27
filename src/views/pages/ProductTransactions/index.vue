@@ -23,10 +23,9 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import axios from 'axios';
-import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 
+import CoreAPI from '@/utils/CoreAPI';
 import TokenService from '@/services/Token';
 
 interface ProductTransaction {
@@ -43,22 +42,11 @@ export default Vue.extend({
   name: 'ProductTransactions',
   methods: {
     downloadCsv: async function downloadCsv() {
-      const auth = `Bearer ${TokenService.token}`;
-      const response = await fetch(
-        new Request(
-          'https://boresha.live:19433/transactions/products/milk/download',
-          {
-            method: 'get',
-            headers: new Headers({
-              Authorization: auth,
-            }),
-          },
-        ),
-      );
-      const blob = await response.blob();
-      const date = moment().format('YYYY-MM-DD');
-      const filename = `${date}-collections.csv`;
-      saveAs(blob, filename);
+      try {
+        await CoreAPI.downloadMilk();
+      } catch (err) {
+        this.error = 'Unable to download data.';
+      }
     },
   },
   computed: {
@@ -66,7 +54,7 @@ export default Vue.extend({
       return this.$store.state.milk.rows.map((row: any) => {
         return {
           ...row, 
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss'),
+          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
         };
       });
     },
