@@ -7,10 +7,13 @@ import { AuthenticationError } from '@/errors/AuthenticationError';
 import TokenService from '@/services/Token';
 
 /** Paths on Core for specific data tables */
-export type CorePath 
-  = '/people/farmers' 
-  | '/transactions/products/milk' 
-  | '/productExports' 
+export type CorePath
+  = '/people/farmers'
+  | '/people/traders'
+  | '/people/admins'
+  | '/people/monitors'
+  | '/transactions/products/milk'
+  | '/productExports'
   | '/transactions/money/loans'
   | '/transactions/products/milk/download'
   ;
@@ -93,12 +96,12 @@ export default class CoreAPI {
     const request = new Request(url, CoreAPI.getOptions(method));
 
     const response = await CoreAPI.coreFetch(request, 'blob');
-    
+
     const date = moment().format('YYYY-MM-DD');
     const filename = `${date}-collections.csv`;
     saveAs(response, filename);
   }
-  
+
   private static getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
     const jwt = TokenService.token;
     if (!jwt) {
