@@ -20,7 +20,7 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" md-auto-select>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Phone Number" md-sort-by="phoneNumber">{{ item.phoneNumber }}</md-table-cell>
-        <md-table-cell md-label="Category" md-sort-by="peopleCategory">{{ item.peopleCategory }}</md-table-cell>
+        <md-table-cell md-label="Category" md-sort-by="category">{{ item.category }}</md-table-cell>
       </md-table-row>
     </md-table>
 
@@ -32,10 +32,10 @@
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
               <h3 class="md-subheading"><b>Category</b></h3>
-              <md-radio v-model="form.peopleCategory" value="farmer">Farmer</md-radio>
-              <md-radio v-model="form.peopleCategory" value="trader">Trader</md-radio>
-              <md-radio v-model="form.peopleCategory" value="admin">Admin</md-radio>
-              <md-radio v-model="form.peopleCategory" value="monitor">Monitor</md-radio>                 
+              <md-radio v-model="form.category" value="farmer">Farmer</md-radio>
+              <md-radio v-model="form.category" value="trader">Trader</md-radio>
+              <md-radio v-model="form.category" value="admin">Admin</md-radio>
+              <md-radio v-model="form.category" value="monitor">Monitor</md-radio>                 
             </div>
           </div>
 
@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.peopleCategory == 'admin' || form.peopleCategory == 'monitor'">
+          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
@@ -75,7 +75,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.peopleCategory == 'admin' || form.peopleCategory == 'monitor'">
+          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
@@ -93,7 +93,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.peopleCategory == 'farmer'">
+          <div class="md-gutter" v-if="form.category == 'farmer'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Notes</label>
@@ -121,8 +121,8 @@
             <h3><b>Phone Number</b></h3>
             {{ selectedRow.phoneNumber }}
             <h3><b>Category</b></h3>
-            {{ selectedRow.peopleCategory }}
-            <!-- <h3 v-if="selectedRow.peopleCategory === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
+            {{ selectedRow.category }}
+            <!-- <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
             <h3><b>Notes</b></h3>            
             {{ selectedRow.notes }}
           </md-dialog-content>
@@ -165,7 +165,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admin' || editableRow.peopleCategory == 'monitor'">
+          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
@@ -174,7 +174,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.peopleCategory == 'admin' || editableRow.peopleCategory == 'monitor'">
+          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
@@ -192,7 +192,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.peopleCategory == 'farmer'">
+          <div class="md-gutter" v-if="editableRow.category == 'farmer'">
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Notes</label>
@@ -230,7 +230,7 @@ export default Vue.extend({
       showViewDialog: false,
       showEditDialog: false,
       form: {
-        peopleCategory: '',
+        category: '',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -251,12 +251,16 @@ export default Vue.extend({
     fuse(): Fuse {
       return new Fuse(this.people, {
         shouldSort: true,
-        threshold: 0.7,
+        threshold: 0.5,
         location: 0,
         distance: 100,
         maxPatternLength: 32,
         minMatchCharLength: 1,
-        keys: ['name', 'peopleCategory', 'phoneNumber'],
+        keys: [
+          'name',
+          'category',
+          'phoneNumber',
+        ],
       });
     },
   },
@@ -274,18 +278,23 @@ export default Vue.extend({
     },
     onSaveCreate() {
       this.showAddDialog = false;
-      const newFarmer =  {
-        firstName: this.form.firstName,
-        middleName: this.form.middleName,
-        lastName: this.form.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: this.form.phoneNumber,
-        notes: this.form.notes,
-        paymentFrequency: 'monthly',
-        companyName: 'boresha',
-      };
-      this.$store.dispatch('farmer/createRow', { row: newFarmer });
+      const newPerson = this.form;
+      
+      switch (newPerson.category) {
+        case 'admin':
+          this.dispatchNewAdmin(newPerson);
+          break;
+        case 'monitor':
+          this.dispatchNewMonitor(newPerson);
+          break;
+        case 'trader':
+          this.dispatchNewTrader(newPerson);
+          break;
+        case 'farmer':
+          this.dispatchNewFarmer(newPerson);
+          break;
+      }
+      this.dispatchNewFarmer(this.form);
       this.resetForm();
     },
     onCancelView() {
@@ -303,9 +312,43 @@ export default Vue.extend({
     onSaveEdit() {
       this.showEditDialog = false;
     },
+    dispatchNewAdmin(data: any) {
+
+    },
+    dispatchNewMonitor(data: any) {
+
+    },
+    dispatchNewTrader(data: any) {
+      const newTrader = {
+        firstName: data.firstName,
+        middleName: data.middleName,
+        lastName: data.lastName,
+        phoneCountry: '',
+        phoneArea: '',
+        phoneNumber: data.phoneNumber,
+        notes: data.notes,
+        companyName: '',
+        paymentFrequency: 'monthly',
+      };
+      this.$store.dispatch('trader/createRow', { row: newTrader });
+    },
+    dispatchNewFarmer(data: any) {
+      const newFarmer =  {
+        firstName: data.firstName,
+        middleName: data.middleName,
+        lastName: data.lastName,
+        phoneCountry: '',
+        phoneArea: '',
+        phoneNumber: data.phoneNumber,
+        notes: data.notes,
+        paymentFrequency: 'monthly',
+        companyName: 'boresha',
+      };
+      this.$store.dispatch('farmer/createRow', { row: newFarmer });
+    },
     resetForm() {
       this.form = {
-        peopleCategory: '',
+        category: '',
         firstName: '',
         middleName: '',
         lastName: '',
