@@ -312,10 +312,32 @@ export default Vue.extend({
       this.showEditDialog = false;
     },
     dispatchNewAdmin(data: any) {
-
+      const newAdmin = {
+        firstName: data.firstName,
+        middleName: data.middleName,
+        lastName: data.lastName,
+        phoneCountry: '',
+        phoneArea: '',
+        phoneNumber: data.phoneNumber,
+        notes: data.notes,
+        companyName: '',
+        paymentFrequency: 'monthly',
+      };
+      this.$store.dispatch('admin/createRow', { row: newAdmin });
     },
     dispatchNewMonitor(data: any) {
-
+      const newMonitor = {
+        firstName: data.firstName,
+        middleName: data.middleName,
+        lastName: data.lastName,
+        phoneCountry: '',
+        phoneArea: '',
+        phoneNumber: data.phoneNumber,
+        notes: data.notes,
+        companyName: '',
+        paymentFrequency: 'monthly',
+      };
+      this.$store.dispatch('monitor/createRow', { row: newMonitor });
     },
     dispatchNewTrader(data: any) {
       const newTrader = {
