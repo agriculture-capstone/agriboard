@@ -279,29 +279,23 @@ export default Vue.extend({
     },
     onCancelCreate() {
       this.showAddDialog = false;
-      this.form = {
-        peopleCategory: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        username: '',
-        password: '',
-        phoneNumber: '',
-        notes: '',
-      };
+      this.resetForm();
     },
     onSaveCreate() {
       this.showAddDialog = false;
-      this.form = {
-        peopleCategory: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        username: '',
-        password: '',
-        phoneNumber: '',
-        notes: '',
+      const newFarmer =  {
+        firstName: this.form.firstName,
+        middleName: this.form.middleName,
+        lastName: this.form.lastName,
+        phoneCountry: '',
+        phoneArea: '',
+        phoneNumber: this.form.phoneNumber,
+        notes: this.form.notes,
+        paymentFrequency: 'monthly',
+        companyName: 'boresha',
       };
+      this.$store.dispatch('farmer/createRow', { row: newFarmer });
+      this.resetForm();
     },
     onCancelView() {
       this.showViewDialog = false;
@@ -317,6 +311,18 @@ export default Vue.extend({
     },
     onSaveEdit() {
       this.showEditDialog = false;
+    },
+    resetForm() {
+      this.form = {
+        peopleCategory: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        notes: '',
+      };
     },
   },
 });
