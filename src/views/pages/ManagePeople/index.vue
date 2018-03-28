@@ -137,15 +137,6 @@
       <md-dialog :md-active.sync="showEditDialog">
         <md-dialog-title>Edit User</md-dialog-title>
         <md-dialog-content>
-          <div class="md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <h3 class="md-subheading"><b>Category</b></h3>
-              <md-radio v-model="editableRow.peopleCategory" value="farmer">Farmer</md-radio>
-              <md-radio v-model="editableRow.peopleCategory" value="trader">Trader</md-radio>
-              <md-radio v-model="editableRow.peopleCategory" value="admin">Admin</md-radio>
-              <md-radio v-model="editableRow.peopleCategory" value="monitor">Monitor</md-radio>  
-            </div>
-          </div>
 
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -358,6 +349,10 @@ export default Vue.extend({
     height: 100%;
     display: block;
   }
+}
+
+.md-dialog {
+  min-width: 443px;
 }
 
 .error {
