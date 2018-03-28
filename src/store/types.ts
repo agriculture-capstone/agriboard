@@ -139,6 +139,9 @@ export type CoreUpdateRequest<T> = Partial<T> & LastModifiedData & UUIDData;
 
 export interface Person {
   name: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
   phoneNumber: string;
   category: string;
   lastModified: string;

@@ -30,6 +30,9 @@ const globalGetters: GetterHandlers<RootState> = {
         }
         const convertedPerson: Person = {
           name: fullName,
+          firstName: person.firstName,
+          middleName: person.middleName,
+          lastName: person.lastName,
           phoneNumber: fullPhone,
           category: person.category,
           lastModified: person.lastModified,
