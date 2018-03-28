@@ -8,8 +8,8 @@ export interface Farmer {
   phoneArea: string;
   phoneNumber: string;
   notes: string;
-  companyName?: string;
   paymentFrequency: string;
+  companyName?: string;
 }
 
 export type FarmersState = CoreModuleState<Farmer>;

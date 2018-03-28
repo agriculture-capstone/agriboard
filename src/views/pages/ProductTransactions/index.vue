@@ -1,6 +1,6 @@
 <template>
   <div class='ProductTransactions'>
-    <md-table class="table" v-model="productTransactions" md-sort="name" md-sort-order="asc" md-fixed-header>
+    <md-table class="table" v-model="productTransactions" md-sort="name" md-sort-order="asc">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <h1 class="md-title"><md-icon class="md-size-2x icon">receipt</md-icon> Product Transactions</h1>
@@ -23,10 +23,9 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import axios from 'axios';
-import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 
+import CoreAPI from '@/utils/CoreAPI';
 import TokenService from '@/services/Token';
 
 interface ProductTransaction {
@@ -43,79 +42,25 @@ export default Vue.extend({
   name: 'ProductTransactions',
   methods: {
     downloadCsv: async function downloadCsv() {
-      const auth = `Bearer ${TokenService.token}`;
-      const response = await fetch(
-        new Request(
-          'https://boresha.live:19433/transactions/products/milk/download',
-          {
-            method: 'get',
-            headers: new Headers({
-              Authorization: auth,
-            }),
-          },
-        ),
-      );
-      const blob = await response.blob();
-      const date = moment().format('YYYY-MM-DD');
-      const filename = `${date}-collections.csv`;
-      saveAs(blob, filename);
+      try {
+        await CoreAPI.downloadMilk();
+      } catch (err) {
+        this.error = 'Unable to download data.';
+      }
     },
   },
-  created: async function created() {
-    // get productTransactions types
-    const productTypes: any[] = [];
-    await axios
-      .get('https://boresha.live:19433/products')
-      .then((response: any) => {
-        response.data.map((productType: any) => {
-          productTypes.push(productType.name);
-        });
-      })
-      .catch((error: any) => {
-        this.error = error.message;
+  computed: {
+    productTransactions (): any {
+      return this.$store.state.milk.rows.map((row: any) => {
+        return {
+          ...row, 
+          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+        };
       });
-
-    // get all productTransactions
-    const allProductTransactions: Promise<
-      ProductTransaction[]
-    >[] = productTypes.map((productType: string) => {
-      // get all productTransactions of particular productType
-      return axios
-        .get('https://boresha.live:19433/transactions/products/' + productType)
-        .then((response: any) => {
-          // construct each product transaction
-          return response.data.map((transaction: any) => {
-            // construct product transaction
-            return {
-              productType: transaction.productType,
-              datetime: new Date(transaction.datetime).toUTCString(),
-              amountOfProduct: transaction.amountOfProduct,
-              productUnits: transaction.productUnits,
-              costPerUnit: transaction.costPerUnit,
-              currency: transaction.currency,
-              lastModified: new Date(transaction.lastModified).toUTCString(),
-              to: transaction.to,
-              from: transaction.from,
-            };
-          });
-        })
-        .catch((error: any) => {
-          this.error = error.message;
-        });
-    });
-
-    const allProductTransactionsFlat = (await Promise.all(
-      allProductTransactions,
-    )).reduce(function (prev: ProductTransaction[], curr: ProductTransaction[]) {
-      return prev.concat(curr);
-    });
-
-    // update list
-    this.productTransactions = allProductTransactionsFlat;
+    },
   },
   data() {
     return {
-      productTransactions: [],
       error: '',
     };
   },

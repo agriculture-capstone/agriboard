@@ -1,3 +1,6 @@
+import { saveAs } from 'file-saver';
+import * as moment from 'moment';
+
 import HTTPCode from '@/utils/HTTPCode';
 import { CoreUpdateRequest, CoreCreationRequest, CoreRow } from '@/store/types';
 import { AuthenticationError } from '@/errors/AuthenticationError';
@@ -10,11 +13,13 @@ export type CorePath
   | '/people/admins'
   | '/people/monitors'
   | '/transactions/products/milk'
-  | '/transactions/products/export'
-  | '/transactions/money/loan'
+  | '/productExports'
+  | '/transactions/money/loans'
+  | '/transactions/products/milk/download'
   ;
 
 const LOGIN_PATH = '/actions/authenticate';
+const DOWNLOAD_MILK_PATH: CorePath = '/transactions/products/milk/download';
 
 /** Types of methods to interact with the core */
 type CoreRequestMethod
@@ -73,68 +78,31 @@ export default class CoreAPI {
   }
 
   /**
-   * Get a row from the core
-   *
-   * @param uuid UUID of the desired row
-   *
-   * @returns
+   * Downloads milk data
    */
-  public async get<T>(uuid: string): Promise<CoreRow<T>> {
-    const url = `${this.url}/${uuid}`;
+  // tslint:disable-next-line:function-name
+  public static async downloadMilk() {
+    CoreAPI.download(DOWNLOAD_MILK_PATH);
+  }
+
+  /**
+   * Downloads csv data
+   * @param path download path
+   */
+  // tslint:disable-next-line:function-name
+  public static async download(path: CorePath) {
+    const url = `${process.env.CORE_HOST}:${process.env.CORE_PORT}${path}`;
     const method: CoreRequestMethod = 'GET';
-    const request = new Request(url, this.getOptions(method));
+    const request = new Request(url, CoreAPI.getOptions(method));
 
-    return await this.coreFetch(request) as CoreRow<T>;
+    const response = await CoreAPI.coreFetch(request, 'blob');
+
+    const date = moment().format('YYYY-MM-DD');
+    const filename = `${date}-collections.csv`;
+    saveAs(response, filename);
   }
 
-  /**
-   * Get all of the specified resource
-   */
-  public async getAll<T>(): Promise<CoreRow<T>[]> {
-    const url = this.url;
-    const method: CoreRequestMethod = 'GET';
-    const request = new Request(url, this.getOptions(method));
-
-    return this.coreFetch(request);
-  }
-
-  /**
-   * Update a row on the core
-   *
-   * @param row Information to overwrite
-   */
-  public async update<T>(row: CoreUpdateRequest<T>): Promise<CoreRow<T>> {
-    const url = this.url;
-    const method: CoreRequestMethod = 'PUT';
-    const request = new Request(url, this.getOptions(method, row));
-
-    return this.coreFetch(request);
-  }
-
-  /**
-   * Create a row in the database
-   *
-   * @param row Row to create
-   */
-  public async create<T>(row: CoreCreationRequest<T>) {
-    const url = this.url;
-    const method: CoreRequestMethod = 'POST';
-    const request = new Request(url, this.getOptions(method, row));
-
-    return this.coreFetch(request);
-  }
-
-  /**
-   * Send a HEAD request for the resources
-   *
-   * @param timestamp Timestamp to compare
-   */
-  public async head(timestamp: string) {
-
-  }
-
-  private getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
-
+  private static getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
     const jwt = TokenService.token;
     if (!jwt) {
       throw new Error('Not authenticated');
@@ -152,7 +120,7 @@ export default class CoreAPI {
     };
   }
 
-  private async coreFetch(request: Request) {
+  private static async coreFetch(request: Request, type: 'json' | 'blob' = 'json') {
     // Declare block scoped variables (let) at top of block
     let response: Response;
 
@@ -174,6 +142,67 @@ export default class CoreAPI {
       throw response;
     }
 
-    else return await response.json();
+    else return await response[type]();
+  }
+
+  /**
+   * Get a row from the core
+   *
+   * @param uuid UUID of the desired row
+   *
+   * @returns
+   */
+  public async get<T>(uuid: string): Promise<CoreRow<T>> {
+    const url = `${this.url}/${uuid}`;
+    const method: CoreRequestMethod = 'GET';
+    const request = new Request(url, CoreAPI.getOptions(method));
+
+    return await CoreAPI.coreFetch(request) as CoreRow<T>;
+  }
+
+  /**
+   * Get all of the specified resource
+   */
+  public async getAll<T>(): Promise<CoreRow<T>[]> {
+    const url = this.url;
+    const method: CoreRequestMethod = 'GET';
+    const request = new Request(url, CoreAPI.getOptions(method));
+
+    return CoreAPI.coreFetch(request);
+  }
+
+  /**
+   * Update a row on the core
+   *
+   * @param row Information to overwrite
+   */
+  public async update<T>(row: CoreUpdateRequest<T>): Promise<CoreRow<T>> {
+    const url = this.url;
+    const method: CoreRequestMethod = 'PUT';
+    const request = new Request(url, CoreAPI.getOptions(method, row));
+
+    return CoreAPI.coreFetch(request);
+  }
+
+  /**
+   * Create a row in the database
+   *
+   * @param row Row to create
+   */
+  public async create<T>(row: CoreCreationRequest<T>) {
+    const url = this.url;
+    const method: CoreRequestMethod = 'POST';
+    const request = new Request(url, CoreAPI.getOptions(method, row));
+
+    return CoreAPI.coreFetch(request);
+  }
+
+  /**
+   * Send a HEAD request for the resources
+   *
+   * @param timestamp Timestamp to compare
+   */
+  public async head(timestamp: string) {
+
   }
 }
