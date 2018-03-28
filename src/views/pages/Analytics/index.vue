@@ -163,5 +163,6 @@ export default {
   font-size:2vh;
   color: steelblue;
   font-weight: bold;
+  text-align: center;
 }
 </style>
