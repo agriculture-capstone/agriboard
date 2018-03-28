@@ -294,7 +294,6 @@ export default Vue.extend({
           this.dispatchNewFarmer(newPerson);
           break;
       }
-      this.dispatchNewFarmer(this.form);
       this.resetForm();
     },
     onCancelView() {
