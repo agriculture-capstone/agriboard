@@ -177,15 +177,6 @@
           <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor' || editableRow.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
-                <label>Username</label>
-                <md-input v-model="editableRow.username" name="username" id="username" autocomplete="username" />
-              </md-field>
-            </div>
-          </div>
-
-          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor' || editableRow.category == 'trader'">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
                 <label>Password</label>
                 <md-input v-model="editableRow.password" type="password"></md-input>
               </md-field>
