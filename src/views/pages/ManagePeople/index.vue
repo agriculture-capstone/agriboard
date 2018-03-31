@@ -96,15 +96,6 @@
           <div class="md-gutter" v-if="form.category == 'farmer'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
-                <label>Payment Frequency</label>
-                <md-input v-model="form.paymentFrequency" name="paymentFrequency" id="paymentFrequency" autocomplete="paymentFrequency" />
-              </md-field>
-            </div>
-          </div>
-
-          <div class="md-gutter" v-if="form.category == 'farmer'">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
                 <label>Notes</label>
                 <md-input v-model="form.notes" name="notes" id="notes" autocomplete="notes" />
               </md-field>
@@ -188,15 +179,6 @@
               <md-field>
                 <label>Phone Number</label>
                 <md-input v-model="editableRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
-              </md-field>
-            </div>
-          </div>
-
-          <div class="md-gutter" v-if="editableRow.category == 'farmer'">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label>Payment Frequency</label>
-                <md-input v-model="editableRow.paymentFrequency" name="paymentFrequency" id="paymentFrequency" autocomplete="paymentFrequency" />
               </md-field>
             </div>
           </div>
