@@ -219,8 +219,30 @@ export default Vue.extend({
     return {
       search: '',
       error: '',
-      selectedRow: {},
-      editableRow: {},
+      selectedRow: {
+        category: '',
+        name: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        paymentFrequency: '',
+        notes: '',
+      },
+      editableRow: {
+        category: '',
+        name: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        paymentFrequency: '',
+        notes: '',
+      },
       showAddDialog: false,
       showViewDialog: false,
       showEditDialog: false,
@@ -275,21 +297,7 @@ export default Vue.extend({
     onSaveCreate() {
       this.showAddDialog = false;
       const newPerson = this.form;
-
-      switch (newPerson.category) {
-        case 'admin':
-          this.dispatchNewAdmin(newPerson);
-          break;
-        case 'monitor':
-          this.dispatchNewMonitor(newPerson);
-          break;
-        case 'trader':
-          this.dispatchNewTrader(newPerson);
-          break;
-        case 'farmer':
-          this.dispatchNewFarmer(newPerson);
-          break;
-      }
+      this.createPerson(newPerson);
       this.resetForm();
     },
     onCancelView() {
@@ -297,7 +305,7 @@ export default Vue.extend({
     },
     onEditClick() {
       this.editableRow = this.selectedRow;
-      this.selectedRow = {};
+      this.resetSelectedRow();
       this.showViewDialog = false;
       this.showEditDialog = true;
     },
@@ -306,66 +314,131 @@ export default Vue.extend({
     },
     onSaveEdit() {
       this.showEditDialog = false;
+      const newPerson = this.editableRow;
+      this.updatePerson(newPerson);
+      this.resetEditableRow();
     },
-    dispatchNewAdmin(data: any) {
-      const newAdmin = {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        companyName: '',
-        username: data.username,
-        hash: Bcrypt.hashSync(data.password, saltRounds),
-      };
-      this.$store.dispatch('admin/createRow', { row: newAdmin });
+    createPerson(data: any) {
+      let path = '';
+      let newPerson = {};
+      if (data.username && data.password) {
+        newPerson = {
+          firstName: data.firstName,
+          middleName: data.middleName,
+          lastName: data.lastName,
+          phoneCountry: '',
+          phoneArea: '',
+          phoneNumber: data.phoneNumber,
+          companyName: '',
+          username: data.username,
+          hash: Bcrypt.hashSync(data.password, saltRounds),
+        };
+      } else {
+        newPerson = {
+          firstName: data.firstName,
+          middleName: data.middleName,
+          lastName: data.lastName,
+          phoneCountry: '',
+          phoneArea: '',
+          phoneNumber: data.phoneNumber,
+          notes: data.notes,
+          paymentFrequency: 'monthly',
+          companyName: 'boresha',
+        };
+      }
+      switch (data.category) {
+        case 'admin':
+          path = 'admin/createRow';
+          break;
+        case 'monitor':
+          path = 'monitor/createRow';
+          break;
+        case 'trader':
+          path = 'trader/createRow';
+          break;
+        case 'farmer':
+          path = 'farmer/createRow';
+          break;
+      }
+      this.$store.dispatch(path, { row: newPerson });
     },
-    dispatchNewMonitor(data: any) {
-      const newMonitor = {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        companyName: '',
-        username: data.username,
-        hash: Bcrypt.hashSync(data.password, saltRounds),
-      };
-      this.$store.dispatch('monitor/createRow', { row: newMonitor });
-    },
-    dispatchNewTrader(data: any) {
-      const newTrader = {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        companyName: '',
-        username: data.username,
-        hash: Bcrypt.hashSync(data.password, saltRounds),
-      };
-      this.$store.dispatch('trader/createRow', { row: newTrader });
-    },
-    dispatchNewFarmer(data: any) {
-      const newFarmer =  {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        notes: data.notes,
-        paymentFrequency: 'monthly',
-        companyName: 'boresha',
-      };
-      this.$store.dispatch('farmer/createRow', { row: newFarmer });
+    updatePerson(data: any) {
+      let path = '';
+      let updatedPerson = {};
+      if (data.username && data.password) {
+        updatedPerson = {
+          uuid: data.uuid,
+          firstName: data.firstName,
+          middleName: data.middleName,
+          lastName: data.lastName,
+          phoneCountry: '',
+          phoneArea: '',
+          phoneNumber: data.phoneNumber,
+          companyName: '',
+          username: data.username,
+          hash: Bcrypt.hashSync(data.password, saltRounds),
+        };
+      } else {
+        updatedPerson = {
+          uuid: data.uuid,
+          firstName: data.firstName,
+          middleName: data.middleName,
+          lastName: data.lastName,
+          phoneCountry: '',
+          phoneArea: '',
+          phoneNumber: data.phoneNumber,
+          notes: data.notes,
+          paymentFrequency: 'monthly',
+          companyName: 'boresha',
+        };
+      }
+      switch (data.category) {
+        case 'admin':
+          path = 'admin/updateRow';
+          break;
+        case 'monitor':
+          path = 'monitor/updateRow';
+          break;
+        case 'trader':
+          path = 'trader/updateRow';
+          break;
+        case 'farmer':
+          path = 'farmer/updateRow';
+          break;
+      }
+      this.$store.dispatch(path, { row: updatedPerson });
     },
     resetForm() {
       this.form = {
         category: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        paymentFrequency: '',
+        notes: '',
+      };
+    },
+    resetSelectedRow() {
+      this.selectedRow = {
+        category: '',
+        name: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        username: '',
+        password: '',
+        phoneNumber: '',
+        paymentFrequency: '',
+        notes: '',
+      };
+    },
+    resetEditableRow() {
+      this.editableRow = {
+        category: '',
+        name: '',
         firstName: '',
         middleName: '',
         lastName: '',
