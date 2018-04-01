@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor'">
+          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor' || form.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
@@ -75,7 +75,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor'">
+          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor' || form.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
@@ -165,16 +165,7 @@
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor'">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label>Username</label>
-                <md-input v-model="editableRow.username" name="username" id="username" autocomplete="username" />
-              </md-field>
-            </div>
-          </div>
-
-          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor'">
+          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor' || editableRow.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
@@ -193,13 +184,13 @@
           </div>
 
           <div class="md-gutter" v-if="editableRow.category == 'farmer'">
-              <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label>Notes</label>
-                  <md-input v-model="editableRow.notes" name="notes" id="notes" autocomplete="notes" />
-                </md-field>
-              </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label>Notes</label>
+                <md-input v-model="editableRow.notes" name="notes" id="notes" autocomplete="notes" />
+              </md-field>
             </div>
+          </div>
         </md-dialog-content>
 
         <md-dialog-actions>
@@ -216,8 +207,12 @@
 import Vue from 'vue';
 import { mapState, mapGetters } from 'vuex';
 import * as R from 'ramda';
+import * as Bcrypt from 'bcryptjs';
 import * as Fuse from 'fuse.js';
 import { RootState, Person } from '@/store/types';
+
+const saltRounds = 5;
+
 export default Vue.extend({
   name: 'ManagePeople',
   data() {
@@ -237,6 +232,7 @@ export default Vue.extend({
         username: '',
         password: '',
         phoneNumber: '',
+        paymentFrequency: '',
         notes: '',
       },
     };
@@ -279,7 +275,7 @@ export default Vue.extend({
     onSaveCreate() {
       this.showAddDialog = false;
       const newPerson = this.form;
-      
+
       switch (newPerson.category) {
         case 'admin':
           this.dispatchNewAdmin(newPerson);
@@ -319,9 +315,9 @@ export default Vue.extend({
         phoneCountry: '',
         phoneArea: '',
         phoneNumber: data.phoneNumber,
-        notes: data.notes,
         companyName: '',
-        paymentFrequency: 'monthly',
+        username: data.username,
+        hash: Bcrypt.hashSync(data.password, saltRounds),
       };
       this.$store.dispatch('admin/createRow', { row: newAdmin });
     },
@@ -333,9 +329,9 @@ export default Vue.extend({
         phoneCountry: '',
         phoneArea: '',
         phoneNumber: data.phoneNumber,
-        notes: data.notes,
         companyName: '',
-        paymentFrequency: 'monthly',
+        username: data.username,
+        hash: Bcrypt.hashSync(data.password, saltRounds),
       };
       this.$store.dispatch('monitor/createRow', { row: newMonitor });
     },
@@ -347,9 +343,9 @@ export default Vue.extend({
         phoneCountry: '',
         phoneArea: '',
         phoneNumber: data.phoneNumber,
-        notes: data.notes,
         companyName: '',
-        paymentFrequency: 'monthly',
+        username: data.username,
+        hash: Bcrypt.hashSync(data.password, saltRounds),
       };
       this.$store.dispatch('trader/createRow', { row: newTrader });
     },
@@ -376,6 +372,7 @@ export default Vue.extend({
         username: '',
         password: '',
         phoneNumber: '',
+        paymentFrequency: '',
         notes: '',
       };
     },

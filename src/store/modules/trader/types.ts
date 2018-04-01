@@ -7,9 +7,8 @@ export interface Trader {
   phoneCountry: string;
   phoneArea: string;
   phoneNumber: string;
-  notes: string;
+  username: string;
   companyName?: string;
-  paymentFrequency: string;
 }
 
 export type TraderState = CoreModuleState<Trader>;
