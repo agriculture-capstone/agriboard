@@ -4,12 +4,18 @@ import AppState from './state';
 
 /** Mutation types for app module */
 export enum MutationType {
-  SET_TITLE = 'setTitle',
+  SET_TITLE = 'set_title',
+  SET_TOOLBAR_SHOWN = 'set_toolbar_shown',
 }
 
 /** Payload for setTitle */
 export interface SetTitlePayload {
   title: string;
+}
+
+/** Payload for setting toolbar visibility */
+export interface SetToolbarShownPayload {
+  shown: boolean;
 }
 
 /*--------------------- Actions ---------------------*/

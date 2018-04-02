@@ -1,4 +1,5 @@
 import * as expect from 'expect';
+import 'mocha';
 
 import {
   MutationType,

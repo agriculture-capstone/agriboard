@@ -7,4 +7,8 @@ declare module 'vue-material/dist/components' {
   export const MdTable: any;
   export const MdRipple: any;
   export const MdContent: any;
+  export const MdDialog: any;
+  export const MdRadio: any;
+  export const MdTabs: any;
+  export const MdProgress: any;
 }
