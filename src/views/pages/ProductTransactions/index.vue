@@ -33,7 +33,7 @@
             {{ selectedRow.to }}
             <h3><b>Amount ({{ selectedRow.productUnits }})</b></h3>            
             {{ selectedRow.amountOfProduct }}
-            <h3><b>Rate ({{ selectedRow.productUnits }}/{{ selectedRow.currency }})</b></h3>            
+            <h3><b>Rate ({{ selectedRow.currency }}/{{ selectedRow.productUnits }})</b></h3>            
             {{ selectedRow.costPerUnit }}
           </md-dialog-content>
         <md-dialog-actions>
