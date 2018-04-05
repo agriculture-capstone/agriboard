@@ -77,6 +77,7 @@ export default Vue.extend({
     },
     onCancelView() {
       this.showViewDialog = false;
+      this.selectedRow = {};
     },
   },
   computed: {
