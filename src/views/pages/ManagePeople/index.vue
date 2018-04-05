@@ -142,7 +142,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>First Name</label>
-                <md-input v-model="editableRow.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                <md-input v-model="selectedRow.firstName" name="first-name" id="first-name" autocomplete="given-name" />
               </md-field>
             </div>
           </div>
@@ -151,7 +151,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Middle Name</label>
-                <md-input v-model="editableRow.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                <md-input v-model="selectedRow.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
               </md-field>
             </div>
           </div>
@@ -160,16 +160,16 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Last Name</label>
-                <md-input v-model="editableRow.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                <md-input v-model="selectedRow.lastName" name="last-name" id="last-name" autocomplete="last-name" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor' || editableRow.category == 'trader'">
+          <div class="md-gutter" v-if="selectedRow.category == 'admin' || selectedRow.category == 'monitor' || selectedRow.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
-                <md-input v-model="editableRow.password" type="password"></md-input>
+                <md-input v-model="selectedRow.password" type="password"></md-input>
               </md-field>
             </div>
           </div>
@@ -178,16 +178,16 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Phone Number</label>
-                <md-input v-model="editableRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <md-input v-model="selectedRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.category == 'farmer'">
+          <div class="md-gutter" v-if="selectedRow.category == 'farmer'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Notes</label>
-                <md-input v-model="editableRow.notes" name="notes" id="notes" autocomplete="notes" />
+                <md-input v-model="selectedRow.notes" name="notes" id="notes" autocomplete="notes" />
               </md-field>
             </div>
           </div>
@@ -220,18 +220,6 @@ export default Vue.extend({
       search: '',
       error: '',
       selectedRow: {
-        category: '',
-        name: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        username: '',
-        password: '',
-        phoneNumber: '',
-        paymentFrequency: '',
-        notes: '',
-      },
-      editableRow: {
         category: '',
         name: '',
         firstName: '',
@@ -304,8 +292,6 @@ export default Vue.extend({
       this.showViewDialog = false;
     },
     onEditClick() {
-      this.editableRow = this.selectedRow;
-      this.resetSelectedRow();
       this.showViewDialog = false;
       this.showEditDialog = true;
     },
@@ -314,9 +300,8 @@ export default Vue.extend({
     },
     onSaveEdit() {
       this.showEditDialog = false;
-      const newPerson = this.editableRow;
+      const newPerson = this.selectedRow;
       this.updatePerson(newPerson);
-      this.resetEditableRow();
     },
     createPerson(data: any) {
       let path = '';
@@ -423,20 +408,6 @@ export default Vue.extend({
     },
     resetSelectedRow() {
       this.selectedRow = {
-        category: '',
-        name: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        username: '',
-        password: '',
-        phoneNumber: '',
-        paymentFrequency: '',
-        notes: '',
-      };
-    },
-    resetEditableRow() {
-      this.editableRow = {
         category: '',
         name: '',
         firstName: '',
