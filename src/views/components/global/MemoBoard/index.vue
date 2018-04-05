@@ -61,10 +61,9 @@ export default Vue.component(name, {
 </script>
 
 <style lang="scss" scoped>
-@import "~vue-material/dist/theme/engine";
-
 .MemoBoard {
-  width: 800px;
+  max-width: 90vw;
+  width: 44rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,7 +71,8 @@ export default Vue.component(name, {
 }
 
 h1 {
-  width: 700px;
+  max-width: 90vw;
+  width: 42rem;
 }
 
 .md-icon {
@@ -84,13 +84,15 @@ h1 {
 }
 
 .memo-input {
-  width: 600px;
+  max-width: 90vw;
+  width: 40rem;
   display: flex;
 }
 
 .md-card {
-  margin: 0.5em;
-  width: 550px;
+  max-width: 90vw;
+  margin-bottom: 1em;
+  width: 38rem;
 }
 
 .memo-timestamp {
