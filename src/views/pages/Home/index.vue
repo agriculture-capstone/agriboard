@@ -15,35 +15,34 @@
         </md-card>
       </router-link>
 
-    <router-link :to="{ name: 'analytics' }">
-      <md-card md-with-hover class="action_card">
-        <md-ripple>
-          <div class="service">
+      <router-link :to="{ name: 'analytics' }">
+        <md-card md-with-hover class="action_card">
+          <md-ripple>
+            <div class="service">
               <md-icon class="md-size-3x serviceIcon">trending_up</md-icon>
               <div class="serviceInfo">
               <h2 class="serviceLabel">Analytics</h2>
               <span class="md-caption serviceDesc">View analytics and statistics on products, traders, and farmers.</span>
               </div>
             </div>
-        </md-ripple>
-      </md-card>
-    </router-link>
-
-
+          </md-ripple>
+        </md-card>
+      </router-link>
       <router-link :to="{ name: 'Transactions' }">
-      <md-card md-with-hover class="action_card">
-        <md-ripple>
-          <div class="service">
+        <md-card md-with-hover class="action_card">
+          <md-ripple>
+            <div class="service">
               <md-icon class="md-size-3x serviceIcon">receipt</md-icon>
               <div class="serviceInfo">
               <h2 class="serviceLabel">Transactions</h2>
               <span class="md-caption serviceDesc">View all transactions and download reports.</span>
               </div>
             </div>
-        </md-ripple>
-      </md-card>
+          </md-ripple>
+        </md-card>
       </router-link>
-      </div>
+    </div>
+    <memoboard></memoboard>
   </div>
 </template>
 
@@ -60,7 +59,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.actions_section {
+.actions_section, memoboard {
   margin: auto;
   padding: 1em;
   display: flex;
@@ -107,5 +106,9 @@ export default Vue.extend({
 
 .serviceIcon {
   padding: 5px;
+}
+
+.MemoBoard {
+  margin: auto;
 }
 </style>
