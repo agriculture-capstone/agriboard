@@ -16,6 +16,7 @@
         </md-card-header>
         <md-card-content>
           {{ memo.message }}
+          <p class="memo-timestamp"> {{ memo.timestamp }}</p>
         </md-card-content>
       </md-card>
     </div>
@@ -30,6 +31,7 @@ const name = 'memoboard';
 interface Memo {
   author: string;
   message: string;
+  timestamp: string;
 }
 
 export default Vue.component(name, {
@@ -40,14 +42,17 @@ export default Vue.component(name, {
         {
           author: 'Enoch Tsang',
           message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.',
+          timestamp: 'Thu, 05 Apr 2018 01:49:09 GMT',
         },
         {
           author: 'Billy Bob',
           message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.',
+          timestamp: 'Thu, 05 Apr 2018 01:49:09 GMT',
         },
         {
           author: 'James Inglis',
           message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.',
+          timestamp: 'Thu, 05 Apr 2018 01:49:09 GMT',
         },
       ];
     },
@@ -86,5 +91,10 @@ h1 {
 .md-card {
   margin: 0.5em;
   width: 550px;
+}
+
+.memo-timestamp {
+  font-style: italic;
+  text-align: right;
 }
 </style>
