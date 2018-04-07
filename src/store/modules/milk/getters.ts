@@ -3,6 +3,7 @@ import { Milk } from './types';
 import * as moment from 'moment';
 
 const milkGetters: CoreGetterHandlers<Milk> = {
+<<<<<<< HEAD
   /**
    * get all of the store milk transactions
    * 
@@ -49,6 +50,9 @@ const milkGetters: CoreGetterHandlers<Milk> = {
 
     return sum;
   },
+=======
+  
+>>>>>>> master
 };
 
 /** Helper Functions */

@@ -10,6 +10,8 @@ import {
   MdTable,
   MdRipple,
   MdContent,
+  MdDialog,
+  MdRadio,
   MdTabs,
   MdProgress,
 } from 'vue-material/dist/components';
@@ -31,6 +33,8 @@ Vue.use(MdTable);
 Vue.use(MdField);
 Vue.use(MdRipple);
 Vue.use(MdContent);
+Vue.use(MdDialog);
+Vue.use(MdRadio);
 Vue.use(MdTabs);
 Vue.use(MdProgress);
 

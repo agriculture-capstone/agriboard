@@ -1,15 +1,14 @@
 import { CoreModuleState } from '@/store/types';
 
-export interface Farmer {
+export interface Monitor {
   firstName: string;
   middleName: string;
   lastName: string;
   phoneCountry: string;
   phoneArea: string;
   phoneNumber: string;
-  notes: string;
-  paymentFrequency: string;
+  username: string;
   companyName?: string;
 }
 
-export type FarmersState = CoreModuleState<Farmer>;
+export type MonitorState = CoreModuleState<Monitor>;
