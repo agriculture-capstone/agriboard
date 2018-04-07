@@ -29,6 +29,7 @@ const globalGetters: GetterHandlers<RootState> = {
           fullPhone += ` ${person.phoneNumber.slice(0, AREA_SIZE)}-${person.phoneNumber.slice(AREA_SIZE)}`;
         }
         const convertedPerson: Person = {
+          uuid: person.uuid,
           name: fullName,
           firstName: person.firstName,
           middleName: person.middleName,

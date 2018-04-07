@@ -25,7 +25,7 @@
     </md-table>
 
     <div class="create-dialog-wrapper">
-      <md-dialog :md-active.sync="showAddDialog">
+      <md-dialog v-if="form" :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
         
         <md-dialog-content>
@@ -134,7 +134,7 @@
     </div>
 
     <div class="edit-dialog-wrapper">
-      <md-dialog :md-active.sync="showEditDialog">
+      <md-dialog v-if="selectedRow" :md-active.sync="showEditDialog">
         <md-dialog-title>Edit User</md-dialog-title>
         <md-dialog-content>
 
@@ -220,6 +220,7 @@ export default Vue.extend({
       search: '',
       error: '',
       selectedRow: {
+        uuid: '',
         category: '',
         name: '',
         firstName: '',
@@ -350,33 +351,39 @@ export default Vue.extend({
     updatePerson(data: any) {
       let path = '';
       let updatedPerson = {};
-      if (data.username && data.password) {
-        updatedPerson = {
-          uuid: data.uuid,
-          firstName: data.firstName,
-          middleName: data.middleName,
-          lastName: data.lastName,
-          phoneCountry: '',
-          phoneArea: '',
-          phoneNumber: data.phoneNumber,
-          companyName: '',
-          username: data.username,
-          hash: Bcrypt.hashSync(data.password, saltRounds),
-        };
-      } else {
-        updatedPerson = {
-          uuid: data.uuid,
-          firstName: data.firstName,
-          middleName: data.middleName,
-          lastName: data.lastName,
-          phoneCountry: '',
-          phoneArea: '',
-          phoneNumber: data.phoneNumber,
-          notes: data.notes,
-          paymentFrequency: 'monthly',
-          companyName: 'boresha',
-        };
+      switch (data.category) {
+        case 'admin':
+        case 'monitor':
+        case 'trader':
+          updatedPerson = {
+            uuid: data.uuid,
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            companyName: '',
+            username: data.username,
+            hash: Bcrypt.hashSync(data.password, saltRounds),
+          };
+          break;
+        case 'farmer':
+          updatedPerson = {
+            uuid: data.uuid,
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            notes: data.notes,
+            paymentFrequency: 'monthly',
+            companyName: 'boresha',
+          };
+          break;
       }
+    
       switch (data.category) {
         case 'admin':
           path = 'admin/updateRow';
@@ -408,6 +415,7 @@ export default Vue.extend({
     },
     resetSelectedRow() {
       this.selectedRow = {
+        uuid: '',
         category: '',
         name: '',
         firstName: '',
