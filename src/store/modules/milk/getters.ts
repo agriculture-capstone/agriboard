@@ -24,7 +24,7 @@ const milkGetters: CoreGetterHandlers<Milk> = {
 // to:"Enoch Tsang"
 // toPersonUuid:"a293e3a5-a88d-473b-9d4a-74a2153992f6"
 // uuid:"0464e508-31fa-4c47-ab2d-56496c6518e4"
-    console.log(state.rows);
+    // console.log(state.rows);
     return state.rows;
   },
     /**
@@ -44,16 +44,15 @@ const milkGetters: CoreGetterHandlers<Milk> = {
    * @returns  array of milk 
    * 
    */
-  getSumOfValues (state, getAllMilkTransactions) {
-    let sum = 0;
-    console.log(getAllMilkTransactions.getAllMilkTransactions.length);
-    if (getAllMilkTransactions.getAllMilkTransactions.length > 0) {
-      sum = getAllMilkTransactions.getAllMilkTransactions.reduce((sum: number, entry: any) => 
-      (sum + entry.amountOfProduct, 0).toFixed(1));
-    }
-    else sum = 0;
-    return sum;
-  },
+  // getSumOfValues (state, getAllMilkTransactions) {
+  //   let sum = 0;
+  //   if (getAllMilkTransactions.getAllMilkTransactions.length > 0) {
+  //     sum = getAllMilkTransactions.getAllMilkTransactions.reduce((sum: number, entry: any) => 
+  //     (sum + entry.amountOfProduct, 0).toFixed(1));
+  //   }
+  //   else sum = 0;
+  //   return sum;
+  // },
 };
 
 /** Helper Functions */

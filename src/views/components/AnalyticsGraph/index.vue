@@ -69,6 +69,7 @@ export default {
       xUnits,
       yUnits
     ) {
+      console.log(data);
       let svg = d3.select("#" + title).select("svg");
       let margin = { top: 10, left: 100, bottom: 30, right: 10 };
 
