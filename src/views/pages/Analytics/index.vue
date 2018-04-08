@@ -14,7 +14,7 @@
           <md-card-header>
             <md-card-header-text>
               <div class="stat-heading">Milk Delivered (Month)</div>
-              <div class="stat">{{this.delivered}} L</div>
+              <div class="stat">{{deliverySum}} L</div>
             </md-card-header-text>
           </md-card-header>
         </md-card>
@@ -22,7 +22,7 @@
           <md-card-header>
             <md-card-header-text>
               <div class="stat-heading">Loans Dispensed (Month)</div>
-              <div class="stat">{{this.dispensed}} UGX</div>
+              <div class="stat">{{loanSum}} UGX</div>
             </md-card-header-text>
           </md-card-header>
         </md-card>
@@ -147,16 +147,16 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
-      console.log(deliveries);
       return this.calculateSum(deliveries);
     },
     loanSum: function() {
       let loans = this.$store.state.loan.rows.map(row => {
         return {
-          amountOfProduct: row.amountOfProduct,
+          amountOfProduct: row.amount,
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
+      console.log(loans);
       return this.calculateSum(loans);
     }
   },
