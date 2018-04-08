@@ -24,6 +24,7 @@ const milkGetters: CoreGetterHandlers<Milk> = {
 // to:"Enoch Tsang"
 // toPersonUuid:"a293e3a5-a88d-473b-9d4a-74a2153992f6"
 // uuid:"0464e508-31fa-4c47-ab2d-56496c6518e4"
+    console.log(state.rows);
     return state.rows;
   },
     /**
@@ -32,11 +33,11 @@ const milkGetters: CoreGetterHandlers<Milk> = {
    * @returns  array of milk 
    * 
    */
-  getSummedValuesByDate (state, getAllMilkTransactions) {
-    const groupedValues = groupBy(getAllMilkTransactions, moment(getAllMilkTransactions.datetime).utc().format('YYYY-MM-DD'));
-    const keys = groupedValues.keys;
-    return groupedValues;
-  },
+  // getSummedValuesByDate (state, getAllMilkTransactions) {
+  //   const groupedValues = groupBy(getAllMilkTransactions, moment(getAllMilkTransactions.datetime).utc().format('YYYY-MM-DD'));
+  //   const keys = groupedValues.keys;
+  //   return groupedValues;
+  // },
   /**
    * get all of the store milk transactions
    * 
@@ -44,9 +45,13 @@ const milkGetters: CoreGetterHandlers<Milk> = {
    * 
    */
   getSumOfValues (state, getAllMilkTransactions) {
-    const sum = getAllMilkTransactions.reduce((sum: number, entry: any) => 
-    (sum + entry.amountOfProduct, 0).toFixed(1));
-
+    let sum = 0;
+    console.log(getAllMilkTransactions.getAllMilkTransactions.length);
+    if (getAllMilkTransactions.getAllMilkTransactions.length > 0) {
+      sum = getAllMilkTransactions.getAllMilkTransactions.reduce((sum: number, entry: any) => 
+      (sum + entry.amountOfProduct, 0).toFixed(1));
+    }
+    else sum = 0;
     return sum;
   },
 };
@@ -81,12 +86,12 @@ var byLocation = myList.groupBy('location');
     ]
   }
  */
-function groupBy<T>(array: T[], prop: string) {
-  return array.reduce(function (groups: any, item: any) {
-    const val = item[prop];
-    groups[val] = groups[val] || [];
-    groups[val].push(item);
-    return groups;
-  }, {});
-}
+// function groupBy<T>(array: T[], prop: string) {
+//   return array.reduce(function (groups: any, item: any) {
+//     const val = item[prop];
+//     groups[val] = groups[val] || [];
+//     groups[val].push(item);
+//     return groups;
+//   }, {});
+// }
 export default milkGetters;

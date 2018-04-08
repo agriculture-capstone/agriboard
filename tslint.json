@@ -5,7 +5,7 @@
   "rules": {
     "import-name": false,
     "ter-prefer-arrow-callback": false,
-    "no-console": true,
+    "no-console": false,
     "no-increment-decrement": false,
     "max-line-length": [
       true,

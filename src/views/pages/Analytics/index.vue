@@ -14,7 +14,7 @@
           <md-card-header>
             <md-card-header-text>
               <div class="stat-heading">Milk Delivered (Month)</div>
-              <div class="stat">{{delivered}} L</div>
+              <div class="stat">{{this.$store.state.milk.rows}} L</div>
             </md-card-header-text>
           </md-card-header>
         </md-card>
@@ -65,7 +65,6 @@ export default {
       delivered: 0,
       dispensed: 0,
       milkTransactions:this.milk,
-      grouped:this.grouped,
     };
   },
   components: {
@@ -88,11 +87,10 @@ export default {
     ...mapGetters({
       // Mounts the "getAllMilkTransactions" getter to the scope of your component.
       milk:'milk/getAllMilkTransactions',
-      grouped:'milk/getSummedValues'
+      grouped:'milk/getSumOfValues'
     })
   },
   methods: {
-
     calculateCollected () {
       let collections = this.productTranscations[0];
       let collected = collections.reduce((sum, transaction) => 
