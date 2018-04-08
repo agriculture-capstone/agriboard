@@ -102,12 +102,12 @@ export default {
         };
       });
       transactions.push(
-        this.getSummedValuesByDate(milkTransactions, "datetime", "collections")
+        this.sortAscending(this.getSummedValuesByDate(milkTransactions, "datetime", "collections"))
       );
       transactions.push(
-        this.getSummedValuesByDate(milkTransactions, "datetime", "deliveries")
+        this.sortAscending(this.getSummedValuesByDate(deliveryTransactions, "datetime", "deliveries"))
       );
-      return this.sortAscending(transactions);
+      return transactions;
     },
     moneyTransactions: function() {
       let transactions = [];
@@ -124,7 +124,7 @@ export default {
         };
       });
       transactions.push(
-        this.getSummedValuesByDate(milkTransactions, "datetime", "loans")
+        this.sortAscending(this.getSummedValuesByDate(milkTransactions, "datetime", "loans"))
       );
       transactions.push(
         this.getSummedValuesByDate(milkTransactions, "datetime", "payments")
@@ -147,6 +147,7 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
+      console.log(deliveries);
       return this.calculateSum(deliveries);
     },
     loanSum: function() {
@@ -227,7 +228,6 @@ export default {
       const groupedValues = this.groupBy(data, prop);
       const keys = Object.keys(groupedValues);
       keys.forEach(function(date) {
-        if (date !== undefined && this.inSameMonth(date)) {
           let sum = groupedValues[date].reduce(
             (sum, entry) => sum + entry.amountOfProduct,0);
           summedTransaction.push({
@@ -235,7 +235,6 @@ export default {
             datetime: new Date(date),
             amountOfProduct: sum
           });
-        }
       });
       return summedTransaction;
     },
@@ -250,15 +249,13 @@ export default {
 
     inLastWeek(date) {
       return moment(date)
-        .utc()
         .isSame(moment().local(), "week")
         ? true
         : false;
     },
 
     inSameMonth(date) {
-      return moment(date)
-        .utc()
+      return moment(date, "YYYY-MM-DD")
         .isSame(moment().local(), "month")
         ? true
         : false;
