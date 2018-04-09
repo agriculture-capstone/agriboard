@@ -11,9 +11,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const loadMinified = require('./load-minified')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const workboxPlugin = require('workbox-webpack-plugin')
 
 const env = config.build.env
 
@@ -90,20 +90,14 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunks: ['vendor']
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: utils.resolve('static/'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]),
-    // service worker caching
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'my-vue-app',
-      filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
-      minify: true,
-      stripPrefix: 'dist/'
+    new CopyWebpackPlugin([{
+      from: utils.resolve('static/'),
+      to: config.build.assetsSubDirectory,
+      ignore: ['.*']
+    }]),
+    new workboxPlugin.InjectManifest({
+      swSrc: path.join(__dirname, 'service-worker.js'),
+      swDest: 'service-worker.js',
     })
   ]
 })
