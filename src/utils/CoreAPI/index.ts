@@ -71,7 +71,10 @@ export default class CoreAPI {
     // Check response
     if (!response.ok) throw new AuthenticationError();
 
-    const { token: jwt, uuid } = await response.json();
+    const { token: jwt, uuid, type } = await response.json();
+    if (type !== 'admins' && type !== 'monitors') {
+      throw new AuthenticationError('Unauthorized user');
+    }
     TokenService.token = jwt;
 
     return { uuid, jwt };

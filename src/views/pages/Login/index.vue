@@ -34,7 +34,11 @@ export default Vue.extend({
         await CoreAPI.login(this.credentials);
         this.$router.push({ name: 'Home' });
       } catch (err) {
-        this.error = 'Invalid username or password';
+        if (err.message  === 'Unauthorized user') {
+          this.error = 'Unauthorized user';
+        } else {
+          this.error = 'Invalid username and/or password';
+        }
       }
     },
   },
