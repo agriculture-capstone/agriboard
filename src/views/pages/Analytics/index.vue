@@ -38,7 +38,7 @@
     </md-card>
     <md-card class='md-elevation-10 graph'>
       <graph 
-        v-bind:values="productTransactions" 
+        v-bind:values="moneyTransactions" 
         title="Loans-and-Payments" 
         xUnits="Date" 
         yUnits="UGX"
@@ -58,8 +58,8 @@ export default {
   name: "analytics",
   data() {
     return {
-      //productTranscations: [],
-      moneyTranscations: [],
+      // productTranscations: [],
+      // moneyTranscations: [],
       collected: 0,
       delivered: 0,
       dispensed: 0
@@ -97,7 +97,7 @@ export default {
       });
       const deliveryTransactions = this.$store.state.delivery.rows.map(row => {
         return {
-          amountOfProduct: row.amountOfProduct,
+          amountOfProduct: row.amountOfProduct*.4, // TODO remove scaling for non rand data
           datetime: moment(row.datetime).format("YYYY-MM-DD")
         };
       });
@@ -113,21 +113,21 @@ export default {
       let transactions = [];
       const loanTransactions = this.$store.state.loan.rows.map(row => {
         return {
-          amountOfProduct: row.amountOfProduct,
+          amountOfProduct: Math.trunc(row.amount),
           datetime: moment(row.datetime).format("YYYY-MM-DD")
         };
       });
-      const paymentTransactions = this.$store.state.payment.rows.map(row => {
+      const paymentTransactions = this.$store.state.milk.rows.map(row => {
         return {
-          amountOfProduct: row.amountOfProduct,
+          amountOfProduct: row.amountOfProduct*1.5, // TODO remove scaling for non rand data
           datetime: moment(row.datetime).format("YYYY-MM-DD")
         };
       });
       transactions.push(
-        this.sortAscending(this.getSummedValuesByDate(milkTransactions, "datetime", "loans"))
+        this.sortAscending(this.getSummedValuesByDate(loanTransactions, "datetime", "loans"))
       );
       transactions.push(
-        this.getSummedValuesByDate(milkTransactions, "datetime", "payments")
+        this.sortAscending(this.getSummedValuesByDate(paymentTransactions, "datetime", "payments"))
       );
       return transactions;
     },
@@ -156,7 +156,6 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
-      console.log(loans);
       return this.calculateSum(loans);
     }
   },
@@ -169,14 +168,11 @@ export default {
             (sum, transaction) =>
               this.inSameMonth(transaction.datetime)
                 ? sum + transaction.amountOfProduct
-                : sum + 0,
-            0
-          )
-          .toFixed(2);
+                : sum + 0,0);
       } else {
         sum = 0;
       }
-      return sum;
+      return Math.trunc(sum);
     },
     /**
      * @example
