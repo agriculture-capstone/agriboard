@@ -119,7 +119,7 @@ export default {
       });
       const paymentTransactions = this.$store.state.milk.rows.map(row => {
         return {
-          amountOfProduct: row.amountOfProduct*1.5, // TODO remove scaling for non rand data
+          amountOfProduct: row.amountOfProduct, // TODO remove scaling for non rand data
           datetime: moment(row.datetime).format("YYYY-MM-DD")
         };
       });
