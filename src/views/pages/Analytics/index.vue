@@ -39,7 +39,7 @@
     <md-card class='md-elevation-10 graph'>
       <graph 
         v-bind:values="moneyTranscations" 
-        title="Loans-and-Payments" 
+        title="Loans-and-Payments-Dispersed" 
         xUnits="Date" 
         yUnits="UGX"
       />
