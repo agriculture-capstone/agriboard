@@ -21,18 +21,46 @@ export function isResponse(response: any): response is Response {
   return (response instanceof Response);
 }
 
+/**
+ * Enum for core module names
+ */
+enum CORE_MODULE_NAMES {
+  FARMER = 'farmer',
+  MILK = 'milk',
+  DELIVERY = 'delivery',
+  TRADER = 'trader',
+  ADMIN = 'admin',
+  MONITOR = 'monitor',
+  LOANS = 'loan',
+}
 
-/** Map for modules */
-// tslint:disable-next-line:variable-name
-export const CoreModuleNames: CoreModuleName[] = [
-  'farmer',
-  'milk',
-  'delivery',
-  'trader',
-  'admin',
-  'monitor',
-  // 'loan', TODO: Enable when implemented
-];
+/**
+ * Gets the core module names for a certain user type
+ * @param userType type of user to get core modules for
+ */
+export function getPermittedCoreModuleNames(userType: string) {
+  let permittedCoreModules: CoreModuleName[] = [];
+  if (userType === 'admins') {
+    permittedCoreModules = [
+      CORE_MODULE_NAMES.FARMER,
+      CORE_MODULE_NAMES.TRADER,
+      CORE_MODULE_NAMES.ADMIN,
+      CORE_MODULE_NAMES.MONITOR,
+      CORE_MODULE_NAMES.MILK,
+      CORE_MODULE_NAMES.DELIVERY,
+      // CORE_MODULE_NAMES.LOANS, TODO 
+    ];
+  } else if (userType === 'monitors') {
+    permittedCoreModules = [
+      CORE_MODULE_NAMES.FARMER,
+      CORE_MODULE_NAMES.TRADER,
+      CORE_MODULE_NAMES.MILK,
+      CORE_MODULE_NAMES.DELIVERY,
+      // CORE_MODULE_NAMES.LOANS, TODO
+    ];
+  } 
+  return permittedCoreModules;
+}
 
 /**
  * Get the module path for the specified module
