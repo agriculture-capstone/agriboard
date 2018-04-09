@@ -5,6 +5,7 @@ import Home from '@/views/pages/Home/index.vue';
 import Login from '@/views/pages/Login/index.vue';
 import ManagePeople from '@/views/pages/ManagePeople/index.vue';
 import ProductTransactions from '@/views/pages/ProductTransactions/index.vue';
+import Loans from '@/views/pages/Loans/index.vue';
 import Analytics from '@/views/pages/Analytics/index.vue';
 
 
@@ -37,6 +38,11 @@ export default new Router({
       path: '/transactions',
       name: 'Transactions',
       component: ProductTransactions,
+    },
+    {
+      path: '/loans',
+      name: 'Loans',
+      component: Loans,
     },
     {
       path: '/analytics',

@@ -16,10 +16,12 @@ export type CorePath
   | '/productExports'
   | '/transactions/money/loans'
   | '/transactions/products/milk/download'
+  | '/transactions/money/loans/download'
   ;
 
 const LOGIN_PATH = '/actions/authenticate';
 const DOWNLOAD_MILK_PATH: CorePath = '/transactions/products/milk/download';
+const DOWNLOAD_LOAN_PATH: CorePath = '/transactions/money/loans/download';
 
 /** Types of methods to interact with the core */
 type CoreRequestMethod
@@ -83,6 +85,14 @@ export default class CoreAPI {
   // tslint:disable-next-line:function-name
   public static async downloadMilk() {
     CoreAPI.download(DOWNLOAD_MILK_PATH);
+  }
+
+   /**
+   * Downloads loan data
+   */
+  // tslint:disable-next-line:function-name
+  public static async downloadLoan() {
+    CoreAPI.download(DOWNLOAD_LOAN_PATH);
   }
 
   /**

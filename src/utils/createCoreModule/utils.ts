@@ -31,7 +31,7 @@ export const CoreModuleNames: CoreModuleName[] = [
   'trader',
   'admin',
   'monitor',
-  // 'loan', TODO: Enable when implemented
+  'loan', // TODO: Enable when implemented
 ];
 
 /**
