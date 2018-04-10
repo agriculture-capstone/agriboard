@@ -146,4 +146,6 @@ export interface Person {
   phoneNumber: string;
   category: string;
   lastModified: string;
+  username?: string;
+  notes?: string;
 }
