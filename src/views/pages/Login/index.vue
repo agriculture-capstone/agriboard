@@ -24,6 +24,7 @@ import Vue from 'vue';
 import TokenService from '@/services/Token';
 import CoreAPI from '@/utils/CoreAPI';
 import SyncService from '@/services/Sync';
+import { MutationType as UserMutation } from '@/store/modules/user/types';
 
 export default Vue.extend({
   name: 'Login',
@@ -31,7 +32,9 @@ export default Vue.extend({
   methods: {
     async login() {
       try {
-        await CoreAPI.login(this.credentials);
+        const { uuid, jwt, type } = await CoreAPI.login(this.credentials);
+        this.$store.commit(UserMutation.SET_USER_ID, { userId: uuid });
+        this.$store.commit(UserMutation.SET_USER_TYPE, { type });
         this.$router.push({ name: 'Home' });
       } catch (err) {
         if (err.message  === 'Unauthorized user') {

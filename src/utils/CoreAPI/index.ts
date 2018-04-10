@@ -48,7 +48,7 @@ export default class CoreAPI {
    * @return {boolean} Success status (true if successful)
    */
   // tslint:disable-next-line:function-name
-  public static async login({ username, password }: {username: string, password: string}): Promise<{ uuid: string, jwt: string }> {
+  public static async login({ username, password }: {username: string, password: string}): Promise<{ uuid: string, jwt: string, type: string }> {
     const url = `${process.env.CORE_HOST}:${process.env.CORE_PORT}${LOGIN_PATH}`;
     const method: CoreRequestMethod = 'POST';
     const headers = new Headers({
@@ -77,7 +77,7 @@ export default class CoreAPI {
     }
     TokenService.token = jwt;
 
-    return { uuid, jwt };
+    return { uuid, jwt, type };
   }
 
   /**
