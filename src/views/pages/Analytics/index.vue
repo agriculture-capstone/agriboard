@@ -38,13 +38,8 @@
     </md-card>
     <md-card class='md-elevation-10 graph'>
       <graph 
-<<<<<<< HEAD
-        v-bind:values="moneyTranscations" 
-        title="Loans-and-Payments-Dispersed" 
-=======
         v-bind:values="moneyTransactions" 
         title="Loans-and-Payments" 
->>>>>>> jamesinglis/payment-module
         xUnits="Date" 
         yUnits="UGX"
       />
@@ -61,37 +56,10 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "analytics",
-  data() {
-    return {
-      // productTranscations: [],
-      // moneyTranscations: [],
-      collected: 0,
-      delivered: 0,
-      dispensed: 0
-    };
-  },
   components: {
     graph
   },
-
-  created() {
-    // generate data
-    // this.productTranscations.push(dataGenerator.fillCollections());
-    // this.productTranscations.push(dataGenerator.fillExports ());
-    // this.moneyTranscations.push(dataGenerator.fillLoans ());
-    // this.moneyTranscations.push(dataGenerator.fillPayments ());
-    // calculate the stats
-    // this.collected = this.calculateCollected ();
-    // this.delivered = this.calculateDelivered ();
-    // this.dispensed = this.calculateLoans ();
-  },
   computed: {
-    // ...mapGetters({
-    //   // Mounts the "getAllMilkTransactions" getter to the scope of your component.
-    //   milk:'milk/getAllMilkTransactions',
-    //   grouped:'milk/getSumOfValues'
-    // }),
-
     productTransactions: function() {
       let transactions = [];
       const milkTransactions = this.$store.state.milk.rows.map(row => {
