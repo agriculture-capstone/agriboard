@@ -6,6 +6,7 @@ import getters from './getters';
 import farmer from './modules/farmer';
 import milk from './modules/milk';
 import loan from './modules/loan';
+import payment from './modules/payment';
 import delivery from './modules/delivery';
 import trader from './modules/trader';
 import admin from './modules/admin';
@@ -28,6 +29,7 @@ const store = new Vuex.Store<RootState>({
     trader,
     admin,
     monitor,
+    payment,
   },
 });
 
@@ -40,10 +42,11 @@ if (module.hot) {
     const farmerModule = require('./modules/farmer').default;
     const milkModule = require('./modules/milk').default;
     const loanModule = require('./modules/loan').default;
+    const paymentModule = require('./modules/payment').default;
     const deliveryModule = require('./modules/delivery').default;
     const traderModule = require('./modules/trader').default;
-    const adminModule = require('./modules/admin');
-    const monitorModule = require('./modules/monitor');
+    const adminModule = require('./modules/admin').default;
+    const monitorModule = require('./modules/monitor').default;
     // swap in the new actions and mutations
     store.hotUpdate({
       modules: {

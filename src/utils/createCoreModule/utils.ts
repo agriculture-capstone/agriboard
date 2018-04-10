@@ -31,7 +31,8 @@ export const CoreModuleNames: CoreModuleName[] = [
   'trader',
   'admin',
   'monitor',
-  // 'loan', TODO: Enable when implemented
+  'loan',
+  'payment',
 ];
 
 /**
@@ -48,6 +49,8 @@ export function getModulePath(module: CoreModuleName): CorePath {
     case 'delivery': return '/productExports';
 
     case 'loan': return '/transactions/money/loans';
+
+    case 'payment': return '/transactions/money/productPayments';
 
     case 'trader': return '/people/traders';
 
