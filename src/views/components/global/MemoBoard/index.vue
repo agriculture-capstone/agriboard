@@ -1,7 +1,7 @@
 <template>
   <div class="MemoBoard">
     <h1>Memos</h1>
-    <div class="memo-input">
+    <div class="memo-input" v-if="this.$store.state.user.type === 'admins'">
       <md-field>
         <md-input placeholder="Your Memo for Others"/>
       </md-field>
@@ -9,7 +9,7 @@
         <md-icon>send</md-icon>
       </md-button>
     </div>
-    <div v-for="memo in memos">
+    <div v-for="memo in memos" v-bind:key="memo.timestamp + memo.author + memo.message">
       <md-card>
         <md-card-header>
           <div class="md-title">{{ memo.author }}</div>

@@ -1,7 +1,11 @@
 <template>
   <div class='ManagePeople'>
     <div class="add-button">
-      <md-button @click="onAddClick" class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button">
+      <md-button 
+        @click="onAddClick" 
+        class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button"
+        v-if="this.$store.state.user.type === 'admins'"
+        >
         <md-icon>add</md-icon>
       </md-button>
     </div>
