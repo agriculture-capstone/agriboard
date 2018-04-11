@@ -38,7 +38,11 @@ export default Vue.component(name, {
   },
   computed: {
     memos (): Memo[] {
-      return this.$store.state.memo.rows;
+      return this.$store.state.memo.rows.sort((a: Memo, b: Memo) => {
+        const first = new Date(a.datePosted);
+        const second = new Date(b.datePosted);
+        return second.getTime() - first.getTime();
+      });
     },
   },
   methods: {
