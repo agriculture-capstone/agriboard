@@ -28,6 +28,7 @@ export const CoreModuleNames: CoreModuleName[] = [
   'farmer',
   'milk',
   'delivery',
+  'memo',
   'trader',
   'admin',
   'monitor',
@@ -46,6 +47,8 @@ export function getModulePath(module: CoreModuleName): CorePath {
     case 'milk': return '/transactions/products/milk';
 
     case 'delivery': return '/productExports';
+
+    case 'memo': return '/memos';
 
     case 'loan': return '/transactions/money/loans';
 

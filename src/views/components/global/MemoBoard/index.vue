@@ -3,9 +3,9 @@
     <h1>Memos</h1>
     <div class="memo-input">
       <md-field>
-        <md-input placeholder="Your Memo for Others"/>
+        <md-input v-model="newMemoMessage" placeholder="Your Memo for Others"/>
       </md-field>
-      <md-button class="md-icon-button">
+      <md-button class="md-icon-button" @click="dispatchNewMemo">
         <md-icon>send</md-icon>
       </md-button>
     </div>
@@ -16,7 +16,7 @@
         </md-card-header>
         <md-card-content>
           {{ memo.message }}
-          <p class="memo-timestamp"> {{ memo.timestamp }}</p>
+          <p class="memo-timestamp"> {{ memo.datePosted }}</p>
         </md-card-content>
       </md-card>
     </div>
@@ -25,36 +25,32 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { Memo } from '@/store/types';
 
 const name = 'memoboard';
 
-interface Memo {
-  author: string;
-  message: string;
-  timestamp: string;
-}
-
 export default Vue.component(name, {
   name,
+  data() {
+    return {
+      newMemoMessage: '',
+    };
+  },
   computed: {
     memos (): Memo[] {
-      return [
-        {
-          author: 'Enoch Tsang',
-          message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.',
-          timestamp: 'Thu, 05 Apr 2018 01:49:09 GMT',
-        },
-        {
-          author: 'Billy Bob',
-          message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.',
-          timestamp: 'Thu, 05 Apr 2018 01:49:09 GMT',
-        },
-        {
-          author: 'James Inglis',
-          message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.',
-          timestamp: 'Thu, 05 Apr 2018 01:49:09 GMT',
-        },
-      ];
+      return this.$store.state.memo.rows;
+    },
+  },
+  methods: {
+    dispatchNewMemo() {
+      const newMemo : Memo = {
+        authorUuid: '98f0f127-6c7f-4641-b464-447e417318d8',
+        message: this.newMemoMessage,
+        datePosted: new Date().toISOString(),
+      };
+
+      this.newMemoMessage = '';
+      this.$store.dispatch('memo/createRow', { row: newMemo });
     },
   },
 });
