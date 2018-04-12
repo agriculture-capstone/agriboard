@@ -21,6 +21,7 @@
 import Vue from 'vue';
 
 import TokenService from '@/services/Token';
+import { MutationType as UserMutation } from '@/store/modules/user/types';
 
 const name = 'toolbar';
 
@@ -40,6 +41,8 @@ export default Vue.component(name, {
   methods: {
     logOut() {
       TokenService.token = '';
+      this.$store.commit(UserMutation.SET_USER_UUID, { uuid: '' });
+      this.$store.commit(UserMutation.SET_USER_TYPE, { type: '' });
     },
   },
 });

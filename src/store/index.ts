@@ -11,6 +11,7 @@ import delivery from './modules/delivery';
 import trader from './modules/trader';
 import admin from './modules/admin';
 import monitor from './modules/monitor';
+import user from './modules/user';
 import { RootState } from '@/store/types';
 
 Vue.use(Vuex);
@@ -29,6 +30,7 @@ const store = new Vuex.Store<RootState>({
     trader,
     admin,
     monitor,
+    user,
   },
   plugins: [
     createPersistedState(),
@@ -46,8 +48,9 @@ if (module.hot) {
     const loanModule = require('./modules/loan').default;
     const deliveryModule = require('./modules/delivery').default;
     const traderModule = require('./modules/trader').default;
-    const adminModule = require('./modules/admin');
-    const monitorModule = require('./modules/monitor');
+    const adminModule = require('./modules/admin').default;
+    const monitorModule = require('./modules/monitor').default;
+    const userModule = require('./modules/user').default;
     // swap in the new actions and mutations
     store.hotUpdate({
       modules: {
@@ -59,6 +62,7 @@ if (module.hot) {
         trader: traderModule,
         admin: adminModule,
         monitor: monitorModule,
+        user: userModule,
       },
     });
   });

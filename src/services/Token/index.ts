@@ -57,7 +57,7 @@ const TokenService: TokenService = {
     // -- END OVERRIDE -- //
     // Update listeners
     R.map(
-      (fn: Listener) => fn(value),
+      (fn: Listener) => setTimeout(R.partial(fn, [value]), 0),
     )((TokenService as any)[LISTENERS]);
   },
   /** Add listener */
