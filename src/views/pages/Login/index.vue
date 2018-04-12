@@ -33,7 +33,7 @@ export default Vue.extend({
     async login() {
       try {
         const { uuid, jwt, type } = await CoreAPI.login(this.credentials);
-        this.$store.commit(UserMutation.SET_USER_ID, { userId: uuid });
+        this.$store.commit(UserMutation.SET_USER_UUID, { uuid });
         this.$store.commit(UserMutation.SET_USER_TYPE, { type });
         this.$router.push({ name: 'Home' });
       } catch (err) {

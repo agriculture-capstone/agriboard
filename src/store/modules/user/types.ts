@@ -4,13 +4,13 @@ import UserState from './state';
 
 /** Mutation types for user module */
 export enum MutationType {
-  SET_USER_ID = 'set_user_id',
+  SET_USER_UUID = 'set_user_uuid',
   SET_USER_TYPE = 'set_user_type',
 }
 
-/** Payload for setUserId */
-export interface SetUserIdPayload {
-  userId: string;
+/** Payload for setUserUuid */
+export interface SetUserUuidPayload {
+  uuid: string;
 }
 
 /** Payload for setUserType */

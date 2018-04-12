@@ -41,7 +41,7 @@ export default Vue.component(name, {
   methods: {
     logOut() {
       TokenService.token = '';
-      this.$store.commit(UserMutation.SET_USER_ID, { userId: '' });
+      this.$store.commit(UserMutation.SET_USER_UUID, { uuid: '' });
       this.$store.commit(UserMutation.SET_USER_TYPE, { type: '' });
     },
   },

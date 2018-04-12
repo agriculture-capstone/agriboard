@@ -1,4 +1,4 @@
-import { UserState, MutationType, SetUserIdPayload, SetUserTypePayload } from './types';
+import { UserState, MutationType, SetUserUuidPayload, SetUserTypePayload } from './types';
 import { MutationHandlers, RootState } from '@/store/types';
 
 const mutations: MutationHandlers<UserState> = {
@@ -10,8 +10,8 @@ const mutations: MutationHandlers<UserState> = {
    * @param payload - Payload to mutation
    * @param payload.id - New user id
    */
-  [MutationType.SET_USER_ID] (state: UserState, { userId }: SetUserIdPayload) {
-    state.userId = userId;
+  [MutationType.SET_USER_UUID] (state: UserState, { uuid }: SetUserUuidPayload) {
+    state.uuid = uuid;
   },
 
   /**
