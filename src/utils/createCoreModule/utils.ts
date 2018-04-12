@@ -58,7 +58,9 @@ export function getPermittedCoreModuleNames(userType: string) {
       CORE_MODULE_NAMES.DELIVERY,
       // CORE_MODULE_NAMES.LOANS, TODO
     ];
-  } 
+  } else {
+    throw new Error(`Invalid user type: ${userType}`);
+  }
   return permittedCoreModules;
 }
 
