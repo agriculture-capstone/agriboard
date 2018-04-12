@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import HTTPCode from '@/utils/HTTPCode';
 import { CoreUpdateRequest, CoreCreationRequest, CoreRow } from '@/store/types';
 import { AuthenticationError } from '@/errors/AuthenticationError';
+import { AuthorizationError } from '@/errors/AuthorizationError';
 import TokenService from '@/services/Token';
 
 /** Paths on Core for specific data tables */
@@ -45,7 +46,7 @@ export default class CoreAPI {
    * @param username Username to login with
    * @param password Password to login with
    *
-   * @return {boolean} Success status (true if successful)
+   * @return uuid, type, and jwt
    */
   // tslint:disable-next-line:function-name
   public static async login({ username, password }: {username: string, password: string}): Promise<{ uuid: string, jwt: string, type: string }> {
@@ -73,7 +74,7 @@ export default class CoreAPI {
 
     const { token: jwt, uuid, type } = await response.json();
     if (type !== 'admins' && type !== 'monitors') {
-      throw new AuthenticationError('Unauthorized user');
+      throw new AuthorizationError();
     }
     TokenService.token = jwt;
 
