@@ -21,10 +21,12 @@
     <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
     <meta name="msapplication-TileColor" content="#000000">
 
-    <!-- Add Roboto font and Google icons -->
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" crossorigin='anonymous'>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300i,400,400i,500,700" rel="stylesheet" crossorigin='anonymous'>
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet" crossorigin='anonymous'>
 
     <!-- Add webpack chunk files -->
     <% for (var chunk of webpack.chunks) {
@@ -37,7 +39,6 @@
       This is your fallback content in case JavaScript fails to load.
     </noscript>
     <div id="app"></div>
-    <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
   </body>
