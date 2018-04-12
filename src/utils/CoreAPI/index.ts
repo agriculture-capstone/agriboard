@@ -15,6 +15,7 @@ export type CorePath
   | '/people/monitors'
   | '/transactions/products/milk'
   | '/productExports'
+  | '/memos'
   | '/transactions/money/loans'
   | '/transactions/products/milk/download'
   ;

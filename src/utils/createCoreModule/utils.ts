@@ -31,6 +31,7 @@ enum CORE_MODULE_NAMES {
   DELIVERY = 'delivery',
   TRADER = 'trader',
   ADMIN = 'admin',
+  MEMO = 'memo',
   MONITOR = 'monitor',
   LOANS = 'loan',
 }
@@ -46,15 +47,17 @@ export function getPermittedCoreModuleNames(userType: string) {
       CORE_MODULE_NAMES.FARMER,
       CORE_MODULE_NAMES.TRADER,
       CORE_MODULE_NAMES.ADMIN,
+      CORE_MODULE_NAMES.MEMO,
       CORE_MODULE_NAMES.MONITOR,
       CORE_MODULE_NAMES.MILK,
       CORE_MODULE_NAMES.DELIVERY,
-      // CORE_MODULE_NAMES.LOANS, TODO 
+      // CORE_MODULE_NAMES.LOANS, TODO
     ];
   } else if (userType === 'monitors') {
     permittedCoreModules = [
       CORE_MODULE_NAMES.FARMER,
       CORE_MODULE_NAMES.TRADER,
+      CORE_MODULE_NAMES.MEMO,
       CORE_MODULE_NAMES.MILK,
       CORE_MODULE_NAMES.DELIVERY,
       // CORE_MODULE_NAMES.LOANS, TODO
@@ -77,6 +80,8 @@ export function getModulePath(module: CoreModuleName): CorePath {
     case 'milk': return '/transactions/products/milk';
 
     case 'delivery': return '/productExports';
+
+    case 'memo': return '/memos';
 
     case 'loan': return '/transactions/money/loans';
 

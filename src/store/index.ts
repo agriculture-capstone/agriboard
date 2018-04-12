@@ -8,6 +8,7 @@ import farmer from './modules/farmer';
 import milk from './modules/milk';
 import loan from './modules/loan';
 import delivery from './modules/delivery';
+import memo from './modules/memo';
 import trader from './modules/trader';
 import admin from './modules/admin';
 import monitor from './modules/monitor';
@@ -27,6 +28,7 @@ const store = new Vuex.Store<RootState>({
     milk,
     loan,
     delivery,
+    memo,
     trader,
     admin,
     monitor,
@@ -47,6 +49,7 @@ if (module.hot) {
     const milkModule = require('./modules/milk').default;
     const loanModule = require('./modules/loan').default;
     const deliveryModule = require('./modules/delivery').default;
+    const memoModule = require('./modules/memo').default;
     const traderModule = require('./modules/trader').default;
     const adminModule = require('./modules/admin').default;
     const monitorModule = require('./modules/monitor').default;
@@ -59,6 +62,7 @@ if (module.hot) {
         milk: milkModule,
         loan: loanModule,
         delivery: deliveryModule,
+        memo: memoModule,
         trader: traderModule,
         admin: adminModule,
         monitor: monitorModule,
