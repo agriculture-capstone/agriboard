@@ -1,7 +1,7 @@
 <template>
   <div class="MemoBoard">
     <h1>Memos</h1>
-    <div class="memo-input">
+    <div class="memo-input" v-if="this.$store.state.user.type === 'admins'">
       <md-field>
         <md-input v-model="newMemoMessage" placeholder="Your Memo for Others"/>
       </md-field>
@@ -9,7 +9,7 @@
         <md-icon>send</md-icon>
       </md-button>
     </div>
-    <div v-for="memo in memos">
+    <div v-for="memo in memos" v-bind:key="memo.timestamp + memo.author + memo.message">
       <md-card>
         <md-card-header>
           <div class="md-title">{{ memo.author }}</div>
@@ -48,7 +48,7 @@ export default Vue.component(name, {
   methods: {
     dispatchNewMemo() {
       const newMemo : Memo = {
-        authorUuid: '98f0f127-6c7f-4641-b464-447e417318d8',
+        authorUuid: this.$store.state.user.uuid,
         message: this.newMemoMessage,
         datePosted: new Date().toISOString(),
       };
