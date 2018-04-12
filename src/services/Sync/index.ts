@@ -6,7 +6,7 @@ import { CoreModuleName } from '../../utils/createCoreModule';
 import store from '@/store';
 import { CoreModuleState, CoreRow, StoreRow } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
-import { getModulePath, CoreModuleNames } from '@/utils/createCoreModule/utils';
+import { getModulePath, getPermittedCoreModuleNames } from '@/utils/createCoreModule/utils';
 
 /**
  * Promise representing the job taking place
@@ -189,7 +189,7 @@ async function createJob(module: CoreModuleName): Job {
         successStatus = false;
       }
 
-      return successStatus;
+      resolve(successStatus);
     }
   }) as Job;
 }
@@ -219,8 +219,9 @@ function createSyncService(): SyncServiceInstance {
       }
       intervalId = window.setInterval(instance.syncAll, SYNC_FREQUENCY);
 
+      const coreModuleNames = getPermittedCoreModuleNames(store.state.user.type); 
       // Forcing the types to work because we know better than Typescript here (be careful)
-      const modulesPending = CoreModuleNames.map(async (m: CoreModuleName) => instance.syncModule(m));
+      const modulesPending = coreModuleNames.map(async (m: CoreModuleName) => instance.syncModule(m));
 
       return Promise.all(modulesPending);
     },

@@ -31,6 +31,7 @@ export type CoreModuleName
   = 'farmer'
   | 'milk'
   | 'delivery'
+  | 'memo'
   | 'loan'
   | 'trader'
   | 'admin'
