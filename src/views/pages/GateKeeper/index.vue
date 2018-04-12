@@ -13,17 +13,12 @@ import TokenService from '@/services/Token';
 
 export default Vue.extend({
   name: 'GateKeeper',
-  data () {
-    return {
-    };
-  },
   created () {
     if (TokenService.token) {
       this.$router.push({ name: 'Home' });
     } else {
       this.$router.push({ name: 'Login' });
     }
-
   },
 });
 </script>

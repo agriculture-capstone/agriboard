@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import createPersistedState from 'vuex-persistedstate';
 
 import app from './modules/app';
 import getters from './getters';
@@ -29,6 +30,9 @@ const store = new Vuex.Store<RootState>({
     admin,
     monitor,
   },
+  plugins: [
+    createPersistedState(),
+  ],
 });
 
 if (module.hot) {
