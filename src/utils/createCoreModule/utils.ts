@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { CoreModuleName } from '@/utils/createCoreModule';
 import { CorePath } from '@/utils/CoreAPI';
 import { StoreRow } from '@/store/types';
+import { AuthorizationError } from '@/errors/AuthorizationError';
 
 /** Type for object with UUID */
 type ObjectWithUUID<T extends object> = T & { uuid: string };
@@ -59,7 +60,7 @@ export function getPermittedCoreModuleNames(userType: string) {
       // CORE_MODULE_NAMES.LOANS, TODO
     ];
   } else {
-    throw new Error(`Invalid user type: ${userType}`);
+    throw new AuthorizationError(`Invalid user type: ${userType}`);
   }
   return permittedCoreModules;
 }
