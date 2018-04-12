@@ -90,9 +90,9 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD")
         };
       });
-      const paymentTransactions = this.$store.state.milk.rows.map(row => {
+      const paymentTransactions = this.$store.state.payment.rows.map(row => {
         return {
-          amountOfProduct: row.amountOfProduct, // TODO remove scaling for non rand data
+          amountOfProduct: Math.trunc(row.amount),
           datetime: moment(row.datetime).format("YYYY-MM-DD")
         };
       });

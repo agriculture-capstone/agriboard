@@ -32,7 +32,7 @@ export const CoreModuleNames: CoreModuleName[] = [
   'admin',
   'monitor',
   'loan',
-  // 'payment', uncomment when implemented
+  'payment',
 ];
 
 /**
