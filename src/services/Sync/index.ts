@@ -189,7 +189,7 @@ async function createJob(module: CoreModuleName): Job {
         successStatus = false;
       }
 
-      return successStatus;
+      resolve(successStatus);
     }
   }) as Job;
 }
