@@ -126,8 +126,8 @@
             {{ selectedRow.phoneNumber }}
             <h3><b>Category</b></h3>
             {{ selectedRow.category }}
-            <!-- <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
-            <h3><b>Notes</b></h3>            
+            <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3>
+            <!-- <h3><b>Notes</b></h3>             -->
             {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
@@ -311,45 +311,37 @@ export default Vue.extend({
     createPerson(data: any) {
       let path = '';
       let newPerson = {};
-      if (data.username && data.password) {
-        newPerson = {
-          firstName: data.firstName,
-          middleName: data.middleName,
-          lastName: data.lastName,
-          phoneCountry: '',
-          phoneArea: '',
-          phoneNumber: data.phoneNumber,
-          companyName: '',
-          username: data.username,
-          hash: Bcrypt.hashSync(data.password, saltRounds),
-        };
-      } else {
-        newPerson = {
-          firstName: data.firstName,
-          middleName: data.middleName,
-          lastName: data.lastName,
-          phoneCountry: '',
-          phoneArea: '',
-          phoneNumber: data.phoneNumber,
-          notes: data.notes,
-          paymentFrequency: 'monthly',
-          companyName: 'boresha',
-        };
-      }
       switch (data.category) {
         case 'admin':
-          path = 'admin/createRow';
-          break;
         case 'monitor':
-          path = 'monitor/createRow';
-          break;
         case 'trader':
-          path = 'trader/createRow';
+          newPerson = {
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            companyName: '',
+            username: data.username,
+            hash: Bcrypt.hashSync(data.password, saltRounds),
+          };
           break;
         case 'farmer':
-          path = 'farmer/createRow';
+          newPerson = {
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            notes: data.notes,
+            paymentFrequency: 'monthly',
+            companyName: 'boresha',
+          };
           break;
       }
+      path = `${data.category}/createRow`;
       this.$store.dispatch(path, { row: newPerson });
     },
     updatePerson(data: any) {
@@ -387,21 +379,7 @@ export default Vue.extend({
           };
           break;
       }
-    
-      switch (data.category) {
-        case 'admin':
-          path = 'admin/updateRow';
-          break;
-        case 'monitor':
-          path = 'monitor/updateRow';
-          break;
-        case 'trader':
-          path = 'trader/updateRow';
-          break;
-        case 'farmer':
-          path = 'farmer/updateRow';
-          break;
-      }
+      path = `${data.category}/updateRow`;
       this.$store.dispatch(path, { row: updatedPerson });
     },
     resetForm() {
