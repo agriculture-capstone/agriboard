@@ -382,21 +382,6 @@ export default Vue.extend({
         notes: '',
       };
     },
-    resetSelectedRow() {
-      this.selectedRow = {
-        uuid: '',
-        category: '',
-        name: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        username: '',
-        password: '',
-        phoneNumber: '',
-        paymentFrequency: '',
-        notes: '',
-      };
-    },
   },
 });
 </script>
