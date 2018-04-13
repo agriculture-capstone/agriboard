@@ -127,7 +127,6 @@
             <h3><b>Category</b></h3>
             {{ selectedRow.category }}
             <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3>
-            <!-- <h3><b>Notes</b></h3>             -->
             {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
