@@ -47,7 +47,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>First Name</label>
-                <md-input v-model="form.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                <md-input v-model="form.firstName" v-validate="'required'" type="text" name="first-name" id="first-name" autocomplete="given-name" />
+                <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
               </md-field>
             </div>
           </div>
@@ -65,7 +66,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Last Name</label>
-                <md-input v-model="form.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                <md-input v-model="form.lastName" v-validate="'required'" type="text" name="last-name" id="last-name" autocomplete="last-name" />
+                <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
               </md-field>
             </div>
           </div>
@@ -74,7 +76,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Username</label>
-                <md-input v-model="form.username" name="username" id="username" autocomplete="username" />
+                <md-input v-model="form.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
+                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>                
               </md-field>
             </div>
           </div>
@@ -83,8 +86,10 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
-                <md-input v-model="form.password" type="password"></md-input>
+                <md-input v-model="form.password" v-validate="'required'" type="password"></md-input>
+                <!-- <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span> -->
               </md-field>
+              <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>              
             </div>
           </div>
 
@@ -474,6 +479,11 @@ export default Vue.extend({
 
 .error {
   text-align: center;
+  margin: auto;
+  color: red;
+}
+
+.is-danger {
   margin: auto;
   color: red;
 }
