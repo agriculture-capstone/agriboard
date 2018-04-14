@@ -39,7 +39,7 @@
               <md-radio v-model="form.category" value="farmer">Farmer</md-radio>
               <md-radio v-model="form.category" value="trader">Trader</md-radio>
               <md-radio v-model="form.category" value="admin">Admin</md-radio>
-              <md-radio v-model="form.category" value="monitor">Monitor</md-radio>                 
+              <md-radio v-model="form.category" value="monitor">Monitor</md-radio>      
             </div>
           </div>
 
@@ -77,19 +77,13 @@
               <md-field>
                 <label>Username</label>
                 <md-input v-model="form.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
-                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>                
+                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>     
               </md-field>
-            </div>
-          </div>
-
-          <div class="md-gutter" v-if="form.category == 'admin' || form.category == 'monitor' || form.category == 'trader'">
-            <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
-                <md-input v-model="form.password" v-validate="'required'" type="password"></md-input>
-                <!-- <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span> -->
+                <md-input v-model="form.password" v-validate="'required'" type="password" name="password"></md-input>
+                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
               </md-field>
-              <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>              
             </div>
           </div>
 
@@ -97,7 +91,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Phone Number</label>
-                <md-input v-model="form.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <md-input v-model="form.phoneNumber" v-validate="'required'" type="text" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>                
               </md-field>
             </div>
           </div>
@@ -131,8 +126,7 @@
             {{ selectedRow.phoneNumber }}
             <h3><b>Category</b></h3>
             {{ selectedRow.category }}
-            <!-- <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
-            <h3><b>Notes</b></h3>            
+            <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3>
             {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
@@ -151,7 +145,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>First Name</label>
-                <md-input v-model="selectedRow.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                <md-input v-model="selectedRow.firstName" v-validate="'required'" type="text" name="first-name" id="first-name" autocomplete="given-name" />
+                <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
               </md-field>
             </div>
           </div>
@@ -169,7 +164,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Last Name</label>
-                <md-input v-model="selectedRow.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                <md-input v-model="selectedRow.lastName" v-validate="'required'" type="text" name="last-name" id="last-name" autocomplete="last-name" />
+                <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
               </md-field>
             </div>
           </div>
@@ -177,8 +173,14 @@
           <div class="md-gutter" v-if="selectedRow.category == 'admin' || selectedRow.category == 'monitor' || selectedRow.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
+                <label>Username</label>
+                <md-input v-model="selectedRow.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
+                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>     
+              </md-field>
+              <md-field>
                 <label>Password</label>
-                <md-input v-model="selectedRow.password" type="password"></md-input>
+                <md-input v-model="selectedRow.password" v-validate="'required'" type="password" name="password"></md-input>
+                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
               </md-field>
             </div>
           </div>
@@ -187,7 +189,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Phone Number</label>
-                <md-input v-model="selectedRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <md-input v-model="selectedRow.phoneNumber" v-validate="'required'" type="text" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>                
               </md-field>
             </div>
           </div>
