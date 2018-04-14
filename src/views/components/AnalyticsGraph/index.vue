@@ -5,19 +5,21 @@
 </template>
 <script>
 import * as d3 from "d3";
+
 export default {
   name: "graph",
   data() {
     return {
-    heightScaling: 0.9,
-    widthScaling: 1,
+      heightScaling: 0.9,
+      widthScaling: 1,
+      resizeSensor: null,
     };
   },
   props: ["values", "title", "xUnits", "yUnits"],
 
   mounted() {
     /**
-     * @description Create an event listener for window resizing that rerenders the graph 
+     * @description Create an event listener for window resizing that rerenders the graph
      *
      * @returns New event listener created
     */
@@ -38,8 +40,8 @@ export default {
     window.removeEventListener("resize", this.redrawGraph);
   },
   methods: {
-    /** 
-    * @description remove the specified SVG and rerender it with the new window dimensions 
+    /**
+    * @description remove the specified SVG and rerender it with the new window dimensions
     *
     * @returns New SVG graph will be rendered in div
     */
@@ -58,7 +60,7 @@ export default {
     },
     /**
     * @description Renders the template SVG as a D3 graph
-    * 
+    *
     * @returns Rendered SVG graph in div
     */
     drawLinesGraph(
@@ -69,8 +71,11 @@ export default {
       xUnits,
       yUnits
     ) {
+      const isMobile = window.screen.width <= 480;
       let svg = d3.select("#" + title).select("svg");
-      let margin = { top: 10, left: 100, bottom: 30, right: 10 };
+      const margin = isMobile ?
+        { top: 10, left: 55, bottom: 30, right: 10 } :
+        { top: 10, left: 100, bottom: 30, right: 10 }
 
       let height = containerHeight - margin.top - margin.bottom;
       let width = containerWidth - margin.right - margin.left;
@@ -170,7 +175,10 @@ export default {
         .attr("class", "main")
         .attr("clip-path", "url(#clip)");
 
-      let legend = g.append("g").attr("class", "legend");
+      let legend =
+        g
+          .append("g")
+          .attr("class", "legend");
       // iterate over data and generte lines
       for (let i = 0; i < data.length; i++) {
         main
@@ -203,20 +211,23 @@ export default {
         legend = g
           .append("text")
           .data(data[i])
-          .attr(
-            "transform",
-            "translate(" +
-              (width/ 1.5 + 100 * i) +
-              " ," +
-              height / 10 +
-              ")"
-          )
           // .style("text-anchor", "middle")
           .style("font-size", "1.8vh")
           .attr("stroke", d => colors(i))
           .text(function(d) {
             return d.type;
           });
+        if (isMobile) {
+          legend.attr(
+            'transform',
+            `translate(${(width / 4 + 100 * i)}, ${height / 10 + 15})`,
+          )
+        } else {
+          legend.attr(
+            'transform',
+            `translate(${(width / 1.4 + 100 * i)}, ${height / 10 + 18})`,
+          )
+        }
       }
 
       //voronoi
@@ -373,26 +384,31 @@ export default {
       // text label for the x axis taken from props
       g
         .append("text")
+        .style("text-anchor", "middle")
+        .style("font-size", "2vh")
+        .style("font-weight", "bold")
         .attr(
           "transform",
           "translate(" + width / 2 + " ," + (height + margin.top * 4) + ")"
         )
-        .style("text-anchor", "middle")
-        .style("font-size", "2vh")
-        .style("font-weight", "bold")
         .text(xUnits);
 
       // text label for the y axis taken from props
-      g
+      const yTitle = g
         .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 40 - (margin.left))
-        .attr("x", 0 - height / 2)
+        .attr('x', 0 - height / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .style("font-size", "2vh")
         .style("font-weight", "bold")
         .text(yUnits);
+
+      if (isMobile) {
+        yTitle.attr('y', -margin.left)
+      } else {
+        yTitle.attr('y', 40 - (margin.left))
+      }
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="analytics">
     <!-- Stats Section -->
     <div class="md-layout stats md-gutter">
         <md-card class="md-layout-item md-elevation-6">
@@ -29,18 +29,18 @@
     </div>
     <!-- Graphs -->
     <md-card class='md-elevation-10 graph'>
-      <graph 
-        v-bind:values="productTranscations" 
-        title="Milk-Collections-and-Deliveries" 
-        xUnits="Date" 
+      <graph
+        v-bind:values="productTranscations"
+        title="Milk-Collections-and-Deliveries"
+        xUnits="Date"
         yUnits="Litres"
       />
     </md-card>
     <md-card class='md-elevation-10 graph'>
-      <graph 
-        v-bind:values="moneyTranscations" 
-        title="Loans-and-Payments" 
-        xUnits="Date" 
+      <graph
+        v-bind:values="moneyTranscations"
+        title="Loans-and-Payments"
+        xUnits="Date"
         yUnits="UGX"
       />
     </md-card>
@@ -69,7 +69,7 @@ export default {
   },
 
   created() {
-  // generate data 
+  // generate data
     this.productTranscations.push(dataGenerator.fillCollections());
     this.productTranscations.push(dataGenerator.fillExports ());
     this.moneyTranscations.push(dataGenerator.fillLoans ());
@@ -84,30 +84,30 @@ export default {
 
     calculateCollected () {
       let collections = this.productTranscations[0];
-      let collected = collections.reduce((sum, transaction) => 
+      let collected = collections.reduce((sum, transaction) =>
         this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
       return collected;
     },
 
     calculateDelivered () {
       let deliveries = this.productTranscations[1];
-      let delivered = deliveries.reduce((sum, transaction) => 
+      let delivered = deliveries.reduce((sum, transaction) =>
         this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
-      return delivered;    
+      return delivered;
     },
 
     calculateLoans () {
       let loans = this.moneyTranscations[0];
-      let dispensed = loans.reduce((sum, transaction) => 
+      let dispensed = loans.reduce((sum, transaction) =>
         this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
-      return dispensed;    
+      return dispensed;
     },
 
     calculatePayments () {
       let payments = this.moneyTranscations[1];
-      let payed = payments.reduce((sum, transaction) => 
+      let payed = payments.reduce((sum, transaction) =>
         this.inSameMonth(transaction.datetime) ? sum + transaction.amountOfProduct : sum + 0, 0).toFixed(3);
-      return payed;    
+      return payed;
     },
 
     inSameDay(date) {
@@ -125,7 +125,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .md-card {
   width: 90vw;
   margin: auto;
@@ -164,5 +164,14 @@ export default {
   color: steelblue;
   font-weight: bold;
   text-align: center;
+}
+
+@media screen and (max-device-width: 480px) {
+  #analytics {
+    > * {
+      margin: 0;
+      width: 100vw;
+    }
+  }
 }
 </style>
