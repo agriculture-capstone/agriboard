@@ -36,20 +36,6 @@ enum CORE_MODULE_NAMES {
   LOANS = 'loan',
 }
 
-<<<<<<< HEAD
-/** Map for modules */
-// tslint:disable-next-line:variable-name
-export const CoreModuleNames: CoreModuleName[] = [
-  'farmer',
-  'milk',
-  'delivery',
-  'trader',
-  'admin',
-  'monitor',
-  'loan',
-  'payment',
-];
-=======
 /**
  * Gets the core module names for a certain user type
  * @param userType type of user to get core modules for
@@ -81,7 +67,6 @@ export function getPermittedCoreModuleNames(userType: string) {
   }
   return permittedCoreModules;
 }
->>>>>>> master
 
 /**
  * Get the module path for the specified module

@@ -4,22 +4,26 @@ import { FarmersState } from '@/store/modules/farmer/types';
 import { TraderState } from '@/store/modules/trader/types';
 import { MilkState } from '@/store/modules/milk/types';
 import { DeliveryState } from '@/store/modules/delivery/types';
+import { MemoState } from '@/store/modules/memo/types';
 import { LoanState } from '@/store/modules/loan/types';
 import { AdminState } from '@/store/modules/admin/types';
 import { MonitorState } from '@/store/modules/monitor/types';
 import { PaymentState } from '@/store/modules/payment/types';
 
+import { UserState } from '@/store/modules/user/types';
 
 export interface RootState {
   app: AppTypes.AppState;
   farmer: FarmersState;
   milk: MilkState;
   delivery: DeliveryState;
+  memo: MemoState;
   loan: LoanState;
   trader: TraderState;
   admin: AdminState;
   monitor: MonitorState;
   payment: PaymentState;
+  user: UserState;
 }
 
 /** Composed mutation types */
@@ -148,4 +152,12 @@ export interface Person {
   phoneNumber: string;
   category: string;
   lastModified: string;
+}
+
+export interface Memo {
+  authorName?: string;
+  authorUuid: string;
+  uuid?: string;
+  message: string;
+  datePosted: string;
 }
