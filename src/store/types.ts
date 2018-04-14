@@ -142,6 +142,7 @@ export type CoreCreationRequest<T> = T & LastModifiedData & UUIDData;
 export type CoreUpdateRequest<T> = Partial<T> & LastModifiedData & UUIDData;
 
 export interface Person {
+  uuid: string;
   name: string;
   firstName: string;
   middleName: string;
@@ -149,6 +150,8 @@ export interface Person {
   phoneNumber: string;
   category: string;
   lastModified: string;
+  username?: string;
+  notes?: string;
 }
 
 export interface Memo {
