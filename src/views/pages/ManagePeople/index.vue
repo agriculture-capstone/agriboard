@@ -291,6 +291,7 @@ export default Vue.extend({
     },
     onCancelView() {
       this.showViewDialog = false;
+      this.selectedRow = {};
     },
     onEditClick() {
       this.showViewDialog = false;
@@ -298,11 +299,13 @@ export default Vue.extend({
     },
     onCancelEdit() {
       this.showEditDialog = false;
+      this.selectedRow = {};
     },
     onSaveEdit() {
       this.showEditDialog = false;
       const newPerson = this.selectedRow;
       this.updatePerson(newPerson);
+      this.selectedRow = {};
     },
     createPerson(data: any) {
       let path = '';
