@@ -1,15 +1,15 @@
 <template>
   <div class='ManagePeople'>
     <div class="add-button">
-      <md-button 
-        @click="onAddClick" 
+      <md-button
+        @click="onAddClick"
         class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button"
         v-if="this.$store.state.user.type === 'admins'"
       >
         <md-icon>add</md-icon>
       </md-button>
     </div>
-    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
+    <md-table class="table" v-model="rows" md-sort="name" md-sort-order="desc" md-card @md-selected="onSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
@@ -31,7 +31,7 @@
     <div class="create-dialog-wrapper">
       <md-dialog :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
-        
+
         <md-dialog-content>
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -39,7 +39,7 @@
               <md-radio v-model="form.category" value="farmer">Farmer</md-radio>
               <md-radio v-model="form.category" value="trader">Trader</md-radio>
               <md-radio v-model="form.category" value="admin">Admin</md-radio>
-              <md-radio v-model="form.category" value="monitor">Monitor</md-radio>                 
+              <md-radio v-model="form.category" value="monitor">Monitor</md-radio>
             </div>
           </div>
 
@@ -113,7 +113,7 @@
         </md-dialog-actions>
       </md-dialog>
     </div>
-    
+
     <div class="view-dialog-wrapper">
       <md-dialog v-if="selectedRow" :md-active.sync="showViewDialog">
         <md-dialog-title>{{ selectedRow.name }}</md-dialog-title>
@@ -127,7 +127,7 @@
             <h3><b>Category</b></h3>
             {{ selectedRow.category }}
             <!-- <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
-            <h3><b>Notes</b></h3>            
+            <h3><b>Notes</b></h3>
             {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
@@ -214,6 +214,7 @@ import * as R from 'ramda';
 import * as Bcrypt from 'bcryptjs';
 import * as Fuse from 'fuse.js';
 import { RootState, Person } from '@/store/types';
+import sortAlphabeticalByProp from '@/utils/list/sortAlphabeticalByProp';
 
 const saltRounds = 5;
 
@@ -221,6 +222,7 @@ export default Vue.extend({
   name: 'ManagePeople',
   data() {
     return {
+      rows: [],
       search: '',
       error: '',
       selectedRow: {},
@@ -243,7 +245,7 @@ export default Vue.extend({
   },
   computed: {
     people(): Person[] {
-      return this.$store.getters['people'];
+      return this.$store.getters['people'].sort(sortAlphabeticalByProp('name'));
     },
     filteredPeople(): Person[] {
       return this.search === '' ? this.people : this.fuse.search(this.search);
@@ -379,6 +381,22 @@ export default Vue.extend({
         paymentFrequency: '',
         notes: '',
       };
+    },
+  },
+  created () {
+    this.rows = this.people;
+  },
+  watch: {
+    search () {
+      this.rows = this.search ?
+        this
+          .people
+          .filter((row: any) => {
+            const values = Object.values(row);
+
+            return values.find(v => String(v).toLowerCase().includes(this.search.toLowerCase()));
+          }) :
+        this.people;
     },
   },
 });
