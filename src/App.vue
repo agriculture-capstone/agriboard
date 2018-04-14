@@ -87,6 +87,12 @@ export default Vue.extend({
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 body {
+  overflow: hidden;
+
+  main {
+    overflow: auto;
+  }
+
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -91,8 +91,13 @@ h1 {
 
 .md-card {
   max-width: 90vw;
-  margin-bottom: 1em;
-  width: 38rem;
+  margin-bottom: 15px;
+  width: 640px;
+  overflow-x: hidden;
+
+  .md-card-content {
+    word-wrap: break-word;
+  }
 }
 
 .memo-timestamp {
