@@ -57,7 +57,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "analytics",
   components: {
-    graph
+    graph,
   },
   computed: {
     /**

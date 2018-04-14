@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       heightScaling: 0.9,
-      widthScaling: 1
+      widthScaling: 1,
     };
   },
   props: ["values", "title", "xUnits", "yUnits"],

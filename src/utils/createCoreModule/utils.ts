@@ -54,7 +54,6 @@ export function getPermittedCoreModuleNames(userType: string) {
       CORE_MODULE_NAMES.DELIVERY,
       CORE_MODULE_NAMES.LOANS,
       CORE_MODULE_NAMES.PAYMENT,
-
     ];
   } else if (userType === 'monitors') {
     permittedCoreModules = [

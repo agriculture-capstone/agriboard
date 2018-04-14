@@ -8,7 +8,7 @@ export interface Milk {
   amountOfProduct: number;
   costPerUnit: number;
   currency: string;
-  milkQuality: string;
+  milkQuality?: string;
 }
 
 export type MilkState = CoreModuleState<Milk>;
