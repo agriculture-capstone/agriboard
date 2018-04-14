@@ -36,11 +36,12 @@
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
               <h3 class="md-subheading"><b>Category</b></h3>
-              <md-radio v-model="form.category" value="farmer">Farmer</md-radio>
-              <md-radio v-model="form.category" value="trader">Trader</md-radio>
-              <md-radio v-model="form.category" value="admin">Admin</md-radio>
-              <md-radio v-model="form.category" value="monitor">Monitor</md-radio>      
+              <md-radio v-model="form.category" value="farmer" name="person-type" v-validate="'required'">Farmer</md-radio>
+              <md-radio v-model="form.category" value="trader" name="person-type">Trader</md-radio>
+              <md-radio v-model="form.category" value="admin" name="person-type">Admin</md-radio>
+              <md-radio v-model="form.category" value="monitor" name="person-type">Monitor</md-radio>
             </div>
+            <span v-show="errors.has('person-type')" class="help is-danger">{{ errors.first('person-type') }}</span>
           </div>
 
           <div class="md-gutter">
@@ -77,7 +78,7 @@
               <md-field>
                 <label>Username</label>
                 <md-input v-model="form.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
-                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>     
+                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
               </md-field>
               <md-field>
                 <label>Password</label>
@@ -92,7 +93,7 @@
               <md-field>
                 <label>Phone Number</label>
                 <md-input v-model="form.phoneNumber" v-validate="'required'" type="text" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>                
+                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>
               </md-field>
             </div>
           </div>
@@ -109,7 +110,7 @@
 
         <md-dialog-actions>
           <md-button class="md-primary" @click="onCancelCreate">Cancel</md-button>
-          <md-button class="md-primary" @click="onSaveCreate">Create</md-button>
+          <md-button class="md-primary" @click.prevent="onSaveCreate">Create</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
@@ -175,7 +176,7 @@
               <md-field>
                 <label>Username</label>
                 <md-input v-model="selectedRow.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
-                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>     
+                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
               </md-field>
               <md-field>
                 <label>Password</label>
@@ -190,7 +191,7 @@
               <md-field>
                 <label>Phone Number</label>
                 <md-input v-model="selectedRow.phoneNumber" v-validate="'required'" type="text" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>                
+                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>
               </md-field>
             </div>
           </div>
@@ -207,7 +208,7 @@
 
         <md-dialog-actions>
           <md-button class="md-primary" @click="onCancelEdit">Cancel</md-button>
-          <md-button class="md-primary" @click="onSaveEdit">Save</md-button>
+          <md-button class="md-primary" @click.prevent="onSaveEdit">Save</md-button>
         </md-dialog-actions>
       </md-dialog>
 
@@ -284,10 +285,15 @@ export default Vue.extend({
       this.resetForm();
     },
     onSaveCreate() {
-      this.showAddDialog = false;
-      const newPerson = this.form;
-      this.createPerson(newPerson);
-      this.resetForm();
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.showAddDialog = false;
+          const newPerson = this.form;
+          this.createPerson(newPerson);
+          this.resetForm();
+        }
+        return false;
+      });
     },
     onCancelView() {
       this.showViewDialog = false;
@@ -302,10 +308,15 @@ export default Vue.extend({
       this.selectedRow = {};
     },
     onSaveEdit() {
-      this.showEditDialog = false;
-      const newPerson = this.selectedRow;
-      this.updatePerson(newPerson);
-      this.selectedRow = {};
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.showEditDialog = false;
+          const newPerson = this.selectedRow;
+          this.updatePerson(newPerson);
+          this.selectedRow = {};
+        }
+        return false;
+      });
     },
     createPerson(data: any) {
       let path = '';
