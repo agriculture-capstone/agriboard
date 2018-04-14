@@ -60,6 +60,11 @@ export default {
     graph
   },
   computed: {
+    /**
+    * @description combine the milk and delivery data into one array for the graph
+    *
+    * @returns array containing processed milk and delivery data
+    */
     productTransactions: function() {
       let transactions = [];
       const milkTransactions = this.$store.state.milk.rows.map(row => {
@@ -82,6 +87,11 @@ export default {
       );
       return transactions;
     },
+    /**
+    * @description combine the loan and payment data into one array for the graph
+    *
+    * @returns array containing processed loan and payment data
+    */
     moneyTransactions: function() {
       let transactions = [];
       const loanTransactions = this.$store.state.loan.rows.map(row => {
@@ -104,6 +114,11 @@ export default {
       );
       return transactions;
     },
+    /**
+    * @description calculate the collected sum of delivery values
+    *
+    * @returns sum of collected for current month
+    */
     collectedSum: function() {
       let collections = this.$store.state.milk.rows.map(row => {
         return {
@@ -113,6 +128,11 @@ export default {
       });
       return this.calculateSum(collections);
     },
+    /**
+    * @description calculate the monthly sum of delivery values
+    *
+    * @returns sum of delivery for current month
+    */
     deliverySum: function() {
       let deliveries = this.$store.state.delivery.rows.map(row => {
         return {
@@ -122,6 +142,11 @@ export default {
       });
       return this.calculateSum(deliveries);
     },
+    /**
+    * @description calculate the monthly sum of loan values
+    *
+    * @returns sum of loans for current month
+    */
     loanSum: function() {
       let loans = this.$store.state.loan.rows.map(row => {
         return {
@@ -129,11 +154,16 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
-      return this.calculateSum(loans);
+      return this.calculateMonthSum(loans);
     }
   },
   methods: {
-    calculateSum(data) {
+    /**
+    * @description calculates the some of values in the current month
+    *
+    * @returns the sum from the current month
+    */
+    calculateMonthSum(data) {
       let sum = 0;
       if (data.length > 0) {
         sum = data
@@ -148,8 +178,9 @@ export default {
       return Math.trunc(sum);
     },
     /**
+    * @description method which takes a data set and the prop to group it by
+    *
      * @example
-
       var myList = [
         {time: '12:00', location: 'mall'    },
         {time: '9:00',  location: 'store'   },
@@ -159,8 +190,7 @@ export default {
       ];
 
       var byLocation = myList.groupBy('location');
-
-    ***RESULT**
+    *@returns an object who's properties are the array groups
       byLocation = {
         mall: [
           {time: '9:00',  location: 'mall'  },
@@ -183,7 +213,11 @@ export default {
         return groups;
       }, {});
     },
-
+    /**
+    * @description sum all values in a data set
+    *
+    * @returns the sume of values
+    */
     getSumOfValues(data) {
       let sum = 0;
       if (data.length > 0) {
@@ -191,7 +225,11 @@ export default {
       } else sum = 0;
       return sum;
     },
-
+    /**
+    * @description given a data array it will group by the prop (in this case date) 
+    * and create a new array with the data relevant to the graphs
+    * @returns array of objects for the graphs
+    */
     getSummedValuesByDate(data, prop, type) {
       let summedTransaction = [];
       const groupedValues = this.groupBy(data, prop);
@@ -207,28 +245,22 @@ export default {
       });
       return summedTransaction;
     },
-
-    inSameDay(date) {
-      return moment(date)
-        .utc()
-        .isSame(moment().local(), "day")
-        ? true
-        : false;
-    },
-
-    inLastWeek(date) {
-      return moment(date)
-        .isSame(moment().local(), "week")
-        ? true
-        : false;
-    },
-
+    /**
+    * @description checks if passed date is in the current month
+    *
+    * @returns True if date is in current month
+    */
     inSameMonth(date) {
       return moment(date, "YYYY-MM-DD")
         .isSame(moment().local(), "month")
         ? true
         : false;
     },
+    /**
+    * @description sorts an array into ascending order by date
+    *
+    * @returns sorted array
+    */
     sortAscending(array) {
       return array.sort(function(a, b) {
         let d1 = moment(a.datetime, "YYYY-MM-DD");

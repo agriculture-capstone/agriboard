@@ -14,7 +14,6 @@ export default {
     };
   },
   props: ["values", "title", "xUnits", "yUnits"],
-
   mounted() {
     /**
      * @description Create an event listener for window resizing that rerenders the graph
