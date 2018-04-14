@@ -29,7 +29,7 @@
     </md-table>
 
     <div class="create-dialog-wrapper">
-      <md-dialog :md-active.sync="showAddDialog">
+      <md-dialog v-if="form" :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
         
         <md-dialog-content>
@@ -126,8 +126,7 @@
             {{ selectedRow.phoneNumber }}
             <h3><b>Category</b></h3>
             {{ selectedRow.category }}
-            <!-- <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3> -->
-            <h3><b>Notes</b></h3>            
+            <h3 v-if="selectedRow.category === 'farmer' && selectedRow.notes"><b>Notes</b></h3>
             {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
@@ -138,7 +137,7 @@
     </div>
 
     <div class="edit-dialog-wrapper">
-      <md-dialog :md-active.sync="showEditDialog">
+      <md-dialog v-if="selectedRow" :md-active.sync="showEditDialog">
         <md-dialog-title>Edit User</md-dialog-title>
         <md-dialog-content>
 
@@ -146,7 +145,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>First Name</label>
-                <md-input v-model="editableRow.firstName" name="first-name" id="first-name" autocomplete="given-name" />
+                <md-input v-model="selectedRow.firstName" name="first-name" id="first-name" autocomplete="given-name" />
               </md-field>
             </div>
           </div>
@@ -155,7 +154,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Middle Name</label>
-                <md-input v-model="editableRow.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
+                <md-input v-model="selectedRow.middleName" name="middle-name" id="middle-name" autocomplete="middle-name" />
               </md-field>
             </div>
           </div>
@@ -164,16 +163,16 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Last Name</label>
-                <md-input v-model="editableRow.lastName" name="last-name" id="last-name" autocomplete="last-name" />
+                <md-input v-model="selectedRow.lastName" name="last-name" id="last-name" autocomplete="last-name" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.category == 'admin' || editableRow.category == 'monitor' || editableRow.category == 'trader'">
+          <div class="md-gutter" v-if="selectedRow.category == 'admin' || selectedRow.category == 'monitor' || selectedRow.category == 'trader'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Password</label>
-                <md-input v-model="editableRow.password" type="password"></md-input>
+                <md-input v-model="selectedRow.password" type="password"></md-input>
               </md-field>
             </div>
           </div>
@@ -182,16 +181,16 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Phone Number</label>
-                <md-input v-model="editableRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
+                <md-input v-model="selectedRow.phoneNumber" name="phone-number" id="phone-number" autocomplete="phone-number" />
               </md-field>
             </div>
           </div>
 
-          <div class="md-gutter" v-if="editableRow.category == 'farmer'">
+          <div class="md-gutter" v-if="selectedRow.category == 'farmer'">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label>Notes</label>
-                <md-input v-model="editableRow.notes" name="notes" id="notes" autocomplete="notes" />
+                <md-input v-model="selectedRow.notes" name="notes" id="notes" autocomplete="notes" />
               </md-field>
             </div>
           </div>
@@ -224,7 +223,6 @@ export default Vue.extend({
       search: '',
       error: '',
       selectedRow: {},
-      editableRow: {},
       showAddDialog: false,
       showViewDialog: false,
       showEditDialog: false,
@@ -279,29 +277,13 @@ export default Vue.extend({
     onSaveCreate() {
       this.showAddDialog = false;
       const newPerson = this.form;
-
-      switch (newPerson.category) {
-        case 'admin':
-          this.dispatchNewAdmin(newPerson);
-          break;
-        case 'monitor':
-          this.dispatchNewMonitor(newPerson);
-          break;
-        case 'trader':
-          this.dispatchNewTrader(newPerson);
-          break;
-        case 'farmer':
-          this.dispatchNewFarmer(newPerson);
-          break;
-      }
+      this.createPerson(newPerson);
       this.resetForm();
     },
     onCancelView() {
       this.showViewDialog = false;
     },
     onEditClick() {
-      this.editableRow = this.selectedRow;
-      this.selectedRow = {};
       this.showViewDialog = false;
       this.showEditDialog = true;
     },
@@ -310,62 +292,82 @@ export default Vue.extend({
     },
     onSaveEdit() {
       this.showEditDialog = false;
+      const newPerson = this.selectedRow;
+      this.updatePerson(newPerson);
     },
-    dispatchNewAdmin(data: any) {
-      const newAdmin = {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        companyName: '',
-        username: data.username,
-        hash: Bcrypt.hashSync(data.password, saltRounds),
-      };
-      this.$store.dispatch('admin/createRow', { row: newAdmin });
+    createPerson(data: any) {
+      let path = '';
+      let newPerson = {};
+      switch (data.category) {
+        case 'admin':
+        case 'monitor':
+        case 'trader':
+          newPerson = {
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            companyName: '',
+            username: data.username,
+            hash: Bcrypt.hashSync(data.password, saltRounds),
+          };
+          break;
+        case 'farmer':
+          newPerson = {
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            notes: data.notes,
+            paymentFrequency: 'monthly',
+            companyName: 'boresha',
+          };
+          break;
+      }
+      path = `${data.category}/createRow`;
+      this.$store.dispatch(path, { row: newPerson });
     },
-    dispatchNewMonitor(data: any) {
-      const newMonitor = {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        companyName: '',
-        username: data.username,
-        hash: Bcrypt.hashSync(data.password, saltRounds),
-      };
-      this.$store.dispatch('monitor/createRow', { row: newMonitor });
-    },
-    dispatchNewTrader(data: any) {
-      const newTrader = {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        companyName: '',
-        username: data.username,
-        hash: Bcrypt.hashSync(data.password, saltRounds),
-      };
-      this.$store.dispatch('trader/createRow', { row: newTrader });
-    },
-    dispatchNewFarmer(data: any) {
-      const newFarmer =  {
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        phoneCountry: '',
-        phoneArea: '',
-        phoneNumber: data.phoneNumber,
-        notes: data.notes,
-        paymentFrequency: 'monthly',
-        companyName: 'boresha',
-      };
-      this.$store.dispatch('farmer/createRow', { row: newFarmer });
+    updatePerson(data: any) {
+      let path = '';
+      let updatedPerson = {};
+      switch (data.category) {
+        case 'admin':
+        case 'monitor':
+        case 'trader':
+          updatedPerson = {
+            uuid: data.uuid,
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            companyName: '',
+            username: data.username,
+            hash: Bcrypt.hashSync(data.password, saltRounds),
+          };
+          break;
+        case 'farmer':
+          updatedPerson = {
+            uuid: data.uuid,
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneCountry: '',
+            phoneArea: '',
+            phoneNumber: data.phoneNumber,
+            notes: data.notes,
+            paymentFrequency: 'monthly',
+            companyName: 'boresha',
+          };
+          break;
+      }
+      path = `${data.category}/updateRow`;
+      this.$store.dispatch(path, { row: updatedPerson });
     },
     resetForm() {
       this.form = {

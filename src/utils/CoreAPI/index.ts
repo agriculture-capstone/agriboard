@@ -183,7 +183,7 @@ export default class CoreAPI {
    * @param row Information to overwrite
    */
   public async update<T>(row: CoreUpdateRequest<T>): Promise<CoreRow<T>> {
-    const url = this.url;
+    const url = `${this.url}/${row.uuid}`;
     const method: CoreRequestMethod = 'PUT';
     const request = new Request(url, CoreAPI.getOptions(method, row));
 
