@@ -126,7 +126,7 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
-      return this.calculateSum(collections);
+      return this.calculateMonthSum(collections);
     },
     /**
     * @description calculate the monthly sum of delivery values
@@ -140,7 +140,7 @@ export default {
           datetime: moment(row.datetime).format("YYYY-MM-DD h:mm:ss a")
         };
       });
-      return this.calculateSum(deliveries);
+      return this.calculateMonthSum(deliveries);
     },
     /**
     * @description calculate the monthly sum of loan values
