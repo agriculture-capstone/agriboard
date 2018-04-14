@@ -64,6 +64,7 @@ if (module.hot) {
         farmer: farmerModule,
         milk: milkModule,
         loan: loanModule,
+        payment: paymentModule,
         delivery: deliveryModule,
         memo: memoModule,
         trader: traderModule,
