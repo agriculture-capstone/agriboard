@@ -38,11 +38,11 @@
             {{ selectedRow.costPerUnit }}
           </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-primary" @click="onCancelView">Cancel</md-button>
+          <md-button class="md-primary" @click="onCloseView">Close</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
-    <md-button class="md-fab md-primary download-csv">
+    <md-button class="md-fab md-primary download-csv" @click="downloadCsv">
       <md-icon>file_download</md-icon>
     </md-button>
   </div>
@@ -79,7 +79,7 @@ export default Vue.extend({
       this.selectedRow = item;
       this.showViewDialog = true;
     },
-    onCancelView() {
+    onCloseView() {
       this.showViewDialog = false;
       this.selectedRow = {};
     },
