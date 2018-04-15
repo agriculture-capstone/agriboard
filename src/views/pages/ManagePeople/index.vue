@@ -2,14 +2,14 @@
   <div class='ManagePeople'>
     <div class="add-button">
       <md-button 
-        @click="onAddClick" 
+        @click="onClickAdd" 
         class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button"
         v-if="this.$store.state.user.type === 'admins'"
       >
         <md-icon>add</md-icon>
       </md-button>
     </div>
-    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
+    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelectRow">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
@@ -49,8 +49,8 @@
               <md-field>
                 <label>First Name</label>
                 <md-input v-model="form.firstName" v-validate="'required'" type="text" name="first-name" id="first-name" autocomplete="given-name" />
-                <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
               </md-field>
+              <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
             </div>
           </div>
 
@@ -68,8 +68,8 @@
               <md-field>
                 <label>Last Name</label>
                 <md-input v-model="form.lastName" v-validate="'required'" type="text" name="last-name" id="last-name" autocomplete="last-name" />
-                <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
               </md-field>
+              <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
             </div>
           </div>
 
@@ -78,13 +78,13 @@
               <md-field>
                 <label>Username</label>
                 <md-input v-model="form.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
-                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
               </md-field>
+              <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
               <md-field>
                 <label>Password</label>
                 <md-input v-model="form.password" v-validate="'required'" type="password" name="password"></md-input>
-                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
               </md-field>
+              <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
             </div>
           </div>
 
@@ -93,8 +93,8 @@
               <md-field>
                 <label>Phone Number</label>
                 <md-input v-model="form.phoneNumber" v-validate="'required'" type="text" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>
               </md-field>
+              <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>
             </div>
           </div>
 
@@ -147,8 +147,8 @@
               <md-field>
                 <label>First Name</label>
                 <md-input v-model="selectedRow.firstName" v-validate="'required'" type="text" name="first-name" id="first-name" autocomplete="given-name" />
-                <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
               </md-field>
+              <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
             </div>
           </div>
 
@@ -166,8 +166,8 @@
               <md-field>
                 <label>Last Name</label>
                 <md-input v-model="selectedRow.lastName" v-validate="'required'" type="text" name="last-name" id="last-name" autocomplete="last-name" />
-                <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
               </md-field>
+              <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
             </div>
           </div>
 
@@ -176,13 +176,13 @@
               <md-field>
                 <label>Username</label>
                 <md-input v-model="selectedRow.username" v-validate="'required'" type="text" name="username" id="username" autocomplete="username" />
-                <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
               </md-field>
+              <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
               <md-field>
                 <label>Password</label>
                 <md-input v-model="selectedRow.password" v-validate="'required'" type="password" name="password"></md-input>
-                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
               </md-field>
+              <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
             </div>
           </div>
 
@@ -191,8 +191,8 @@
               <md-field>
                 <label>Phone Number</label>
                 <md-input v-model="selectedRow.phoneNumber" v-validate="'required'" type="text" name="phone-number" id="phone-number" autocomplete="phone-number" />
-                <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>
               </md-field>
+              <span v-show="errors.has('phone-number')" class="help is-danger">{{ errors.first('phone-number') }}</span>
             </div>
           </div>
 
@@ -273,11 +273,13 @@ export default Vue.extend({
     },
   },
   methods: {
-    onSelect(item: any) {
-      this.selectedRow = item;
-      this.showViewDialog = true;
+    onSelectRow(item: any) {
+      if (item) {
+        this.selectedRow = JSON.parse(JSON.stringify(item));
+        this.showViewDialog = true;
+      }
     },
-    onAddClick() {
+    onClickAdd() {
       this.showAddDialog = true;
     },
     onCancelCreate() {
@@ -439,6 +441,10 @@ export default Vue.extend({
     height: 100%;
     display: block;
   }
+}
+
+.md-field {
+  margin-bottom: 0px;
 }
 
 .md-dialog {
