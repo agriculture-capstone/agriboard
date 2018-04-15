@@ -26,7 +26,7 @@ const globalGetters: GetterHandlers<RootState> = {
         }
         if (person.phoneNumber) {
           const AREA_SIZE = 3;
-          fullPhone += ` ${person.phoneNumber.slice(0, AREA_SIZE)}-${person.phoneNumber.slice(AREA_SIZE)}`;
+          fullPhone += `${person.phoneNumber.slice(0, AREA_SIZE)}-${person.phoneNumber.slice(AREA_SIZE)}`;
         }
         const convertedPerson: Person = {
           uuid: person.uuid,
