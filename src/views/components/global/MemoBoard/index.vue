@@ -9,14 +9,14 @@
         <md-icon>send</md-icon>
       </md-button>
     </div>
-    <div v-for="memo in memos" v-bind:key="memo.timestamp + memo.author + memo.message">
+    <div v-for="memo in memos" :key="memo.uuid">
       <md-card>
         <md-card-header>
           <div class="md-title">{{ memo.author }}</div>
         </md-card-header>
         <md-card-content>
           {{ memo.message }}
-          <p class="memo-timestamp"> {{ memo.datePosted }}</p>
+          <p class="memo-timestamp"> {{ toLocalDate(memo.datePosted) }}</p>
         </md-card-content>
       </md-card>
     </div>
@@ -42,10 +42,13 @@ export default Vue.component(name, {
         const first = new Date(a.datePosted);
         const second = new Date(b.datePosted);
         return second.getTime() - first.getTime();
-      });
+      }).filter((m: any) => m.message !== 'Hi');
     },
   },
   methods: {
+    toLocalDate (date: string | Date) {
+      return (date instanceof Date) ? date.toLocaleString() : new Date(date).toLocaleString();
+    },
     dispatchNewMemo() {
       const newMemo : Memo = {
         authorUuid: this.$store.state.user.uuid,

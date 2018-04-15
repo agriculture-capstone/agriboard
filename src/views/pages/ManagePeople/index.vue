@@ -437,7 +437,8 @@ export default Vue.extend({
 }
 
 .md-dialog {
-  min-width: 443px;
+  max-width: 100%;
+  min-width: 30%;
 }
 
 .error {
