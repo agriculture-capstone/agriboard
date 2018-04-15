@@ -7,6 +7,7 @@ import getters from './getters';
 import farmer from './modules/farmer';
 import milk from './modules/milk';
 import loan from './modules/loan';
+import payment from './modules/payment';
 import delivery from './modules/delivery';
 import memo from './modules/memo';
 import trader from './modules/trader';
@@ -32,6 +33,7 @@ const store = new Vuex.Store<RootState>({
     trader,
     admin,
     monitor,
+    payment,
     user,
   },
   plugins: [
@@ -48,6 +50,7 @@ if (module.hot) {
     const farmerModule = require('./modules/farmer').default;
     const milkModule = require('./modules/milk').default;
     const loanModule = require('./modules/loan').default;
+    const paymentModule = require('./modules/payment').default;
     const deliveryModule = require('./modules/delivery').default;
     const memoModule = require('./modules/memo').default;
     const traderModule = require('./modules/trader').default;
@@ -61,6 +64,7 @@ if (module.hot) {
         farmer: farmerModule,
         milk: milkModule,
         loan: loanModule,
+        payment: paymentModule,
         delivery: deliveryModule,
         memo: memoModule,
         trader: traderModule,
