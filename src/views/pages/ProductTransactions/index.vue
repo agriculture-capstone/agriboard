@@ -84,7 +84,7 @@ export default Vue.extend({
   computed: {
     productTransactions (): any {
       const res: any[] = [];
-      const milk = this.$store.state.milk.rows.map((row: any) => {
+      this.$store.state.milk.rows.map((row: any) => {
         res.push({
           ...row,
           category: 'milk',
@@ -92,13 +92,34 @@ export default Vue.extend({
         });
       });
       
-      const loans = this.$store.state.loan.rows.map((row: any) => {
+      this.$store.state.loan.rows.map((row: any) => {
         res.push({
           ...row,
           category: 'loan',
           from: row.fromPersonName,
           to: row.toPersonName,
           amountOfProduct: row.amount,
+          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+        });
+      });
+
+      this.$store.state.payment.rows.map((row: any) => {
+        res.push({
+          ...row,
+          category: 'payment',
+          from: row.fromPersonName,
+          to: row.toPersonName,
+          amountOfProduct: row.amount,
+          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+        });
+      });
+
+      this.$store.state.delivery.rows.map((row: any) => {
+        res.push({
+          ...row,
+          category: 'delivery',
+          currency: 'UGX',
+          to: row.transportId,
           datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
         });
       });
