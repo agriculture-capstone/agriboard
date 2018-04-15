@@ -15,6 +15,7 @@ import {
   MdTabs,
   MdProgress,
 } from 'vue-material/dist/components';
+import VeeValidate from 'vee-validate';
 
 import App from '@/App.vue';
 import router from './router';
@@ -37,6 +38,9 @@ Vue.use(MdDialog);
 Vue.use(MdRadio);
 Vue.use(MdTabs);
 Vue.use(MdProgress);
+
+// Use VeeValidate for form validation
+Vue.use(VeeValidate);
 
 /* eslint-disable no-new */
 new Vue({
