@@ -14,9 +14,7 @@
         <md-table-cell md-label="Date" md-sort-by="datetime">{{item.datetime}}</md-table-cell>
         <md-table-cell md-label="From" md-sort-by="from">{{item.from}}</md-table-cell>
         <md-table-cell md-label="To" md-sort-by="to">{{item.to}}</md-table-cell>
-        <!-- <md-table-cell :md-label="`Amount (${item.currency})`" md-sort-by="amountOfProduct">{{item.amountOfProduct}}</md-table-cell> -->
-        <!-- <md-table-cell :md-label="`Rate (${item.currency}/${item.productUnits})`" md-sort-by="costPerUnit">{{item.costPerUnit}}</md-table-cell> -->
-        <md-table-cell md-label="Amount" md-sort-by="amountOfProduct">{{item.amountOfProduct}}</md-table-cell>        
+        <md-table-cell md-label="Amount" md-sort-by="amountOfProduct">{{item.amountOfProduct}} ({{item.productUnits}})</md-table-cell>        
         <md-table-cell md-label="Category" md-sort-by="category">{{item.category}}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -43,10 +41,8 @@
               <h3><b>License Plate</b></h3>
               {{ selectedRow.to }}
             </div>
-            
             <h3><b>Amount ({{ selectedRow.productUnits }})</b></h3>
             {{ selectedRow.amountOfProduct }}
-            
             <div v-if="selectedRow.category === 'milk'">
               <h3><b>Quality</b></h3>
               {{ selectedRow.milkQuality }}
@@ -55,7 +51,6 @@
               <h3><b>Value ({{ selectedRow.currency }})</b></h3>
               {{ selectedRow.costPerUnit * selectedRow.amountOfProduct }}
             </div>
-
           </md-dialog-content>
         <md-dialog-actions>
           <md-button class="md-primary" @click="onCancelView">Cancel</md-button>
@@ -103,49 +98,7 @@ export default Vue.extend({
   },
   computed: {
     productTransactions (): any {
-      const res: any[] = [];
-      this.$store.state.milk.rows.map((row: any) => {
-        res.push({
-          ...row,
-          category: 'milk',
-          
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
-        });
-      });
-      
-      this.$store.state.loan.rows.map((row: any) => {
-        res.push({
-          ...row,
-          category: 'loan',
-          from: row.fromPersonName,
-          to: row.toPersonName,
-          amountOfProduct: row.amount,
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
-        });
-      });
-
-      this.$store.state.payment.rows.map((row: any) => {
-        res.push({
-          ...row,
-          category: 'payment',
-          from: row.fromPersonName,
-          to: row.toPersonName,
-          amountOfProduct: row.amount,
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
-        });
-      });
-
-      this.$store.state.delivery.rows.map((row: any) => {
-        res.push({
-          ...row,
-          category: 'delivery',
-          currency: 'UGX',
-          to: row.transportId,
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
-        });
-      });
-
-      return res;
+      return this.$store.getters['transactions'];
     },
   },
   data() {
