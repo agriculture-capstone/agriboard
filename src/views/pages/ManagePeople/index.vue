@@ -1,15 +1,15 @@
 <template>
   <div class='ManagePeople'>
     <div class="add-button">
-      <md-button 
-        @click="onClickAdd" 
+      <md-button
+        @click="onAddClick"
         class="md-fab md-primary md-fab-bottom-right md-fixed add-user-button"
         v-if="this.$store.state.user.type === 'admins'"
       >
         <md-icon>add</md-icon>
       </md-button>
     </div>
-    <md-table class="table" v-model="filteredPeople" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelectRow">
+    <md-table class="table" v-model="rows" md-sort="name" md-sort-order="desc" md-card @md-selected="onRowSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <md-icon class="md-size-2x icon">supervisor_account</md-icon>
@@ -31,7 +31,7 @@
     <div class="create-dialog-wrapper">
       <md-dialog v-if="form" :md-active.sync="showAddDialog">
         <md-dialog-title>Create New User</md-dialog-title>
-        
+
         <md-dialog-content>
           <div class="md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -114,7 +114,7 @@
         </md-dialog-actions>
       </md-dialog>
     </div>
-    
+
     <div class="view-dialog-wrapper">
       <md-dialog v-if="selectedRow" :md-active.sync="showViewDialog">
         <md-dialog-title>{{ selectedRow.name }}</md-dialog-title>
@@ -223,6 +223,7 @@ import * as R from 'ramda';
 import * as Bcrypt from 'bcryptjs';
 import * as Fuse from 'fuse.js';
 import { RootState, Person } from '@/store/types';
+import sortAlphabeticalByProp from '@/utils/list/sortAlphabeticalByProp';
 
 const saltRounds = 5;
 
@@ -230,6 +231,7 @@ export default Vue.extend({
   name: 'ManagePeople',
   data() {
     return {
+      rows: [],
       search: '',
       error: '',
       selectedRow: {},
@@ -251,7 +253,7 @@ export default Vue.extend({
   },
   computed: {
     people(): Person[] {
-      return this.$store.getters['people'];
+      return this.$store.getters['people'].sort(sortAlphabeticalByProp('name'));
     },
     filteredPeople(): Person[] {
       return this.search === '' ? this.people : this.fuse.search(this.search);
@@ -273,13 +275,13 @@ export default Vue.extend({
     },
   },
   methods: {
-    onSelectRow(item: any) {
+    onRowSelect(item: any) {
       if (item) {
         this.selectedRow = JSON.parse(JSON.stringify(item));
         this.showViewDialog = true;
       }
     },
-    onClickAdd() {
+    onAddClick() {
       this.showAddDialog = true;
     },
     onCancelCreate() {
@@ -408,6 +410,22 @@ export default Vue.extend({
       };
     },
   },
+  created () {
+    this.rows = this.people;
+  },
+  watch: {
+    search () {
+      this.rows = this.search ?
+        this
+          .people
+          .filter((row: any) => {
+            const values = Object.values(row);
+
+            return values.find(v => String(v).toLowerCase().includes(this.search.toLowerCase()));
+          }) :
+        this.people;
+    },
+  },
 });
 </script>
 
@@ -448,7 +466,8 @@ export default Vue.extend({
 }
 
 .md-dialog {
-  min-width: 443px;
+  max-width: 100%;
+  min-width: 30%;
 }
 
 .error {

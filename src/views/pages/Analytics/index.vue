@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="analytics">
     <!-- Stats Section -->
     <div class="md-layout stats md-gutter">
         <md-card class="md-layout-item md-elevation-6">
@@ -29,18 +29,18 @@
     </div>
     <!-- Graphs -->
     <md-card class='md-elevation-10 graph'>
-      <graph 
-        v-bind:values="productTransactions" 
-        title="Milk-Collections-and-Deliveries" 
-        xUnits="Date" 
+      <graph
+        v-bind:values="productTransactions"
+        title="Milk-Collections-and-Deliveries"
+        xUnits="Date"
         yUnits="Litres"
       />
     </md-card>
     <md-card class='md-elevation-10 graph'>
-      <graph 
-        v-bind:values="moneyTransactions" 
-        title="Loans-and-Payments" 
-        xUnits="Date" 
+      <graph
+        v-bind:values="moneyTransactions"
+        title="Loans-and-Payments"
+        xUnits="Date"
         yUnits="UGX"
       />
     </md-card>
@@ -226,7 +226,7 @@ export default {
       return sum;
     },
     /**
-    * @description given a data array it will group by the prop (in this case date) 
+    * @description given a data array it will group by the prop (in this case date)
     * and create a new array with the data relevant to the graphs
     * @returns array of objects for the graphs
     */
@@ -272,7 +272,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .md-card {
   width: 90vw;
   margin: auto;
@@ -311,5 +311,14 @@ export default {
   color: steelblue;
   font-weight: bold;
   text-align: center;
+}
+
+@media screen and (max-device-width: 480px) {
+  #analytics {
+    > * {
+      margin: 0;
+      width: 100vw;
+    }
+  }
 }
 </style>
