@@ -42,7 +42,7 @@ export default Vue.component(name, {
         const first = new Date(a.datePosted);
         const second = new Date(b.datePosted);
         return second.getTime() - first.getTime();
-      }).filter((m: any) => m.message !== 'Hi');
+      });
     },
   },
   methods: {
