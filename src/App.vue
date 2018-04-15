@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <header>
-      <toolbar v-if="toolbarShown" />
+    <header class="header">
+      <toolbar class="toolbar" v-if="toolbarShown"/>
+      <div class="spacer" v-if="toolbarShown" />
     </header>
     <main>
       <router-view></router-view>
@@ -86,6 +87,12 @@ export default Vue.extend({
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 body {
+  overflow: hidden;
+
+  main {
+    overflow: auto;
+  }
+
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -95,6 +102,25 @@ body {
     width: 100%;
     flex-direction: column;
     position: relative;
+  }
+
+  header {
+    z-index: 10;
+  }
+
+  .toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .spacer {
+    height: 112px;
+
+    @media screen and (max-width: 944px) {
+      height: 104px;
+    }
   }
 
   margin: 0;

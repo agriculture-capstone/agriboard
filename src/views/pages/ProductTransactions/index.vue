@@ -1,11 +1,13 @@
 <template>
   <div class='ProductTransactions'>
-    <md-table class="table" v-model="productTransactions" md-sort="name" md-sort-order="asc" @md-selected="onSelect">
+    <md-table class="table" v-model="rows" @md-selected="onSelect">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <h1 class="md-title"><md-icon class="md-size-2x icon">receipt</md-icon> Product Transactions</h1>
         </div>
-        <md-button v-on:click="downloadCsv" class="md-raised md-accent download_csv_button">Download CSV</md-button>
+        <md-field md-clearable class="md-toolbar-section-end search">
+          <md-input placeholder="Search" v-model="search" />
+        </md-field>
       </md-table-toolbar>
 
       <h2 class="error md-subheader">{{error}}</h2>
@@ -18,7 +20,6 @@
         <md-table-cell md-label="Category" md-sort-by="category">{{item.category}}</md-table-cell>
       </md-table-row>
     </md-table>
-
     <div class="view-dialog-wrapper">
       <md-dialog v-if="selectedRow" :md-active.sync="showViewDialog">
         <md-dialog-title>Transaction Details</md-dialog-title>
@@ -57,6 +58,9 @@
         </md-dialog-actions>
       </md-dialog>
     </div>
+    <md-button class="md-fab download-csv">
+      <md-icon>file_download</md-icon>
+    </md-button>
   </div>
 </template>
 
@@ -106,7 +110,25 @@ export default Vue.extend({
       error: '',
       showViewDialog: false,
       selectedRow: {},
+      search: '',
+      rows: [],
     };
+  },
+  created () {
+    this.rows = this.productTransactions;
+  },
+  watch: {
+    search () {
+      this.rows = this.search ?
+        this
+          .productTransactions
+          .filter((row: any) => {
+            const values = Object.values(row);
+
+            return values.find(v => String(v).toLowerCase().includes(this.search.toLowerCase()));
+          }) :
+        this.productTransactions;
+    },
   },
 });
 </script>
@@ -122,7 +144,8 @@ export default Vue.extend({
 }
 
 .md-dialog {
-  min-width: 443px;
+  max-width: 100%;
+  min-width: 35%;
 }
 
 .md-dialog-title {
@@ -147,5 +170,19 @@ export default Vue.extend({
 
 .icon {
   color: $icon-color !important;
+}
+
+.download-csv {
+  position: fixed;
+  right: 24px;
+  bottom: 20px;
+
+  @media screen and (max-device-width: 480px) {
+    right: 16px;
+  }
+}
+
+.search {
+  max-width: 300px;
 }
 </style>
