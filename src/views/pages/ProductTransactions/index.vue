@@ -42,7 +42,7 @@
         </md-dialog-actions>
       </md-dialog>
     </div>
-    <md-button class="md-fab download-csv">
+    <md-button class="md-fab download-csv" @click="downloadCsv">
       <md-icon>file_download</md-icon>
     </md-button>
   </div>
