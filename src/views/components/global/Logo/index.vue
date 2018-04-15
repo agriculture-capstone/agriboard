@@ -46,8 +46,8 @@ export default Vue.component('logo', {
     },
     iconSize (): any {
       return {
-        height: this.size,
-        width: this.size,
+        height: `${this.size}px`,
+        width: `${this.size}px`,
       };
     },
     titleSpacing (): any {
