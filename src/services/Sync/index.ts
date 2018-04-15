@@ -219,7 +219,7 @@ function createSyncService(): SyncServiceInstance {
       }
       intervalId = window.setInterval(instance.syncAll, SYNC_FREQUENCY);
 
-      const coreModuleNames = getPermittedCoreModuleNames(store.state.user.type); 
+      const coreModuleNames = getPermittedCoreModuleNames(store.state.user.type);
       // Forcing the types to work because we know better than Typescript here (be careful)
       const modulesPending = coreModuleNames.map(async (m: CoreModuleName) => instance.syncModule(m));
 
