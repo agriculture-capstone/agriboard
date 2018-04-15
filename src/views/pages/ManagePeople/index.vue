@@ -131,8 +131,8 @@
             {{ selectedRow.notes }}
           </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-primary" @click="onCancelView">Cancel</md-button>
-          <md-button class="md-primary" @click="onEditClick">Edit</md-button>
+          <md-button class="md-primary" @click="onCloseView">Close</md-button>
+          <md-button class="md-primary" @click="onEditClick" v-if="this.$store.state.user.type === 'admins'">Edit</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
@@ -299,7 +299,7 @@ export default Vue.extend({
         return false;
       });
     },
-    onCancelView() {
+    onCloseView() {
       this.showViewDialog = false;
       this.selectedRow = {};
     },
