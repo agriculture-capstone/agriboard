@@ -38,7 +38,7 @@
             {{ selectedRow.costPerUnit }}
           </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-primary" @click="onCancelView">Cancel</md-button>
+          <md-button class="md-primary" @click="onCancelView">Close</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>

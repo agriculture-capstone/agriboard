@@ -48,7 +48,7 @@ export function getPermittedCoreModuleNames(userType: string) {
       CORE_MODULE_NAMES.FARMER,
       CORE_MODULE_NAMES.TRADER,
       CORE_MODULE_NAMES.ADMIN,
-      CORE_MODULE_NAMES.MEMO,
+      // CORE_MODULE_NAMES.MEMO,
       CORE_MODULE_NAMES.MONITOR,
       CORE_MODULE_NAMES.MILK,
       CORE_MODULE_NAMES.DELIVERY,
@@ -59,7 +59,7 @@ export function getPermittedCoreModuleNames(userType: string) {
     permittedCoreModules = [
       CORE_MODULE_NAMES.FARMER,
       CORE_MODULE_NAMES.TRADER,
-      CORE_MODULE_NAMES.MEMO,
+      // CORE_MODULE_NAMES.MEMO,
       CORE_MODULE_NAMES.MILK,
       CORE_MODULE_NAMES.DELIVERY,
       CORE_MODULE_NAMES.LOANS,
