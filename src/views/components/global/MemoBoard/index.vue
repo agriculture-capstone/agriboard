@@ -50,6 +50,10 @@ export default Vue.component(name, {
       return (date instanceof Date) ? date.toLocaleString() : new Date(date).toLocaleString();
     },
     dispatchNewMemo() {
+      if (!this.newMemoMessage.trim()) {
+        this.newMemoMessage = '';
+        return;
+      }
       const newMemo : Memo = {
         authorUuid: this.$store.state.user.uuid,
         message: this.newMemoMessage,
