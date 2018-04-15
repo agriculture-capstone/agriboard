@@ -36,6 +36,7 @@ export type CoreModuleName
   | 'trader'
   | 'admin'
   | 'monitor'
+  | 'payment'
   ;
 
 /*--------------------------------- Functions ---------------------------------*/

@@ -34,6 +34,7 @@ enum CORE_MODULE_NAMES {
   MEMO = 'memo',
   MONITOR = 'monitor',
   LOANS = 'loan',
+  PAYMENT = 'payment',
 }
 
 /**
@@ -51,7 +52,8 @@ export function getPermittedCoreModuleNames(userType: string) {
       CORE_MODULE_NAMES.MONITOR,
       CORE_MODULE_NAMES.MILK,
       CORE_MODULE_NAMES.DELIVERY,
-      // CORE_MODULE_NAMES.LOANS, TODO
+      CORE_MODULE_NAMES.LOANS,
+      CORE_MODULE_NAMES.PAYMENT,
     ];
   } else if (userType === 'monitors') {
     permittedCoreModules = [
@@ -60,7 +62,8 @@ export function getPermittedCoreModuleNames(userType: string) {
       CORE_MODULE_NAMES.MEMO,
       CORE_MODULE_NAMES.MILK,
       CORE_MODULE_NAMES.DELIVERY,
-      // CORE_MODULE_NAMES.LOANS, TODO
+      CORE_MODULE_NAMES.LOANS,
+      CORE_MODULE_NAMES.PAYMENT,
     ];
   } else {
     throw new AuthorizationError(`Invalid user type: ${userType}`);
@@ -84,6 +87,8 @@ export function getModulePath(module: CoreModuleName): CorePath {
     case 'memo': return '/memos';
 
     case 'loan': return '/transactions/money/loans';
+
+    case 'payment': return '/transactions/money/productPayments';
 
     case 'trader': return '/people/traders';
 

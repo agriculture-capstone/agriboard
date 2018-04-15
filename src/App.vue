@@ -2,7 +2,7 @@
   <div id="app">
     <header class="header">
       <toolbar class="toolbar" v-if="toolbarShown"/>
-      <div class="spacer"></div>
+      <div class="spacer" v-if="toolbarShown" />
     </header>
     <main>
       <router-view></router-view>

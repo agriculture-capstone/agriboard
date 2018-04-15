@@ -10,7 +10,7 @@ export default {
     const min = 10;
     const max = 200;
     for (let i = 0; i < dataItems; i++) {
-      const currentDate = new Date('2018-02-20T18:58:51-06:00');
+      const currentDate = new Date('2018-03-01T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
       data.push({
@@ -37,7 +37,7 @@ export default {
     const min = 10;
     const max = 200;
     for (let i = 0; i < dataItems; i++) {
-      const currentDate = new Date('2018-02-20T18:58:51-06:00');
+      const currentDate = new Date('2018-03-01T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
       data.push({
@@ -63,7 +63,7 @@ export default {
     const min = 300;
     const max = 2000;
     for (let i = 0; i < dataItems; i++) {
-      const currentDate = new Date('2018-02-20T18:58:51-06:00');
+      const currentDate = new Date('2018-03-01T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
       data.push({
@@ -87,7 +87,7 @@ export default {
     const min = 100;
     const max = 2000;
     for (let i = 0; i < dataItems; i++) {
-      const currentDate = new Date('2018-02-20T18:58:51-06:00');
+      const currentDate = new Date('2018-03-01T18:58:51-06:00');
       currentDate.setDate(currentDate.getDate() + i);
       const currentValue = Math.random() * (max - min) + min;
       data.push({

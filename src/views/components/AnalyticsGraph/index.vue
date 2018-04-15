@@ -12,17 +12,15 @@ export default {
     return {
       heightScaling: 0.9,
       widthScaling: 1,
-      resizeSensor: null,
     };
   },
   props: ["values", "title", "xUnits", "yUnits"],
-
   mounted() {
     /**
      * @description Create an event listener for window resizing that rerenders the graph
      *
      * @returns New event listener created
-    */
+     */
     this.$nextTick(function() {
       window.addEventListener("resize", this.redrawGraph);
     });
@@ -41,12 +39,13 @@ export default {
   },
   methods: {
     /**
-    * @description remove the specified SVG and rerender it with the new window dimensions
-    *
-    * @returns New SVG graph will be rendered in div
-    */
+     * @description remove the specified SVG and rerender it with the new window dimensions
+     *
+     * @returns New SVG graph will be rendered in div
+     */
     redrawGraph() {
-      d3.select("#" + this.title)
+      d3
+        .select("#" + this.title)
         .selectAll("g")
         .remove();
       this.drawLinesGraph(
@@ -59,10 +58,10 @@ export default {
       );
     },
     /**
-    * @description Renders the template SVG as a D3 graph
-    *
-    * @returns Rendered SVG graph in div
-    */
+     * @description Renders the template SVG as a D3 graph
+     *
+     * @returns Rendered SVG graph in div
+     */
     drawLinesGraph(
       containerHeight,
       containerWidth,
@@ -211,8 +210,9 @@ export default {
         legend = g
           .append("text")
           .data(data[i])
-          // .style("text-anchor", "middle")
-          .style("font-size", "1.8vh")
+          .attr("text-anchor", "middle")
+          .style("text-anchor", "middle")
+          .style("font-size", "1vw")
           .attr("stroke", d => colors(i))
           .text(function(d) {
             return d.type;
@@ -324,6 +324,7 @@ export default {
       }
 
       function zoom() {
+        if(width > 300) {
         let t = svg.transition().duration(750);
         svg
           .select(".axis--x")
@@ -358,6 +359,7 @@ export default {
             return yScale(d.amountOfProduct);
           })
           .size([containerWidth, containerHeight])(vorData);
+        }
       }
 
       function dragged() {
@@ -376,7 +378,7 @@ export default {
         .append("text")
         .attr("transform", "translate(" + width / 2 + " ," + height / 10 + ")")
         .attr("text-anchor", "middle")
-        .style("font-size", "2.2vh")
+        .style("font-size", "1.4vw")
         .style("text-decoration", "underline")
         .style("font-weight", "bold")
         .text(title);
@@ -397,7 +399,7 @@ export default {
       const yTitle = g
         .append("text")
         .attr("transform", "rotate(-90)")
-        .attr('x', 0 - height / 2)
+        .attr("x", 0 - height / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .style("font-size", "2vh")
