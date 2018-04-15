@@ -38,7 +38,7 @@
             {{ selectedRow.costPerUnit }}
           </md-dialog-content>
         <md-dialog-actions>
-          <md-button class="md-primary" @click="onCancelView">Close</md-button>
+          <md-button class="md-primary" @click="onCloseView">Close</md-button>
         </md-dialog-actions>
       </md-dialog>
     </div>
@@ -79,7 +79,7 @@ export default Vue.extend({
       this.selectedRow = item;
       this.showViewDialog = true;
     },
-    onCancelView() {
+    onCloseView() {
       this.showViewDialog = false;
       this.selectedRow = {};
     },
