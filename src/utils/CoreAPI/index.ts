@@ -128,18 +128,7 @@ export default class CoreAPI {
 
   private static async coreFetch(request: Request, type: 'json' | 'blob' = 'json') {
     // Declare block scoped variables (let) at top of block
-    let response: Response;
-
-    { let attempts: number = 0;
-      const maxAttempts = 10;
-
-      // Make request, attempt request again if 500 received
-      do {
-        // tslint:disable-next-line:no-console
-        attempts && console.log('request failed with 500, making another attempt');
-        response = await fetch(request);
-      } while (response.status === HTTPCode.INTERNAL_SERVER_ERROR && attempts++ < maxAttempts);
-    }
+    const response = await fetch(request);
 
     if (!response.ok) {
       if (response.status === HTTPCode.UNAUTHORIZED) {

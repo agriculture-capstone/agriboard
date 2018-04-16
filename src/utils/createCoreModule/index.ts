@@ -62,19 +62,24 @@ function createMutations<Row>(): MutationHandlers<CoreModuleState<Row>> {
 
 function createActions<Row>(path: CorePath): ActionHandlers<CoreModuleState<Row>> {
   return {
+
     /** create row action */
     async createRow ({ commit }, { row }: CreatePayload<Row>) {
 
-      const payload: CreationMutateRow<Row> = {
-        ...(row as any),
-        lastModified: new Date().toUTCString(),
-        uuid: uuid4(),
-        status: 'local',
-      };
-      commit('createRow', { row: payload });
+      let payload: CreationMutateRow<Row>;
+      if (row.uuid && row.status && row.lastModified) {
+        payload = row;
+      } else {
+        payload = {
+          ...(row as any),
+          lastModified: new Date().toUTCString(),
+          uuid: uuid4(),
+          status: 'local',
+        };
+        commit('createRow', { row: payload });
+      }
 
       const { uuid } = payload;
-
 
       // Send the new row to the core
       const api = new CoreAPI(path);
