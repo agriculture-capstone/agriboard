@@ -1,10 +1,11 @@
 import * as R from 'ramda';
+import * as moment from 'moment';
 
 import { GetterHandlers, RootState, Person } from './types';
 
 const globalGetters: GetterHandlers<RootState> = {
   /** Get all people */
-  people (state) {
+  people(state) {
     const people = [
       ...R.map(r => ({ ...r, category: 'farmer', notes: r.notes, username: '' }), state.farmer.rows),
       ...R.map(r => ({ ...r, category: 'trader', notes: '', username: r.username }), state.trader.rows),
@@ -45,6 +46,50 @@ const globalGetters: GetterHandlers<RootState> = {
       },
       people,
     );
+  },
+
+  /** Get all transactions */
+  transactions(state) {
+    const allTransactions: any[] = [];
+    state.milk.rows.map((row: any) => {
+      allTransactions.push({
+        ...row,
+        category: 'milk',
+        datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+      });
+    });
+    state.loan.rows.map((row: any) => {
+      allTransactions.push({
+        ...row,
+        category: 'loan',
+        from: row.fromPersonName,
+        to: row.toPersonName,
+        amountOfProduct: row.amount,
+        productUnits: row.currency,
+        datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+      });
+    });
+    state.payment.rows.map((row: any) => {
+      allTransactions.push({
+        ...row,
+        category: 'payment',
+        from: row.fromPersonName,
+        to: row.toPersonName,
+        amountOfProduct: row.amount,
+        productUnits: row.currency,
+        datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+      });
+    });
+    state.delivery.rows.map((row: any) => {
+      allTransactions.push({
+        ...row,
+        category: 'delivery',
+        to: row.transportId,
+        datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
+      });
+    });
+
+    return allTransactions;
   },
 };
 

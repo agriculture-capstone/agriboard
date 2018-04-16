@@ -13,11 +13,11 @@
       <h2 class="error md-subheader">{{error}}</h2>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" md-auto-select>
-        <md-table-cell md-label="Date">{{item.datetime}}</md-table-cell>
-        <md-table-cell md-label="From">{{item.from}}</md-table-cell>
-        <md-table-cell md-label="To">{{item.to}}</md-table-cell>
-        <md-table-cell :md-label="`Amount (${item.productUnits})`">{{item.amountOfProduct}}</md-table-cell>
-        <md-table-cell :md-label="`Rate (${item.currency}/${item.productUnits})`">{{item.costPerUnit}}</md-table-cell>
+        <md-table-cell md-label="Date" md-sort-by="datetime">{{item.datetime}}</md-table-cell>
+        <md-table-cell md-label="From" md-sort-by="from">{{item.from}}</md-table-cell>
+        <md-table-cell md-label="To" md-sort-by="to">{{item.to}}</md-table-cell>
+        <md-table-cell md-label="Amount" md-sort-by="amountOfProduct">{{item.amountOfProduct}} ({{item.productUnits}})</md-table-cell>        
+        <md-table-cell md-label="Category" md-sort-by="category">{{item.category}}</md-table-cell>
       </md-table-row>
     </md-table>
     <div class="view-dialog-wrapper">
@@ -28,14 +28,30 @@
               <md-icon>access_time</md-icon>
               <span>Date: {{ selectedRow.datetime }}</span>
             </div>
-            <h3><b>From</b></h3>
-            {{ selectedRow.from }}
-            <h3><b>To</b></h3>
-            {{ selectedRow.to }}
+            <h3><b>Category</b></h3>
+            {{ selectedRow.category }}
+            <div v-if="selectedRow.from">
+              <h3><b>From</b></h3>
+              {{ selectedRow.from }}
+            </div>
+            <div v-if="selectedRow.category !== 'delivery'">
+              <h3><b>To</b></h3>
+              {{ selectedRow.to }}
+            </div>
+            <div v-if="selectedRow.category === 'delivery'">
+              <h3><b>License Plate</b></h3>
+              {{ selectedRow.to }}
+            </div>
             <h3><b>Amount ({{ selectedRow.productUnits }})</b></h3>
             {{ selectedRow.amountOfProduct }}
-            <h3><b>Rate ({{ selectedRow.currency }}/{{ selectedRow.productUnits }})</b></h3>
-            {{ selectedRow.costPerUnit }}
+            <div v-if="selectedRow.category === 'milk'">
+              <h3><b>Quality</b></h3>
+              {{ selectedRow.milkQuality }}
+              <h3><b>Rate ({{ selectedRow.currency }}/{{ selectedRow.productUnits }})</b></h3>
+              {{ selectedRow.costPerUnit }}
+              <h3><b>Value ({{ selectedRow.currency }})</b></h3>
+              {{ selectedRow.costPerUnit * selectedRow.amountOfProduct }}
+            </div>
           </md-dialog-content>
         <md-dialog-actions>
           <md-button class="md-primary" @click="onCloseView">Close</md-button>
@@ -85,13 +101,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    productTransactions (): any[] {
-      return this.$store.state.milk.rows.map((row: any) => {
-        return {
-          ...row,
-          datetime: moment(row.datetime).format('YYYY-MM-DD h:mm:ss a'),
-        };
-      });
+    productTransactions (): any {
+      return this.$store.getters['transactions'];
     },
   },
   data() {
