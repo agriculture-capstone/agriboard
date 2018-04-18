@@ -12,7 +12,7 @@
     <div v-for="memo in memos" :key="memo.uuid">
       <md-card>
         <md-card-header>
-          <div class="md-title">{{ memo.author }}</div>
+          <div class="md-title">{{ memo.authorName }}</div>
         </md-card-header>
         <md-card-content>
           {{ memo.message }}
